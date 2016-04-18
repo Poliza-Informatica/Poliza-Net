@@ -104,7 +104,7 @@ CREATE TABLE identify
 -- Personal Recursos Humanos, además de Recursos humanos externos y colaboradores
 -- También representa la tabla de usuarios de la aplicación
 --
-CREATE TABLE PersonalRRHH       -- Usuarios de la aplicación
+CREATE TABLE user_app      -- Usuarios de la aplicación
 (
     id                  serial NOT NULL,
     tipo                varchar(50),    -- tipo de relación con la empresa empleado, freelance, socio, administrador
@@ -146,7 +146,7 @@ CREATE TABLE PersonalRRHH       -- Usuarios de la aplicación
 --INSERT INTO PersonalRRHH (nif, nombre, cargo, tipo, email) 
 --    VALUES ('23781554J','Sara Pérez Fajardo','Administración, publicidad y diseño', 'socio','sara@redmoon.es');
 
-INSERT INTO PersonalRRHH (tipo) 
+INSERT INTO user_app (tipo) 
     VALUES ('administrador');
 
 --INSERT INTO PersonalRRHH (nif, nombre, cargo, tipo, email) 
@@ -165,14 +165,43 @@ CREATE TABLE customers_type
     primary key (id)
 );
 
-INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('CLIENTES PENINSULA Y BALEARES','4300','7000');
-INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('CLIENTES RECARGO EQUIVALENCIA PENINSULA Y BALEARES','4301','7000');
-INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('CLIENTES CANARIAS','4302','7000');
-INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('CLIENTES CEUTA Y MELILLA','4303','7000');
-INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('CLIENTES PAIS MIEMBRO DE LA UE','4303','7000');
-INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('CLIENTES PAIS FUERA UE','4304','7000');
+INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('ACCESO TOTAL','4300','7000');
+INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('DELEGADO','4301','7000');
+INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('DIVISION','4302','7000');
+INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('ZONA','4303','7000');
+INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('COMERCIAL','4303','7000');
+INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('COLABORADOR','4304','7000');
+INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('CLIENTE','4304','7000');
+INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('CLIENTES AGRUPADOS','4304','7000');
 
 
+--
+-- Customers scope
+--
+-- Ambito de los clientes, 
+--
+
+CREATE TABLE customers_scope
+(
+   id                      serial      NOT NULL,
+   id_customers_type       integer references customers_type(id),
+   nif                     varchar(20),
+   razon_social            varchar(50),
+   apellidos               varchar(50),
+   domicilio               varchar(100), 
+   cp                      varchar(10),
+   localidad               varchar(90), 
+   provincia               varchar(50), 
+   telefono1               varchar(20),
+   telefono2               varchar(20),
+   mail                    varchar(150),
+   f_nacimiento            varchar(10),
+   f_permiso_conducir      varchar(10),
+   IBAN                    varchar(34),
+   IBAN2                   varchar(34),
+   certificado             bytea,
+   primary key (id)
+);
 
 --
 -- Clientes
@@ -181,183 +210,168 @@ INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('CLIENTES PAIS FUE
 CREATE TABLE customers
 (
    id                      serial      NOT NULL,
-   id_customers_type       integer references customers_type(id),
-   IBAN                    varchar(34), -- los dos primeros digitos indican el país ES codigo para españa
-   BIC                     varchar(11),
-   Domiciliado             varchar(15) default 'domiciliado', -- por defecto domiciliado
+   id_customers_scope      integer references customers_scope(id),
    nif                     varchar(20),
-   nombre                  varchar(60),
-   direccion               varchar(90), -- Avenida Europa, 21
-   objeto                  varchar(40), -- bloque A 2ºD
-   poblacion               varchar(90), -- 18690 Almuñécar Granada
-   Pais_ISO3166            varchar(2) default 'ES',
-   movil                   varchar(10),
-   mail                    varchar(90),
-   saldo                   numeric(5),
-   passwd                  varchar(40),
-   clase                   varchar(2)  DEFAULT 'SL',
-   pertenece_a             integer        DEFAULT 0,
-   sip                     varchar(40),
-   perfil                  varchar(50),
-   digitos                 varchar(16),
-   rol                     integer,
-   carpeta_digitalizacion  varchar(90),
-   tipo                    varchar(40)    DEFAULT 'US'::character varying,
-   id_delegacion           integer,
-   id_departamento         integer,
-   envio_sms               char(1)        DEFAULT 'N'::bpchar,
-   databasename            varchar(20),
-   passdatabase            varchar(10),
-   otros_datos             json,
-   CuotaServicio           numeric(8,2) default 0,
-   fecha_orden_sepa        date, -- FechaFirmaMandato
-   referencia_mandato      varchar(35),
-   orden_sepa              bytea, -- orden de domiciliación en formato SEPA
+   razon_social            varchar(50),
+   apellidos               varchar(50),
+   domicilio               varchar(100), 
+   cp                      varchar(10),
+   localidad               varchar(90), 
+   provincia               varchar(50), 
+   telefono1               varchar(20),
+   telefono2               varchar(20),
+   mail                    varchar(150),
+   f_nacimiento            varchar(10),
+   f_permiso_conducir      varchar(10),
+   IBAN                    varchar(34),
+   IBAN2                   varchar(34),
    certificado             bytea,
    primary key (id)
 );
 
-create index customers_nombre on customers(nombre);
+create index customers_razon_social on customers(razon_social);
 create index customers_nif on customers(nif);
 
 
+--
+-- Coberturas
+--
+CREATE TABLE coberturas
+(
+   id                      serial      NOT NULL,
+   descripcion             text,
+   primary key (id)
+);
+
+
+--
 -- Polizas
+--
 CREATE TABLE Polizas
 (
    id                      serial      NOT NULL,
-   id_customers_type       integer references customers_type(id),
-   poliza                  varchar(20),
-   documento_adhesion      varchar(60),
-   efecto                  date,
-   vencimiento             date,
-   agente                  varchar(90), -- 18690 Almuñécar Granada
-   comercial               varchar(2) default 'ES',
-   delegado                varchar(10),
-   division                varchar(90),
-   aseguradora             numeric(5),
-   producto                varchar(40),
-   nombre_producto         varchar(2)  DEFAULT 'SL',
-   todador_nombre          integer        DEFAULT 0,
-   tomador_apellidos       varchar(40),
-   tomador_domicilio       varchar(50),
-   tomador_cp              varchar(16),
-   tomador_localidad       integer,
-   tomador_provincia       varchar(90),
-   riesgo_asegurado        varchar(40)    DEFAULT 'US'::character varying,
-   matricula               integer,
-   marca_modelo            integer,
-   uso                     char(1)        DEFAULT 'N'::bpchar,
-   grip_coberturas         varchar(20),
+   poliza                  varchar(15),
+   documento_adhesion      varchar(15),
+   efecto                  varchar(10),
+   vencimiento             varchar(10),
+   agente                  varchar(50),
+   comercial               varchar(50),
+   delegado                varchar(50),
+   division                varchar(50),
+   aseguradora             varchar(50),
+   producto                varchar(6),
+   nombre_producto         varchar(50),
+   riesgo_asegurado        varchar(50),
    forma_pago              varchar(10),
    canal_pago              json,
-   cuenta_bancaria         numeric(8,2) default 0,
+   cuenta_bancaria         varchar(34),
    phone_asistencia_cia    varchar(20),
    certificado             bytea,
    primary key (id)
 );
 
--- Recibos
-CREATE TABLE Recibos
+
+--
+-- Coberturas de una poliza
+--
+CREATE TABLE coberturas_poliza
 (
    id                      serial      NOT NULL,
-   id_customers_type       integer references customers_type(id),
-   poliza                  varchar(20),
-   documento_adhesion      varchar(60),
-   efecto                  date,
-   vencimiento             date,
-   agente                  varchar(90), -- 18690 Almuñécar Granada
-   comercial               varchar(2) default 'ES',
-   delegado                varchar(10),
-   division                varchar(90),
-   aseguradora             numeric(5),
-   producto                varchar(40),
-   nombre_producto         varchar(2)  DEFAULT 'SL',
-   todador_nombre          integer        DEFAULT 0,
-   tomador_apellidos       varchar(40),
-   tomador_domicilio       varchar(50),
-   tomador_cp              varchar(16),
-   tomador_localidad       integer,
-   tomador_provincia       varchar(90),
-   riesgo_asegurado        varchar(40)    DEFAULT 'US'::character varying,
-   matricula               integer,
-   marca_modelo            integer,
-   uso                     char(1)        DEFAULT 'N'::bpchar,
-   grip_coberturas         varchar(20),
-   forma_pago              varchar(10),
-   canal_pago              json,
-   cuenta_bancaria         numeric(8,2) default 0,
-   phone_asistencia_cia    varchar(20),
-   certificado             bytea,
+   id_poliza               integer references polizas(id),
+   id_coberturas           integer references coberturas(id),
+   descripcion             text,
    primary key (id)
 );
+
+
+--
+-- Intervinientes, lista de tomadores
+--
+CREATE TABLE intervinientes
+(
+   id                      serial      NOT NULL,
+   id_customers            integer references customers(id),
+   id_poliza               integer references polizas(id),
+   nif                     varchar(20),
+   poliza                  varchar(50),
+   primary key (id)
+);
+
+--
+-- Recibos
+--
+CREATE TABLE Recibos
+(
+   id                       serial      NOT NULL,
+   id_poliza                integer references polizas(id),
+   n_recibo                 varchar(15),
+   efecto                   varchar(10),
+   vencimiento              varchar(10),
+   prima_neta               varchar(15),
+   total_recibo             varchar(15),
+   comision_bruta           varchar(15),
+   liquido_bruto            varchar(15),
+   forma_pago               varchar(5),
+   canal_pago               varchar(5),
+   tipo                     varchar(5),
+   estado_cliente           varchar(2),
+   fecha_cobro              varchar(10),
+   estado_cia               varchar(2),
+   fecha_estado_cia         varchar(10)
+   comercial                varchar(50),
+   comision_comercial       varchar(15),
+   estado_comercial         varchar(2),
+   f_estado_comercial       varchar(10),
+   division                 varchar(50),
+   comision_division        varchar(15),
+   estado_division          varchar(2),
+   f_estado_division        varchar(10),
+   delegado                 varchar(50),
+   comision_delegado        varchar(15),
+   estado_delegado          varchar(2),
+   f_estado_delegado        varchar(10),
+   agente                   varchar(50),
+   comision_agente          varchar(15),
+   estado_agente            varchar(2),
+   f_estado_agente          varchar(10),
+   cobrador                 varchar(50),
+   comision_cobrador        varchar(15),
+   estado_cobrador          varchar(2),
+   f_estado_cobrador        varchar(10),
+   primary key (id)
+);
+
+
+
 
 -- Siniestros
 CREATE TABLE Siniestros
 (
-   id                      serial      NOT NULL,
-   id_customers_type       integer references customers_type(id),
-   poliza                  varchar(20),
-   documento_adhesion      varchar(60),
-   efecto                  date,
-   vencimiento             date,
-   agente                  varchar(90), -- 18690 Almuñécar Granada
-   comercial               varchar(2) default 'ES',
-   delegado                varchar(10),
-   division                varchar(90),
-   aseguradora             numeric(5),
-   producto                varchar(40),
-   nombre_producto         varchar(2)  DEFAULT 'SL',
-   todador_nombre          integer        DEFAULT 0,
-   tomador_apellidos       varchar(40),
-   tomador_domicilio       varchar(50),
-   tomador_cp              varchar(16),
-   tomador_localidad       integer,
-   tomador_provincia       varchar(90),
-   riesgo_asegurado        varchar(40)    DEFAULT 'US'::character varying,
-   matricula               integer,
-   marca_modelo            integer,
-   uso                     char(1)        DEFAULT 'N'::bpchar,
-   grip_coberturas         varchar(20),
-   forma_pago              varchar(10),
-   canal_pago              json,
-   cuenta_bancaria         numeric(8,2) default 0,
-   phone_asistencia_cia    varchar(20),
-   certificado             bytea,
+   id                       serial      NOT NULL,
+   id_poliza                integer references polizas(id),
+   expe_agencia             varchar(20),
+   expe_cia                 varchar(60),
+   fecha_hora_sini          varchar(20),
+   lugar                    varchar(15),
+   cp                       varchar(2) default 'ES',
+   localidad                varchar(10),
+   provincia                varchar(90),
+   tipo_siniestro           varchar(40),
+   situacion                varchar(2)  DEFAULT 'SL',
+   fecha_situacion          varchar(20),
+   descripcio               text,
+   damage_asegurado         text,
+   tramitador               varchar(90),
    primary key (id)
 );
 
 -- Seguimiento siniestro
 CREATE TABLE Seguimiento_siniestro
 (
-   id                      serial      NOT NULL,
-   id_customers_type       integer references customers_type(id),
-   poliza                  varchar(20),
-   documento_adhesion      varchar(60),
-   efecto                  date,
-   vencimiento             date,
-   agente                  varchar(90), -- 18690 Almuñécar Granada
-   comercial               varchar(2) default 'ES',
-   delegado                varchar(10),
-   division                varchar(90),
-   aseguradora             numeric(5),
-   producto                varchar(40),
-   nombre_producto         varchar(2)  DEFAULT 'SL',
-   todador_nombre          integer        DEFAULT 0,
-   tomador_apellidos       varchar(40),
-   tomador_domicilio       varchar(50),
-   tomador_cp              varchar(16),
-   tomador_localidad       integer,
-   tomador_provincia       varchar(90),
-   riesgo_asegurado        varchar(40)    DEFAULT 'US'::character varying,
-   matricula               integer,
-   marca_modelo            integer,
-   uso                     char(1)        DEFAULT 'N'::bpchar,
-   grip_coberturas         varchar(20),
-   forma_pago              varchar(10),
-   canal_pago              json,
-   cuenta_bancaria         numeric(8,2) default 0,
-   phone_asistencia_cia    varchar(20),
-   certificado             bytea,
+    id                      serial      NOT NULL,
+    id_siniestros           integer references siniestros(id),
+    fecha_hora              varchar(20),
+    texto                   text,
    primary key (id)
 );
 
