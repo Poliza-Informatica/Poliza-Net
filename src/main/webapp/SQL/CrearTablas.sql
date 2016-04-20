@@ -209,6 +209,8 @@ CREATE TABLE coberturas
 );
 
 
+-- ******************** CREATE INDEX users_search_idx ON users USING gin (first_name gin_trgm_ops, last_name gin_trgm_ops);
+
 --
 -- Polizas
 --
@@ -234,6 +236,7 @@ CREATE TABLE Polizas
    primary key (id)
 );
 
+create index polizas_poliza on polizas(poliza);
 
 --
 -- Coberturas de una poliza
