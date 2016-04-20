@@ -4,6 +4,11 @@
 -- SIC 62012 Business and domestic software development
 
 --
+createdb poliza-net;
+create user polizanet password 'yo';
+psql -d poliza-net -U polizanet;
+
+
 
 --
 -- Naturaleza jurídica
@@ -152,54 +157,14 @@ INSERT INTO user_app (tipo)
 --INSERT INTO PersonalRRHH (nif, nombre, cargo, tipo, email) 
 --    VALUES ('23781555J','Ángel Luis García Sánchez','Desarrollo Java', 'empleado','angel@redmoon.es');
 
+
 --
--- Los distintos tipos de clientes en función de su residencia y consideraciones
--- especiales tributarias
+-- Clientes agrupados
 --
-CREATE TABLE customers_type
+CREATE TABLE customers_grouped
 (
-    id              serial      NOT NULL,
-    descripcion     varchar(50),
-    cuenta          varchar(4),
-    gasto           varchar(4),
-    primary key (id)
-);
-
-INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('ACCESO TOTAL','4300','7000');
-INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('DELEGADO','4301','7000');
-INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('DIVISION','4302','7000');
-INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('ZONA','4303','7000');
-INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('COMERCIAL','4303','7000');
-INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('COLABORADOR','4304','7000');
-INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('CLIENTE','4304','7000');
-INSERT INTO customers_type (DESCRIPCION,cuenta,gasto) VALUES ('CLIENTES AGRUPADOS','4304','7000');
-
-
---
--- Customers scope
---
--- Ambito de los clientes, 
---
-
-CREATE TABLE customers_scope
-(
-   id                      serial      NOT NULL,
-   id_customers_type       integer references customers_type(id),
-   nif                     varchar(20),
-   razon_social            varchar(50),
-   apellidos               varchar(50),
-   domicilio               varchar(100), 
-   cp                      varchar(10),
-   localidad               varchar(90), 
-   provincia               varchar(50), 
-   telefono1               varchar(20),
-   telefono2               varchar(20),
-   mail                    varchar(150),
-   f_nacimiento            varchar(10),
-   f_permiso_conducir      varchar(10),
-   IBAN                    varchar(34),
-   IBAN2                   varchar(34),
-   certificado             bytea,
+   id                       serial      NOT NULL,
+   descripcion              varchar(50), -- ejemplo: familia "perez fajardo"
    primary key (id)
 );
 
@@ -210,7 +175,7 @@ CREATE TABLE customers_scope
 CREATE TABLE customers
 (
    id                      serial      NOT NULL,
-   id_customers_scope      integer references customers_scope(id),
+   id_customers_grouped    integer references customers_grouped(id),
    nif                     varchar(20),
    razon_social            varchar(50),
    apellidos               varchar(50),
@@ -230,7 +195,7 @@ CREATE TABLE customers
 );
 
 create index customers_razon_social on customers(razon_social);
-create index customers_nif on customers(nif);
+create unique index customers_nif on customers(nif);
 
 
 --
@@ -266,7 +231,6 @@ CREATE TABLE Polizas
    canal_pago              json,
    cuenta_bancaria         varchar(34),
    phone_asistencia_cia    varchar(20),
-   certificado             bytea,
    primary key (id)
 );
 
@@ -293,9 +257,12 @@ CREATE TABLE intervinientes
    id_customers            integer references customers(id),
    id_poliza               integer references polizas(id),
    nif                     varchar(20),
-   poliza                  varchar(50),
+   en_calidad_de           varchar(20),
    primary key (id)
 );
+create index intervinientes_nif on intervinientes(nif);
+create index intervinientes_poliza on intervinientes(id_poliza);
+create index intervinientes_calidad on intervinientes(en_calidad_de,id_poliza);
 
 --
 -- Recibos
