@@ -57,15 +57,6 @@ CREATE TABLE datosper
     CNAE                varchar(25), -- ejemplo: CNAE J6311: Proceso de datos, hosting y actividades relacionadas o SIC que es el código internacional
     fecha_constitucion  date, -- fecha de constitución de la sociedad
     tipo_actividad      varchar(25) default 'empresarial', -- empresarial o profesional
-    carga_impositiva    numeric(4,2) default 20,
-    sociedades          varchar(2) default 'NO',
-    criterio_de_caja    varchar(2) default 'NO', -- para los autonomos y empresas acogidas al criterio de caja no paga IVA hasta el ingreso
-    presupuestos        varchar(2) default 'NO',
-    fiscal_year         char(4) default EXTRACT(year FROM now()),
-    periodo             char(2) default EXTRACT(QUARTER FROM now()),
-    irpf_profesionales  numeric(4,2) default 21,
-    irpf_alquileres     numeric(4,2) default 21,
-    iva                 numeric(4,2) default 21,
     otras_reglas        json,
     EntidadPresenta     varchar(4), -- para las domiciliaciones
     OficinaPresenta     varchar(4), -- para las domiciliaciones
@@ -82,14 +73,71 @@ CREATE TABLE datosper
     fax                 varchar(10),
     mail                varchar(90),
     url_web             varchar(250),
-    url_tsa             text,
-    escrituras_consti   bytea,
-    cero36              bytea
+    url_tsa             text
 );
 
 
-insert into datosper (forma_juridica, fiscal_year, periodo, nombre) 
-values ('RETA','2016','1','Su nombre comercial');
+insert into datosper (forma_juridica, nombre, mail,url_web,url_tsa) 
+values ('SL','Prodacon','info@prodacon.es','http://www.prodacon.es','http://tsa.belgium.be/connect');
+
+
+--
+-- Tipos de cuentas
+--
+CREATE TABLE PoliticaCuentas
+(
+    id              serial      NOT NULL,
+    nombre          varchar(90),
+    precio          numeric(8,2),
+    duracion        varchar(10), -- mensual, anual, trimestral
+    servicios        json,
+    primary key (id)
+);
+
+--
+-- Tipos de cuentas y funciones disponibles
+--
+
+INSERT INTO PoliticaCuentas ( id, nombre, precio, duracion, servicios) VALUES ( 1, 'Chanquete Free', 0, 'año',
+'{  "Firma": "yes",
+    "Burofax":  "no",
+    "Almacenamiento": "no",
+    "Indexacion":  "no",
+    "myHD": "yes",
+    "LimiteUsuarios": "1"
+}'::json
+);
+
+INSERT INTO PoliticaCuentas ( id, nombre, precio, duracion, servicios) VALUES ( 2, 'Boqueron Premiun', 60, 'año',
+'{  "Firma": "yes",
+    "Burofax":  "no",
+    "Almacenamiento": "no",
+    "Indexacion":  "no",
+    "myHD": "yes",
+    "LimiteUsuarios": "5"
+}'::json
+);
+
+INSERT INTO PoliticaCuentas ( id, nombre, precio, duracion, servicios) VALUES ( 3, 'Pargo Enterprise', 32, 'mes',
+'{  "Firma": "yes",
+    "Burofax":  "yes",
+    "Almacenamiento": "yes",
+    "Indexacion":  "yes",
+    "myHD": "yes",
+    "LimiteUsuarios": "no"
+}'::json
+);
+
+INSERT INTO PoliticaCuentas ( id, nombre, precio, duracion, servicios) VALUES ( 4, 'Atún Adviser', 35, 'mes',
+'{  "Firma": "yes",
+    "Burofax":  "no",
+    "Almacenamiento": "no",
+    "Indexacion":  "no",
+    "myHD": "yes",
+    "LimiteUsuarios": "no"
+}'::json
+);
+
 
 
 --
@@ -106,41 +154,24 @@ CREATE TABLE identify
 
 
 --
--- Personal Recursos Humanos, además de Recursos humanos externos y colaboradores
--- También representa la tabla de usuarios de la aplicación
+-- Representa la tabla de usuarios de la aplicación
 --
 CREATE TABLE user_app      -- Usuarios de la aplicación
 (
     id                  serial NOT NULL,
     tipo                varchar(50),    -- tipo de relación con la empresa empleado, freelance, socio, administrador
-    IBAN                varchar(34), -- los dos primeros digitos indican el país ES codigo para españa
-    BIC                 varchar(11),
     RedSocial           text,   -- URL del usuario de la red social
     email               varchar(90),
     cargo               varchar(50), -- cargo responsabilidad en la empresa
-    estudios            varchar(50), -- nivel de estudios
-    categoria           varchar(50), -- categoría profesional
-    tipo_contrato       varchar(50), -- tipo de contrato
-    SalarioBruto        numeric(8,2), -- salario bruto anual
-    NumeroPagas         integer default 14,
     nif                 varchar(20),
     Nombre              varchar(90),
     genero              varchar(10), -- hombre mujer male female
     locale              varchar(2), -- es, uk, etc.
     otros_datos         json,
     servicios           json,
-    permisos            json default '{"panel":"yes","clientes":"yes","ventas":"yes","proveedores":"yes","compras":"yes","nominas":"no","bancos":"no","contabilidad":"no"}'::json,
-    fecha_nacimiento    date,
-    estado_civil        varchar(25),
-    fecha_alta          date,
-    fecha_baja          date,
-    hijos               integer,
+    permisos            json default '{"panel":"yes","clientes":"yes","ventas":"yes","proveedores":"yes"}'::json,
     asucargo            integer,
-    contrato            bytea,
     certificado         bytea,
-    fecha_orden_sepa        date,
-    referencia_mandato      varchar(35),
-    orden_sepa              bytea, -- orden de domiciliación en formato SEPA
     primary key (id)
 );
 
@@ -151,8 +182,14 @@ CREATE TABLE user_app      -- Usuarios de la aplicación
 --INSERT INTO PersonalRRHH (nif, nombre, cargo, tipo, email) 
 --    VALUES ('23781554J','Sara Pérez Fajardo','Administración, publicidad y diseño', 'socio','sara@redmoon.es');
 
-INSERT INTO user_app (tipo) 
-    VALUES ('administrador');
+INSERT INTO user_app (tipo,email,nif,nombre) 
+    VALUES ('administrador','antoniocastillo@prodacon.es','suNIF','Antonio');
+INSERT INTO user_app (tipo,email,nif,nombre) 
+    VALUES ('developer','rcastro@polizainformatica.es','suNIF','Rubén');
+INSERT INTO user_app (tipo,email,nif,nombre) 
+    VALUES ('developer','jesus@polizainformatica.es','suNIF','Jesus');
+INSERT INTO user_app (tipo,email,nif,nombre) 
+    VALUES ('developer','antonio.gialnet@gmail.com','23781553J','Antonio');
 
 --INSERT INTO PersonalRRHH (nif, nombre, cargo, tipo, email) 
 --    VALUES ('23781555J','Ángel Luis García Sánchez','Desarrollo Java', 'empleado','angel@redmoon.es');

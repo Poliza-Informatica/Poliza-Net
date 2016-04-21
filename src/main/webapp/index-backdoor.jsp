@@ -52,7 +52,7 @@
                     if( mensaje!=null && mensaje.length()>0)
                          out.write("<div class=\"control-group\"><p class=\"text-error\">"+mensaje+"</p></div>");
                 %>
-                <input type="hidden" name="databasename" id="databasename" value="jdbc/myEmpresa01">
+                <input type="hidden" name="databasename" id="databasename" value="jdbc/myPolizaNet">
                 <div class="control-group">
                     <label class="control-label">Username:</label>
                     <div class="controls"><input class="span12" type="text" name="xUser" placeholder="username" /></div>

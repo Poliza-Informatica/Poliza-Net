@@ -19,16 +19,8 @@ public class BeanDatosPer {
     private String Mail;
     private String url_web;
     private String url_tsa;
-    private String perido;
-    private String fiscal_year;
     private String fecha_constitucion;
-    private BigDecimal irpf_profesionales;
-    private BigDecimal irpf_alquileres;
-    private BigDecimal iva;
     private String forma_juridica;
-    private BigDecimal carga_impositiva;
-    private String  Sociedades;
-    private String  CriterioDeCaja;
     
     private String CNAE;
     private String IBAN;
@@ -43,15 +35,6 @@ public class BeanDatosPer {
     
     
     public BeanDatosPer() {}
-
-    public BigDecimal getIrpf_profesionales() {
-        return irpf_profesionales;
-    }
-
-    public void setIrpf_profesionales(BigDecimal irpf_profesionales) {
-        this.irpf_profesionales = irpf_profesionales;
-    }
-
     
     public String getNif() {
         return Nif;
@@ -109,22 +92,6 @@ public class BeanDatosPer {
         this.Mail = Mail;
     }
 
-    public String getPerido() {
-        return perido;
-    }
-
-    public void setPerido(String perido) {
-        this.perido = perido;
-    }
-
-    public String getFiscal_year() {
-        return fiscal_year;
-    }
-
-    public void setFiscal_year(String fiscal_year) {
-        this.fiscal_year = fiscal_year;
-    }
-
     public String getForma_juridica() {
         return forma_juridica;
     }
@@ -132,31 +99,7 @@ public class BeanDatosPer {
     public void setForma_juridica(String forma_juridica) {
         this.forma_juridica = forma_juridica;
     }
-
-    public BigDecimal getCarga_impositiva() {
-        return carga_impositiva;
-    }
-
-    public void setCarga_impositiva(BigDecimal carga_impositiva) {
-        this.carga_impositiva = carga_impositiva;
-    }
-
-    public String getSociedades() {
-        return Sociedades;
-    }
-
-    public void setSociedades(String Sociedades) {
-        this.Sociedades = Sociedades;
-    }
     
-    public BigDecimal getIrpf_alquileres() {
-        return irpf_alquileres;
-    }
-
-    public void setIrpf_alquileres(BigDecimal irpf_alquileres) {
-        this.irpf_alquileres = irpf_alquileres;
-    }
-
     public String getCNAE() {
         return CNAE;
     }
@@ -213,14 +156,6 @@ public class BeanDatosPer {
         this.fecha_constitucion = fecha_constitucion;
     }
 
-    public String getCriterioDeCaja() {
-        return CriterioDeCaja;
-    }
-
-    public void setCriterioDeCaja(String CriterioDeCaja) {
-        this.CriterioDeCaja = CriterioDeCaja;
-    }
-
     public String getEntidadPresenta() {
         return EntidadPresenta;
     }
@@ -251,14 +186,6 @@ public class BeanDatosPer {
 
     public void setPeriodicidad_er(int periodicidad_er) {
         this.periodicidad_er = periodicidad_er;
-    }
-
-    public BigDecimal getIva() {
-        return iva;
-    }
-
-    public void setIva(BigDecimal iva) {
-        this.iva = iva;
     }
 
     public String getEmiteRemesas() {

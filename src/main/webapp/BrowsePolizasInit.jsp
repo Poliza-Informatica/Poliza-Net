@@ -3,7 +3,7 @@
     Created on : 01-sep-2013, 2:46:37
     Author     : antonio
 --%>
-
+<%@include file="sesion.jsp" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -73,10 +73,10 @@
 
                     <li class="dropdown">
                         <a class="user-menu" data-toggle="dropdown"><!--<img src="img/userpic.png" alt="" />-->
-                            <img src="img/person.png" width="20" height="20" alt="" /><span><= sesion.getAttribute("xUser")%></span></a>
+                            <img src="img/person.png" width="20" height="20" alt="" /><span><%= sesion.getAttribute("xUser")%></span></a>
                         <ul class="dropdown-menu">
 
-                            <li><a href="DatosFacturacion.jsp" title=""><i class="icon-cog"></i>Mi Configuraci&oacute;n</a></li>
+                            <li><a href="index.jsp" title=""><i class="icon-cog"></i>Mi Configuraci&oacute;n</a></li>
                             <li><a href="logout.jsp" title=""><i class="icon-remove"></i>Salir</a></li>
                         </ul>
                     </li>
@@ -143,8 +143,8 @@
             <div class="page-header">
                 <div class="page-title">
 
-                    <h5 id="conexion">Cartera de pólizas EMPRESA <= sesion.getAttribute("NIF") %> <= sesion.getAttribute("RazonSocial") %>
-                        <= sesion.getAttribute("FormaJuridica") %></h5>
+                    <h5 id="conexion">Cartera de pólizas <%= sesion.getAttribute("NIF") %> <%= sesion.getAttribute("RazonSocial") %>
+                        <%= sesion.getAttribute("FormaJuridica") %></h5>
                     
                    
                 </div>			    	
@@ -167,7 +167,7 @@
 
             </div>
             <ul class="toolbar">
-                <li><a title="" href="conta-NewAsiento.jsp"><i class="icon-plus"></i>
+                <li><a title="" href="#"><i class="icon-plus"></i>
                         <span>Nuevo Asiento</span></a>
                 </li>
                 <li>
@@ -176,7 +176,7 @@
                          LeerAsientos() aun no está implementado
                     -->
                     <input type="text" name="xConcepto" id="xConcepto" style="height: 28px; margin-right: 10px;" size="30" maxlength="30" 
-                           onkeypress="LeerAsientosByConcepto('<= sesion.getAttribute("Year_fiscal") %>');">
+                           onkeypress="LeerAsientosByConcepto('<%= sesion.getAttribute("Year_fiscal") %>');">
                 </li>
             </ul>
            <div class="table-overflow">
@@ -184,10 +184,12 @@
             <table class="table table-striped table-bordered" id="oTabla">
                 <thead>
                     <tr>
-                        <td width="10%" hidden="true"><strong>id</strong></td>
-                        <td width="60%"><strong>Concepto</strong></td>
-                        <td width="10%"><strong>fecha</strong></td>
-                        <td width="5%"><strong>Periodo</strong></td>
+                        <td width="10%" hidden="hidden"><strong>id</strong></td>
+                        <td width="10%"><strong>NIF</strong></td>
+                        <td width="20%"><strong>Nombre</strong></td>
+                        <td width="10%"><strong>Póliza</strong></td>
+                        <td width="5%"><strong>Efecto</strong></td>
+                        <td width="50%"><strong>Riesgo asegurado</strong></td>
                         <td width="5%"></td>
                     </tr>
             </table>
@@ -196,11 +198,11 @@
 
             <div class="pagination">
                 <ul>
-                    <li><a onclick="paginaAnterior('<= sesion.getAttribute("Year_fiscal") %>',conn);">Anterior</a></li>
+                    <li><a onclick="paginaAnterior('<%= sesion.getAttribute("Year_fiscal") %>',conn);">Anterior</a></li>
 
                     <li class="active"><a href="#" id="xPag">1</a></li>
 
-                    <li><a onclick="paginaSiguiente('<= sesion.getAttribute("Year_fiscal") %>',conn);">Siguiente</a></li>
+                    <li><a onclick="paginaSiguiente('<%= sesion.getAttribute("Year_fiscal") %>',conn);">Siguiente</a></li>
                 </ul>
             </div>
                 
@@ -208,51 +210,7 @@
             
         </div>
     </div>
-    <!-- /content wrapper -->
 
 </div>
-<!-- /content -->
-
-<!-- /content container -->
-
-
-                <script>
-                    selectItemMenu('itemPlanContable');
-                    window.pagina=1; //window.pagina;
-                    window.pagsize=10; //window.pagsize;
-                    var conn = LeerAsientos(<= sesion.getAttribute("Year_fiscal") %>);
-                </script>
-                
-                <div class="modal hide fade" id="xTablaAsiento" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3 id="myModalLabel">Ver movimientos</h3>
-                </div>
-                <div class="modal-body">
-             
-                    <div class="table-overflow" id="xDiario">
-                    <input type="hidden" name="xIDAsiento" id="xIDAsiento">
-                    <table class="table table-striped table-bordered" id="oDiario">
-                        <thead>
-                            <tr>
-                                <td width="10%"><strong>Cuenta</strong></td>
-                                <td width="40%" ><strong>Concepto</strong></td>
-                                <td width="10%"><strong>Debe</strong></td>
-                                <td width="10%"><strong>Haber</strong></td>
-                            </tr>
-                    </table>
-                        <script>
-                            //connAsi=AsientosMovimiento();
-                        </script>
-
-                    </div>
-
-                        <div class="modal-footer">
-                            <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-                            <input class="btn btn-primary" type="submit" value="Pagar"/>
-                        </div>
-                    
-                </div>
-                </div>
 </body>
 </html>

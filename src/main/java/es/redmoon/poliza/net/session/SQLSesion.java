@@ -33,39 +33,24 @@ public class SQLSesion extends PoolConn {
     private String NombreUsuario;
     private String UserTipo;
     private String FormaJuridica;
-    private String TipoBalance="Abreviado";
-    private String year_fiscal;
-    private String periodo;
     private String Database;
     private String NumeroMaxUsuarios;
     private String Fecha;
-    private String Hoy;
-    private String DiasFinPeriodo;
-    private String DiasFinYear;
     private String myCertHash;
     private byte[] myCertificado;
     private int tipo_de_cuenta;
-    private int NumeroDeRecibos;
     
     private String permisos;
     private Locale myLocale;
     
     // Servicios disponibles
-    private String Facturacion="yes"; // yes o premium
-    private String Contabilidad="no"; // yes o no
-    private String Nominas="no";
-    private String NominasApp="no";
-    private String Burofax="no";
-    private String Impuestos="no";
+    
     private String Firma="no";
+    private String Burofax="no";
     private String Almacenamiento="no";
     private String Indexacion="no";
     private String myHD="yes";
-    private String Asesor="no"; // yes, fiscal, laboral, jurídico
     private String LimiteUsuarios="1";
-    private String DocumentoIngreso="factura"; // factura, iguala, cuota.
-    private String EmiteRemesas="NO";
-    private String Presupuestos="NO";
     
     //Terceros
     private int xIDTercero;
@@ -93,7 +78,7 @@ public class SQLSesion extends PoolConn {
         
         try {
             //System.err.println("Error en login usuario:"+xUser);
-            PreparedStatement st = conn.prepareStatement("SELECT id,permisos,email,nif,nombre,tipo,certificado,encode(digest(certificado, 'sha512'), 'hex') as CertHash from PersonalRRHH where email=?");
+            PreparedStatement st = conn.prepareStatement("SELECT id,permisos,email,nif,nombre,tipo,certificado,encode(digest(certificado, 'sha512'), 'hex') as CertHash from user_app where email=?");
             st.setString(1, xUser.trim());
             //st.setString(2, xPass);
             
@@ -129,7 +114,7 @@ public class SQLSesion extends PoolConn {
            rs.close();
         }
         catch (SQLException e) {
-            System.out.println("SELECT * from PersonalRRHH Connection Failed!.MakeSesionGooglePlus");
+            System.out.println("SELECT * from user_app Connection Failed!.MakeSesionGooglePlus");
             conn.close();
             return false;
         }
@@ -153,8 +138,8 @@ public class SQLSesion extends PoolConn {
         
         try (Connection conn = PGconectar()) {
             //System.err.println("Error en login usuario:"+xUser);
-            // "SELECT email,nif,nombre,tipo,certificado from PersonalRRHH where email=? and encode(digest(certificado, 'sha512'), 'hex')=?"
-            PreparedStatement st = conn.prepareStatement("SELECT id,permisos,email,nif,nombre,tipo,certificado from PersonalRRHH where email=?");
+            // "SELECT email,nif,nombre,tipo,certificado from user_app where email=? and encode(digest(certificado, 'sha512'), 'hex')=?"
+            PreparedStatement st = conn.prepareStatement("SELECT id,permisos,email,nif,nombre,tipo,certificado from user_app where email=?");
             st.setString(1, xUser.trim());
             //st.setString(2, xPass);
             
@@ -168,7 +153,7 @@ public class SQLSesion extends PoolConn {
                     this.UserTipo=rs.getString("tipo");
                     this.myCertificado=rs.getBytes("certificado");
                     this.myCertHash=xPass;
-                    this.permisos=(StringUtils.isEmpty(rs.getString("permisos"))) ? "{\"panel\":\"yes\",\"clientes\":\"yes\",\"ventas\":\"yes\",\"proveedores\":\"yes\",\"compras\":\"yes\",\"nominas\":\"no\",\"bancos\":\"no\",\"contabilidad\":\"no\"}": rs.getString("permisos");
+                    this.permisos=(StringUtils.isEmpty(rs.getString("permisos"))) ? "{\"panel\":\"yes\",\"clientes\":\"yes\",\"ventas\":\"yes\",\"proveedores\":\"yes\"}": rs.getString("permisos");
                     
                     // Parte de las variables de sesión de la tabla DatosPer
                     SetSessionVar();
@@ -188,7 +173,7 @@ public class SQLSesion extends PoolConn {
            
         }
         catch (SQLException e) {
-            System.out.println("SELECT * from PersonalRRHH Connection Failed!.CheckLogin");
+            System.out.println("SELECT * from user_app Connection Failed!.CheckLogin");
             return false;
         }
         
@@ -294,7 +279,7 @@ public class SQLSesion extends PoolConn {
         
         try {
 
-            PreparedStatement st = conn.prepareStatement("SELECT email,nif,nombre,tipo,certificado from PersonalRRHH where email=?");
+            PreparedStatement st = conn.prepareStatement("SELECT email,nif,nombre,tipo,certificado from user_app where email=?");
             st.setString(1, xUser.trim());
             
             ResultSet rs = st.executeQuery();
@@ -314,7 +299,7 @@ public class SQLSesion extends PoolConn {
            rs.close();
         }
         catch (SQLException e) {
-            System.out.println("SELECT * from PersonalRRHH Connection Failed!. RefreshSesionVars");
+            System.out.println("SELECT * from user_app Connection Failed!. RefreshSesionVars");
             conn.close();
             return false;
         }
@@ -339,33 +324,12 @@ public class SQLSesion extends PoolConn {
         this.NIF = mySQLDatosPer.getNif();
         this.RazonSocial=mySQLDatosPer.getNombre();
         this.FormaJuridica=mySQLDatosPer.getForma_juridica();
-        this.year_fiscal=mySQLDatosPer.getFiscal_year();
-        this.periodo=mySQLDatosPer.getPerido();
-        this.EmiteRemesas=mySQLDatosPer.getEmiteRemesas();
-        this.NumeroDeRecibos=mySQLDatosPer.getPeriodicidad_er();
-        this.Presupuestos=mySQLDatosPer.getPresupuestos();
+        
         this.myLocale=mySQLDatosPer.getMyLocale();
-        
-        if (this.FormaJuridica.equals("Comunidades de propietarios"))
-        {
-            this.DocumentoIngreso="cuota";
-            this.Presupuestos="SI";
-        }
-        
-        if (this.FormaJuridica.equals("SA"))
-        {
-            this.TipoBalance="Normal";
-        }
         
         // con este datos nos vamos a la tabla PoliticaCuentas        
         this.tipo_de_cuenta=mySQLDatosPer.getTipo_de_cuenta();
         
-        // el tipo de cuenta 4 Atún Advisor
-        if (this.tipo_de_cuenta==4)
-        {
-            this.Asesor="yes";
-            this.DocumentoIngreso="iguala";
-        }
             
         // y leemos la variable JSON servicios autorizados 
         getServicios();
@@ -374,9 +338,6 @@ public class SQLSesion extends PoolConn {
         // this.NumeroMaxUsuarios=null; de la parte de criptografía
         
         this.Fecha=mySQLDatosPer.getFecha();
-        this.Hoy=Integer.toString(mySQLDatosPer.getDoy());
-        this.DiasFinPeriodo=  Integer.toString(mySQLDatosPer.getDiasPeriodo());
-        this.DiasFinYear = Integer.toString(mySQLDatosPer.getDiasEndYear());
         
         mySQLDatosPer = null;
     }
@@ -417,21 +378,14 @@ public class SQLSesion extends PoolConn {
                     }
 
                     /*
-                     * '{   "Contabilidad": "no", 
-                            "Impuestos": "yes",
-                            "Nominas": "yes",
-                            "NominasApp": "no",
-                            "Firma": "yes",
+                     * '{   "Firma": "yes",
                             "Burofax":  "yes",
                             "Almacenamiento": "no",
                             "Indexacion":  "no",
                             "LimiteUsuarios": "1"
                         }'::json
                      */
-                    Contabilidad = (String) jsonObject.get("Contabilidad");
-                    Impuestos = (String) jsonObject.get("Impuestos");
-                    Nominas = (String) jsonObject.get("Nominas");
-                    NominasApp = (String) jsonObject.get("NominasApp");
+                    
                     Firma = (String) jsonObject.get("Firma");
                     Burofax = (String) jsonObject.get("Burofax");
                     Almacenamiento = (String) jsonObject.get("Almacenamiento");
@@ -488,14 +442,6 @@ public class SQLSesion extends PoolConn {
         return FormaJuridica;
     }
 
-    public String getYear_fiscal() {
-        return year_fiscal;
-    }
-
-    public String getPeriodo() {
-        return periodo;
-    }
-
     public String getDatabase() {
         return Database;
     }
@@ -506,18 +452,6 @@ public class SQLSesion extends PoolConn {
 
     public String getFecha() {
         return Fecha;
-    }
-
-    public String getHoy() {
-        return Hoy;
-    }
-
-    public String getDiasFinPeriodo() {
-        return DiasFinPeriodo;
-    }
-
-    public String getDiasFinYear() {
-        return DiasFinYear;
     }
 
     public String getNIFUser() {
@@ -532,24 +466,8 @@ public class SQLSesion extends PoolConn {
         return UserTipo;
     }
 
-    public String getFacturacion() {
-        return Facturacion;
-    }
-
-    public String getContabilidad() {
-        return Contabilidad;
-    }
-
-    public String getNominas() {
-        return Nominas;
-    }
-
     public String getBurofax() {
         return Burofax;
-    }
-
-    public String getImpuestos() {
-        return Impuestos;
     }
 
     public String getFirma() {
@@ -564,10 +482,6 @@ public class SQLSesion extends PoolConn {
         return Indexacion;
     }
 
-    public String getAsesor() {
-        return Asesor;
-    }
-
     public String getMyCertHash() {
         return myCertHash;
     }
@@ -580,36 +494,12 @@ public class SQLSesion extends PoolConn {
         return tipo_de_cuenta;
     }
 
-    public String getNominasApp() {
-        return NominasApp;
-    }
-
     public String getLimiteUsuarios() {
         return LimiteUsuarios;
     }
 
     public String getMyHD() {
         return myHD;
-    }
-
-    public String getDocumentoIngreso() {
-        return DocumentoIngreso;
-    }
-
-    public String getEmiteRemesas() {
-        return EmiteRemesas;
-    }
-
-    public String getPresupuestos() {
-        return Presupuestos;
-    }
-
-    public int getNumeroDeRecibos() {
-        return NumeroDeRecibos;
-    }
-
-    public String getTipoBalance() {
-        return TipoBalance;
     }
 
     public int getxIDTercero() {
