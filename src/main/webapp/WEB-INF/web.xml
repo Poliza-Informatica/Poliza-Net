@@ -4,9 +4,17 @@
         <servlet-name>ServletSesion</servlet-name>
         <servlet-class>es.redmoon.poliza.net.session.ServletSesion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AjaxPolizas</servlet-name>
+        <servlet-class>qwery_polizas.AjaxPolizas</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletSesion</servlet-name>
         <url-pattern>/ServletSesion.servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AjaxPolizas</servlet-name>
+        <url-pattern>/AjaxPolizas.servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

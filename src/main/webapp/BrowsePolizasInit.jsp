@@ -58,8 +58,7 @@
                 
                 <script type="text/javascript" src="js_tetbury/grid.js"></script>
                 <script type="text/javascript" src="js_tetbury/conta-comAJAX.js"></script>
-                <script type="text/javascript" src="js_tetbury/plancontable.js"></script>
-                <script type="text/javascript" src="js_tetbury/asientos.js"></script>
+                <script type="text/javascript" src="js_tetbury/PolizasLeer.js"></script>
 </head>
 <body>
 
@@ -172,9 +171,7 @@
                 </li>
                 <li>
                     <a class="expand"  title="" ><i class="icon-search"></i><span>Buscar:</span></a>
-                    <!-- 
-                         LeerAsientos() aun no está implementado
-                    -->
+                    
                     <input type="text" name="xConcepto" id="xConcepto" style="height: 28px; margin-right: 10px;" size="30" maxlength="30" 
                            onkeypress="LeerAsientosByConcepto('<%= sesion.getAttribute("Year_fiscal") %>');">
                 </li>
@@ -198,14 +195,21 @@
 
             <div class="pagination">
                 <ul>
-                    <li><a onclick="paginaAnterior('<%= sesion.getAttribute("Year_fiscal") %>',conn);">Anterior</a></li>
+                    <li><a onclick="conn.PrevPage('accion=fact_proforma');">Anterior</a></li>
 
                     <li class="active"><a href="#" id="xPag">1</a></li>
 
-                    <li><a onclick="paginaSiguiente('<%= sesion.getAttribute("Year_fiscal") %>',conn);">Siguiente</a></li>
+                    <li><a onclick="conn.NextPage('accion=fact_proforma');">Siguiente</a></li>
                 </ul>
             </div>
-                
+                        <script>
+            
+                            var pag=1; //window.pagina;
+                            var tama=10; //window.pagsize;
+                            
+                            //alert(direccion);
+                            var conn=LeerPolizas();
+                        </script>
             </div>
             
         </div>
