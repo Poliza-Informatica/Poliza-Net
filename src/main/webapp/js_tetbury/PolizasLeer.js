@@ -85,8 +85,8 @@ function CrearTablaPolizas(myJson)
         //tabla.AddRowCellText(row, 0, obj[j].id);
         var celda = tabla.AddRowCellText(row, 0, obj[j].id);
         celda.setAttribute('hidden', 'true'); // ocultar la columna ID
-        tabla.AddRowCellText(row, 1, obj[j].NIF );
-        tabla.AddRowCellText(row, 2, obj[j].Nombre );
+        tabla.AddRowCellText(row, 1, obj[j].nif );
+        tabla.AddRowCellText(row, 2, obj[j].nombre );
         tabla.AddRowCellText(row, 3, obj[j].poliza );
         tabla.AddRowCellText(row, 4, obj[j].efecto );
         tabla.AddRowCellText(row, 5, obj[j].riesgo_asegurado );
@@ -112,6 +112,28 @@ function LeerPolizasByRiesgo()
     
     var url='AjaxPolizas.servlet';
     var dataToSend='accion=PolizasByRiesgo&pagina='+pag +'&size='+tama+'&xRiesgo='+xRiesgo;
+    var conn = new Conectar(url, dataToSend);
+       
+    conn.pageRequest.onreadystatechange = function() { ListaPolizas(conn.pageRequest); };
+
+    conn.Enviar();
+    
+    return conn;
+}
+
+/*
+ * Leer lista de polizas por riesgo
+ * 
+ */
+function LeerPolizasByBuscar()
+{
+    var pag=window.pagina;
+    var tama=window.pagsize;
+    var xBuscar=document.getElementById("xBuscar").value;
+    
+    
+    var url='AjaxPolizas.servlet';
+    var dataToSend='accion=PolizasByBuscar&pagina='+pag +'&size='+tama+'&xBuscar='+xBuscar;
     var conn = new Conectar(url, dataToSend);
        
     conn.pageRequest.onreadystatechange = function() { ListaPolizas(conn.pageRequest); };

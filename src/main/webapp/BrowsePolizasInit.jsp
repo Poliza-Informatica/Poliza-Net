@@ -172,8 +172,8 @@
                 <li>
                     <a class="expand"  title="" ><i class="icon-search"></i><span>Buscar:</span></a>
                     
-                    <input type="text" name="xRiesgo" id="xRiesgo" style="height: 28px; margin-right: 10px;" size="30" maxlength="30" 
-                           onkeypress="LeerPolizasByRiesgo();">
+                    <input type="text" name="xBuscar" id="xBuscar" style="height: 28px; margin-right: 10px;" size="30" maxlength="30" 
+                           onkeypress="LeerPolizasByBuscar();">
                 </li>
             </ul>
            <div class="table-overflow">
@@ -181,12 +181,12 @@
             <table class="table table-striped table-bordered" id="oTabla">
                 <thead>
                     <tr>
-                        <td width="10%" hidden="hidden"><strong>id</strong></td>
+                        <td width="1%" hidden="hidden"><strong>id</strong></td>
                         <td width="10%"><strong>NIF</strong></td>
-                        <td width="20%"><strong>Nombre</strong></td>
+                        <td width="35%"><strong>Nombre</strong></td>
                         <td width="10%"><strong>Póliza</strong></td>
                         <td width="5%"><strong>Efecto</strong></td>
-                        <td width="50%"><strong>Riesgo asegurado</strong></td>
+                        <td width="20%"><strong>Riesgo asegurado</strong></td>
                         <td width="5%"></td>
                     </tr>
             </table>
@@ -195,11 +195,11 @@
 
             <div class="pagination">
                 <ul>
-                    <li><a onclick="conn.PrevPage('accion=PolizasByID');">Anterior</a></li>
+                    <li><a onclick="conn.PrevPage('accion=PolizasByBuscar&xBuscar='+document.getElementById('xBuscar').value);">Anterior</a></li>
 
                     <li class="active"><a href="#" id="xPag">1</a></li>
 
-                    <li><a onclick="conn.NextPage('accion=PolizasByID');">Siguiente</a></li>
+                    <li><a onclick="conn.NextPage('accion=PolizasByBuscar&xBuscar='+document.getElementById('xBuscar').value);">Siguiente</a></li>
                 </ul>
             </div>
                         <script>

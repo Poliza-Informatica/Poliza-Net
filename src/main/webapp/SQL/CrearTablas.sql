@@ -251,27 +251,29 @@ CREATE TABLE coberturas
 --
 -- Polizas
 --
-CREATE TABLE Polizas
+
+CREATE TABLE polizas
 (
-   id                      serial      NOT NULL,
-   poliza                  varchar(15),
-   documento_adhesion      varchar(15),
-   efecto                  varchar(10),
-   vencimiento             varchar(10),
-   agente                  varchar(50),
-   comercial               varchar(50),
-   delegado                varchar(50),
-   division                varchar(50),
-   aseguradora             varchar(50),
-   producto                varchar(6),
-   nombre_producto         varchar(50),
-   riesgo_asegurado        varchar(50),
-   forma_pago              varchar(10),
-   canal_pago              json,
-   cuenta_bancaria         varchar(34),
-   phone_asistencia_cia    varchar(20),
+   id                  serial         NOT NULL,
+   id_solicitud        bigint,
+   poliza              varchar(15),
+   documento_adhesion  varchar(15),
+   efecto              varchar(20),
+   vencimiento         varchar(20),
+   compania            varchar(50),
+   producto            varchar(6),
+   riesgo_asegurado    varchar(50),
+   forma_pago          varchar(10),
+   canal_pago          varchar(10),
+   iban                varchar(34),
+   gestor              varchar(50),
+   mediador1           varchar(50),
+   mediador2           varchar(50),
+   cobrador            varchar(50),
+   comercial           varchar(50),
    primary key (id)
 );
+
 
 create index polizas_poliza on polizas(poliza);
 create index polizas_riesgo on polizas(riesgo_asegurado);
@@ -304,6 +306,15 @@ CREATE TABLE intervinientes
 create index intervinientes_nif on intervinientes(nif);
 create index intervinientes_poliza on intervinientes(id_poliza);
 create index intervinientes_calidad on intervinientes(en_calidad_de,id_poliza);
+
+/*
+ALTER TABLE intervinientes
+  ADD CONSTRAINT intervinientes_poliza FOREIGN KEY (id_poliza)
+  REFERENCES polizas (id)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+*/
+
 
 --
 -- Recibos
