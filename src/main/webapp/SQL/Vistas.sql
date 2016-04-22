@@ -9,7 +9,7 @@
 create or replace view vwpolizas_asegurado (poliza,documento_adhesion,efecto,vencimiento,aseguradora, nif, en_calidad_de) 
 as select  P.poliza,P.documento_adhesion,P.efecto,P.vencimiento,P.aseguradora,I.nif, I.en_calidad_de 
 FROM Polizas P, Intervinientes I
-WHERE P.id=I.id_poliza and I.en_calidad_de='asegurado';
+WHERE P.id=I.id_poliza and I.en_calidad_de='tomador';
 
 -- ejemplo de uso
 -- todas las polizas donde aparezco como asegurado
@@ -26,4 +26,4 @@ select I.nif, C.razon_social, I.en_calidad_de, P.poliza,P.documento_adhesion,P.e
 create or replace view vwpolizas_asegurado (poliza,documento_adhesion,efecto,vencimiento,aseguradora, nif, en_calidad_de) 
 as select  P.poliza,P.documento_adhesion,P.efecto,P.vencimiento,P.aseguradora,I.nif, I.en_calidad_de 
 FROM Polizas P, Intervinientes I, Customers C
-WHERE P.id=I.id_poliza and I.en_calidad_de='asegurado';
+WHERE P.id=I.id_poliza and I.en_calidad_de='tomador';

@@ -57,12 +57,13 @@ public class AjaxPolizas extends HttpServlet {
                     response.getWriter().write(gson.toJson(ListaPolizas));
                     break;
                 }
-            case "clientesByNombre":
+            case "PolizasByRiesgo":
                 {
-                    String nombre = request.getParameter("xNombre");
-                    //SQLCustomers myCustomers = new SQLCustomers(xDataBase);
-                    //List<TuplasCustomers> ListaCustomer = myCustomers.getTuplasCustomers(nombre,Integer.parseInt(pagina),Integer.parseInt(size));
-                    //response.getWriter().write(gson.toJson(ListaCustomer));
+                    SQLPolizas myPoliza = new SQLPolizas(xDataBase);
+                    String riesgo = request.getParameter("xRiesgo");
+                    List<TuplasPolizas> ListaPolizas = 
+                            myPoliza.getTuplasPolizasByRiesgo(riesgo.trim(), Integer.parseInt(pagina),Integer.parseInt(size));
+                    response.getWriter().write(gson.toJson(ListaPolizas));
                     break;
                 }
             default:

@@ -172,8 +172,8 @@
                 <li>
                     <a class="expand"  title="" ><i class="icon-search"></i><span>Buscar:</span></a>
                     
-                    <input type="text" name="xConcepto" id="xConcepto" style="height: 28px; margin-right: 10px;" size="30" maxlength="30" 
-                           onkeypress="LeerAsientosByConcepto('<%= sesion.getAttribute("Year_fiscal") %>');">
+                    <input type="text" name="xRiesgo" id="xRiesgo" style="height: 28px; margin-right: 10px;" size="30" maxlength="30" 
+                           onkeypress="LeerPolizasByRiesgo();">
                 </li>
             </ul>
            <div class="table-overflow">
@@ -195,11 +195,11 @@
 
             <div class="pagination">
                 <ul>
-                    <li><a onclick="conn.PrevPage('accion=fact_proforma');">Anterior</a></li>
+                    <li><a onclick="conn.PrevPage('accion=PolizasByID');">Anterior</a></li>
 
                     <li class="active"><a href="#" id="xPag">1</a></li>
 
-                    <li><a onclick="conn.NextPage('accion=fact_proforma');">Siguiente</a></li>
+                    <li><a onclick="conn.NextPage('accion=PolizasByID');">Siguiente</a></li>
                 </ul>
             </div>
                         <script>

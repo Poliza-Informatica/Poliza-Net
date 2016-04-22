@@ -274,6 +274,7 @@ CREATE TABLE Polizas
 );
 
 create index polizas_poliza on polizas(poliza);
+create index polizas_riesgo on polizas(riesgo_asegurado);
 
 --
 -- Coberturas de una poliza

@@ -98,3 +98,25 @@ function CrearTablaPolizas(myJson)
 
 
 }
+
+/*
+ * Leer lista de polizas por riesgo
+ * 
+ */
+function LeerPolizasByRiesgo()
+{
+    var pag=window.pagina;
+    var tama=window.pagsize;
+    var xRiesgo=document.getElementById("xRiesgo").value;
+    
+    
+    var url='AjaxPolizas.servlet';
+    var dataToSend='accion=PolizasByRiesgo&pagina='+pag +'&size='+tama+'&xRiesgo='+xRiesgo;
+    var conn = new Conectar(url, dataToSend);
+       
+    conn.pageRequest.onreadystatechange = function() { ListaPolizas(conn.pageRequest); };
+
+    conn.Enviar();
+    
+    return conn;
+}
