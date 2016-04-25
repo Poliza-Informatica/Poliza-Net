@@ -182,12 +182,12 @@
                 <thead>
                     <tr>
                         <td width="1%" hidden="hidden"><strong>id</strong></td>
-                        <td width="10%"><strong>NIF</strong></td>
+                        <td width="8%"><strong>NIF</strong></td>
                         <td width="35%"><strong>Nombre</strong></td>
-                        <td width="10%"><strong>Póliza</strong></td>
+                        <td width="5%"><strong>Póliza</strong></td>
                         <td width="5%"><strong>Efecto</strong></td>
                         <td width="20%"><strong>Riesgo asegurado</strong></td>
-                        <td width="5%"></td>
+                        <td width="15%"></td>
                     </tr>
             </table>
            </div>

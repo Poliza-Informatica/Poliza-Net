@@ -1,15 +1,15 @@
 <%-- 
-    Document   : newProveedor
-    Created on : 22-jul-2013, 23:08:38
+    Document   : ShowPoliza
+    Created on : 25-Abril-2015, 23:08:38
     Author     : antonio
 --%>
 
 <%@include file="sesion.jsp" %>
 <%@page import="java.util.List"%>
-<%@page import="es.redmoon.poliza.net.qwery_polizas.TuplasPolizas"%>
+<%@page import="es.redmoon.poliza.net.qwery_polizas.TuplasPolizasMV"%>
 <%@page import="es.redmoon.poliza.net.qwery_polizas.SQLPolizas"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="poliza" class="es.redmoon.poliza.net.qwery_polizas.BeanPolizas" scope="session"/>
+<jsp:useBean id="poliza" class="es.redmoon.poliza.net.qwery_polizas.BeanPolizasMV" scope="session"/>
 <!DOCTYPE html>
 <html>
 
@@ -17,7 +17,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
         <link href="css/main.css" rel="stylesheet" type="text/css" />
-        <title>Alta de un nuevo Proveedor</title>
+        <title>Datos del contrato</title>
         <!--[if IE 8]><link href="css/ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 
@@ -67,7 +67,7 @@
         <!-- Fixed top -->
         <div id="top">
             <div class="fixed">
-                <a href="inicio.jsp" title="" class="logo"><img src="img/logo.png" alt="" /></a>
+                <a href="inicio.jsp" title="" class="logo"><img src="img/LogoPoliza.gif" alt="" /></a>
                 <ul class="top-menu">
                     <li><a class="fullview"></a></li>
 
@@ -77,7 +77,7 @@
                             <img src="img/person.png" width="20" height="20" alt="" /><span><%= sesion.getAttribute("xUser")%></span></a>
                         <ul class="dropdown-menu">
 
-                            <li><a href="DatosFacturacion.jsp" title=""><i class="icon-cog"></i>Mi Configuraci&oacute;n</a></li>
+                            <li><a href="BrowsePolizasInit.jsp" title=""><i class="icon-cog"></i>Mi Configuraci&oacute;n</a></li>
                             <li><a href="logout.jsp" title=""><i class="icon-remove"></i>Salir</a></li>
                         </ul>
                     </li>
@@ -102,7 +102,7 @@
                     <div id="general">		            
 
                         <!-- Main navigation -->
-                        <%@include file="menu.jsp" %>
+                       
                         <!-- /main navigation -->
 
                     </div>
@@ -130,8 +130,8 @@
                     <!-- Breadcrumbs line -->
                     <div class="crumbs">
                         <ul id="breadcrumbs" class="breadcrumb"> 
-                            <li><a href="BrowseProveedores.jsp">Lista de proveedores</a></li>
-                            <li class="active"><a href="#">Añadir un nuevo proveedor</a></li>
+                            <li><a href="BrowsePolizasInit.jsp">Lista de pólizas</a></li>
+                            <li class="active"><a href="#">Datos del contrato</a></li>
                             <!--<li class="active"><a href="calendar.html" title="">Calendar</a></li>-->
                         </ul>
 
@@ -145,7 +145,7 @@
                     <div class="page-header">
                         <div class="page-title">
 
-                            <h5 id="xTitulo">Añadir proveedor o tercero</h5>
+                            <h5 id="xTitulo">Datos del contrato</h5>
 
                         </div>			    	
                     </div>
@@ -154,111 +154,85 @@
                     <%
                         String database = (String) sesion.getAttribute("xDataBaseName");
                         String xIDPoliza = request.getParameter("xIDPoliza");
+                        /*
                         if (xIDPoliza != null && !xIDPoliza.isEmpty()) {
                             SQLPolizas myPoliza = new SQLPolizas(database);
-                            TuplasPolizas myTupla = myPoliza.getTuplaByID(Integer.parseInt(xIDPoliza));
+                            TuplasPolizasMV myTupla = myPoliza.getTuplaByIDFromMVpolizas_asegurado(Integer.parseInt(xIDPoliza));
                             poliza.setId(myTupla.getId());
                             poliza.setNif(myTupla.getNif());
                             poliza.setNombre(myTupla.getNombre());
-                            poliza.setDireccion(myTupla.getDireccion());
-                            poliza.setObjeto(myTupla.getObjeto());
-                            poliza.setPoblacion(myTupla.getPoblacion());
-                            poliza.setMovil(myTupla.getMovil());
-                            poliza.setMail(myTupla.getMail());
-                            poliza.setId_suppliers_type(myTupla.getId_suppliers_type());
-                            poliza.setIBAN(myTupla.getIBAN());
-                            poliza.setBIC(myTupla.getBIC());
                         } else {
-                            proveedor.setID(0);
-                            proveedor.setNif("");
-                            proveedor.setNombre("");
-                            proveedor.setDireccion("");
-                            proveedor.setObjeto("");
-                            proveedor.setPoblacion("");
-                            proveedor.setMovil("");
-                            proveedor.setMail("");
-                            proveedor.setId_suppliers_type(0);
-                            proveedor.setIBAN("");
-                            proveedor.setBIC("");
-                        }
+                            poliza.setId("0");
+                            poliza.setNif("");
+                            poliza.setNombre("");
+                        }*/
                     %>
                     <div class="row-fluid">
 
                         <div class="span12">
 
 
-                            <form class="form-horizontal" action="NewSuppliers.do" id="newcustomer" method="post">
+                            <form class="form-horizontal" action="#" id="ViewPoliza" method="post">
                                 <div  class="well">	
                                     <div id="cajaForm" class="navbar">
                                         <div class="navbar-inner"><h6 id="xTitulo2">Usuario :<%= sesion.getAttribute("xUser")%> Rol : <%= sesion.getAttribute("UserTipo")%></h6></div></div>
 
                                     <fieldset>
-                                        <input type="hidden" name="xIDProveedor" id="xIDProveedor" value="<%= proveedor.getID()%>">
+                                        <input type="hidden" name="xIDPoliza" id="xIDPoliza" value="<%= poliza.getId()%>">
 
                                         <div class="control-group">
-                                            <label class="control-label" for="Tipo">Tipo:</label>
+                                            <label class="control-label" for="Riesgo">Riesgo asegurado:</label>
                                             <div class="controls">
-                                                <select name="xTipo" id="xTipo" class="select">
-                                                    <%
-                                                        List<TuplasSuppliersType> Tuplas = new SQLSuppliersType(database).getTuplasSuppliersType();
-                                                        String opcion;
-                                                        for (TuplasSuppliersType Tipos : Tuplas) {
-                                                            opcion = "<option value=\"" + Tipos.getId() + "\">" + Tipos.getDescripcion() + "</option>";
-                                                            out.write(opcion);
-                                                        }
-                                                    %>
-                                                </select>
+                                                <input type="text" name="xRiesgo" maxlength="60" class="span12"
+                                                       readonly = "readonly"
+                                                       value="<%= poliza.getRiesgo_asegurado()%>">
                                             </div>
-                                        </div>
 
+                                        </div>
+                                            
+                                        <div class="control-group">
+                                            <label class="control-label" for="CiaName">Compañía:</label>
+                                            <div class="controls">
+                                                <input type="text" name="CiaName" maxlength="60" class="span12"
+                                                       readonly = "readonly"
+                                                       value="<%= poliza.getCia_name()%>">
+                                            </div>
+
+                                        </div>
+                                            
+                                        <div class="control-group">
+                                            <label class="control-label" for="Poliza">Póliza:</label>
+                                            <div class="controls">
+                                                <input type="text" name="Poliza" maxlength="60" class="span12"
+                                                       readonly = "readonly"
+                                                       value="<%= poliza.getPoliza()%>">
+                                            </div>
+
+                                        </div>
+                                            
                                         <div class="control-group">
                                             <label class="control-label" for="NIF">NIF/CIF:</label>
                                             <div class="controls">
                                                 <input type="text" name="xNIF" id="xNIF" maxlength="10" class="input-medium"
-                                                       value="<%= proveedor.getNif()%>">
+                                                       value="<%= poliza.getNif()%>">
                                             </div>
                                         </div>
 
                                         <div class="control-group">
-                                            <label class="control-label" for="Razónsocial">Razon Social:</label>
+                                            <label class="control-label" for="Razonsocial">Tomador:</label>
                                             <div class="controls">
                                                 <input type="text" name="xNombre" maxlength="60" class="span12"
                                                        required="required"
-                                                       value="<%= proveedor.getNombre()%>">
+                                                       value="<%= poliza.getNombre()%>">
                                             </div>
 
                                         </div>
 
-                                        <div class="control-group">
-                                            <label class="control-label" for="Direcciónpostal">Dirección postal:</label>
-                                            <div class="controls">
-                                                <input type="text" name="xDireccion" maxlength="90" class="span12" required="required"
-                                                       placeholder="Ejem: Calle Rivera del Manzanares, 7" 
-                                                       value="<%= proveedor.getDireccion()%>">
-                                            </div>
-                                        </div>
-
-                                        <div class="control-group">
-                                            <label class="control-label" for="Ubicación">Piso apartamento:</label>
-                                            <div class="controls">
-                                                <input type="text" name="xObjeto" maxlength="40" class="input-medium"
-                                                       placeholder="Ejem: Bloque A 2ºB"
-                                                       value="<%= proveedor.getObjeto()%>">
-                                            </div>
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label" for="xPoblacion">Cod. Postal Población:</label>
-                                            <div class="controls">
-                                                <input type="text" name="xPoblacion" maxlength="90" class="span12" required="required"
-                                                       placeholder="Ejem: 18152 Dílar Granada"
-                                                       value="<%= proveedor.getPoblacion()%>">
-                                            </div>
-                                        </div>
                                         <div class="control-group">
                                             <label class="control-label" for="Móvil">Teléfono/Móvil:</label>
                                             <div class="controls">
                                                 <input type="text" name="xMovil" maxlength="10" class="input-medium"
-                                                       value="<%= proveedor.getMovil()%>">
+                                                       value="">
                                             </div>
                                         </div>
 
@@ -267,7 +241,7 @@
                                             <div class="controls">
                                                 <input type="email" name="xMail" maxlength="60"  class="span12"
                                                        placeholder="sumail@suisp.es" 
-                                                       value="<%= proveedor.getMail()%>">
+                                                       value="">
                                             </div>
                                         </div>
 
@@ -276,19 +250,10 @@
                                             <div class="controls">
                                                 <input type="text" name="xIBAN" maxlength="34" class="input-large"
                                                        placeholder="NÚMERO BANCARIO EUROPEO"
-                                                       value="<%= proveedor.getIBAN()%>">
+                                                       value="">
                                             </div>
                                         </div>
-                                            
-                                        <div class="control-group">
-                                            <label class="control-label" for="bic">BIC/SWIFT:</label>
-                                            <div class="controls">
-                                                <input type="text" name="xBIC" maxlength="11" class="input-large"
-                                                       placeholder="Código internacional banco"
-                                                       value="<%= proveedor.getBIC()%>">
-                                            </div>
-                                        </div>
-                                            
+                                                                                        
                                         <div class="form-actions align-right">
 
                                             <input class="btn btn-primary" type="submit" value="guardar" />
@@ -305,20 +270,6 @@
 
         </div>
         <!-- /content container -->
-
-
-        <script>
-                            //xTitulo
-                            //xTitulo2
-                            //xIDProveedor
-                            if (document.getElementById("xIDProveedor").value > 0)
-                            {
-                                document.getElementById("xTitulo").innerHTML = 'Modificar datos de un proveedor o tercero';
-                                document.getElementById("xTitulo2").innerHTML = 'Modificar datos de un proveedor o tercero';
-                                document.getElementById("xTipo").value = "<%= proveedor.getId_suppliers_type()%>";
-                            }
-
-        </script>
 
 
     </body>

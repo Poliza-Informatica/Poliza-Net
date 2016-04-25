@@ -144,20 +144,20 @@ public class SQLPolizas extends PoolConn {
     }
     
     /**
-     * Leer una tupla de pólizas por su ID
+     * Leer una tupla de la vista materializada mwpolizas_asegurado por su ID
      * @param xIDPoliza
      * @return
      * @throws SQLException 
      */
-    public TuplasPolizas getTuplaByID(int xIDPoliza) throws SQLException
+    public TuplasPolizasMV getTuplaByIDFromMVpolizas_asegurado(int xIDPoliza) throws SQLException
     {
         Connection conn = PGconectar();
-        TuplasPolizas tp = null;
+        TuplasPolizasMV tp = null;
         
         try {
          
-            
-            PreparedStatement st = conn.prepareStatement("SELECT * from polizas where id = ?");
+            // vista materializada mwpolizas_asegurado
+            PreparedStatement st = conn.prepareStatement("SELECT * from mwpolizas_asegurado where id = ?");
             st.setInt(1, xIDPoliza);
             
             
@@ -165,24 +165,18 @@ public class SQLPolizas extends PoolConn {
         
             while (rs.next()) {
                 
-                 new TuplasPolizas.
+                 new TuplasPolizasMV.
                         Builder(rs.getString("id")).
-                        Id_solicitud(rs.getString("id_solicitud")).
+                        Nombre(rs.getString("nombre")).
                         Poliza(rs.getString("poliza")).
-                        Documento_adhesion(rs.getString("documento_adhesion")).
+                        Nif(rs.getString("nif")).
                         Efecto(rs.getString("efecto")).
                         Vencimiento(rs.getString("vencimiento")).
-                        Compania(rs.getString("compania")).
-                        Producto(rs.getString("producto")).
+                        Cia_code(rs.getString("cia_code")).
+                        Cia_name(rs.getString("cia_name")).
+                        En_calidad_de(rs.getString("en_calidad_de")).
                         Riesgo_asegurado(rs.getString("riesgo_asegurado")).
-                        Forma_pago(rs.getString("forma_pago")).
-                        Canal_pago(rs.getString("canal_pago")).
                         Iban(rs.getString("iban")).
-                        Gestor(rs.getString("gestor")).
-                        Mediador1(rs.getString("mediador1")).
-                        Mediador2(rs.getString("mediador2")).
-                        Cobrador(rs.getString("cobrador")).
-                        Comercial(rs.getString("comercial")).
                         build();
                 
             }

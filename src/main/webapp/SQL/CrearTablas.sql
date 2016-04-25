@@ -164,6 +164,7 @@ CREATE TABLE companias
     primary key (id)
 );
 
+create unique index companias_cod on companias(codigo);
 
 
 --

@@ -45,14 +45,17 @@ as select  C.nombre, I.nif, I.en_calidad_de, P.poliza,P.documento_adhesion,P.efe
 FROM Polizas P, Intervinientes I, mv_clientes C
 WHERE P.id=I.id_poliza and I.en_calidad_de='TOMADOR' and c.nif=I.nif;
 
-create materialized view mwpolizas_asegurado (id,nombre, nif,en_calidad_de, poliza,riesgo_asegurado,efecto,vencimiento,compania,buscar) 
-as select  P.id,C.nombre, I.nif, I.en_calidad_de, P.poliza,P.riesgo_asegurado,P.efecto,P.vencimiento,P.compania,
+create materialized view mwpolizas_asegurado (id,nombre, nif,en_calidad_de, poliza,riesgo_asegurado,efecto,vencimiento,
+    cia_code,cia_name, iban,tlf1,tlf2,email, buscar) 
+as select  P.id,C.nombre, I.nif, I.en_calidad_de, P.poliza,P.riesgo_asegurado,P.efecto,P.vencimiento,P.compania,m.nombre,P.iban,
+C.telefono1,C.telefono2,C.mail,
 concat(C.nombre,' ', I.nif,' ', P.riesgo_asegurado)
-FROM Polizas P, Intervinientes I, mv_clientes C
-WHERE P.id=I.id_poliza and I.en_calidad_de='TOMADOR' and c.nif=I.nif;
+FROM Polizas P, Intervinientes I, mv_clientes C, Companias M
+WHERE P.id=I.id_poliza and I.en_calidad_de='TOMADOR' and c.nif=I.nif and P.compania=M.codigo;
 
 create index mwpolizas_asegurado_buscar on mwpolizas_asegurado(buscar);
 
 refresh materialized view mwpolizas_asegurado;
 
 drop materialized view mwpolizas_asegurado;
+

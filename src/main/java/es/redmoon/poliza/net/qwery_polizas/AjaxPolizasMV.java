@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author antonio
  */
-public class AjaxPolizas extends HttpServlet {
+public class AjaxPolizasMV extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -75,6 +75,15 @@ public class AjaxPolizas extends HttpServlet {
                     response.getWriter().write(gson.toJson(ListaPolizas));
                     break;
                 }
+            case "IDFromMVpolizas_asegurado":
+                {
+                    SQLPolizas myPoliza = new SQLPolizas(xDataBase);
+                    String xIDPoliza = request.getParameter("xIDPoliza");
+                    TuplasPolizasMV tpPoliza = 
+                            myPoliza.getTuplaByIDFromMVpolizas_asegurado(Integer.parseInt(xIDPoliza));
+                    response.getWriter().write(gson.toJson(tpPoliza));
+                    break;
+                }
             default:
                 response.getWriter().write("Error, mensaje no conteplado: "+accion);
                 break;
@@ -99,9 +108,9 @@ public class AjaxPolizas extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(AjaxPolizas.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AjaxPolizasMV.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NamingException ex) {
-            Logger.getLogger(AjaxPolizas.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AjaxPolizasMV.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -120,9 +129,9 @@ public class AjaxPolizas extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(AjaxPolizas.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AjaxPolizasMV.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NamingException ex) {
-            Logger.getLogger(AjaxPolizas.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AjaxPolizasMV.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
