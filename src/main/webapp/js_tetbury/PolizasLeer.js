@@ -90,6 +90,11 @@ function CrearTablaPolizas(myJson)
         tabla.AddRowCellText(row, 3, obj[j].poliza );
         tabla.AddRowCellText(row, 4, obj[j].efecto );
         tabla.AddRowCellText(row, 5, obj[j].riesgo_asegurado );
+        
+        tabla.AddRowCellText(row, 6,
+        '<ul class="table-controls">'+
+        '<li><a onclick="ShowPoliza('+(j+1)+');" class="btn tip" title="Ver Factura"><i class="icon-eye-open"></i></a> </li>'+
+        '</ul>');
     
         window.fila++;
         myfila=window.fila;
@@ -141,4 +146,15 @@ function LeerPolizasByBuscar()
     conn.Enviar();
     
     return conn;
+}
+
+//
+// Mostrar los datos de una póliza
+//
+function ShowPoliza(numFila)
+{
+    var xID='ofila'+numFila;
+    var oCelda = document.getElementById(xID).cells[0];
+    
+    window.location.href = 'ShowPoliza.jsp?xIDPoliza='+oCelda.innerHTML;
 }

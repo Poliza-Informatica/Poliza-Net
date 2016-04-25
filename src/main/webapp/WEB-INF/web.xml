@@ -6,7 +6,7 @@
     </servlet>
     <servlet>
         <servlet-name>AjaxPolizas</servlet-name>
-        <servlet-class>qwery_polizas.AjaxPolizas</servlet-class>
+        <servlet-class>es.redmoon.poliza.net.qwery_polizas.AjaxPolizas</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletSesion</servlet-name>

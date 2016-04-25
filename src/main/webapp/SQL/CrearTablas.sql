@@ -152,6 +152,19 @@ CREATE TABLE identify
     primary key (codigo)
 );
 
+--
+-- Tabla de compañías aseguradoras
+--
+CREATE TABLE companias
+(
+    id        serial         NOT NULL,
+    codigo      varchar(2) not null,
+    nombre      varchar(50),
+    logotipo    bytea,
+    primary key (id)
+);
+
+
 
 --
 -- Representa la tabla de usuarios de la aplicación
@@ -260,7 +273,7 @@ CREATE TABLE polizas
    documento_adhesion  varchar(15),
    efecto              varchar(20),
    vencimiento         varchar(20),
-   compania            varchar(50),
+   compania            varchar(2),
    producto            varchar(6),
    riesgo_asegurado    varchar(50),
    forma_pago          varchar(10),

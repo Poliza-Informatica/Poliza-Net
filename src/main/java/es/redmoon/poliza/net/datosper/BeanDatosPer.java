@@ -2,8 +2,6 @@
 
 package es.redmoon.poliza.net.datosper;
 
-import java.math.BigDecimal;
-
 /**
  *
  * @author antonio

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package qwery_polizas;
+package es.redmoon.poliza.net.qwery_polizas;
 
 import com.google.gson.Gson;
 import java.io.IOException;

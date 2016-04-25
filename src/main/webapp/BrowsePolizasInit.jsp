@@ -208,7 +208,7 @@
                             var tama=10; //window.pagsize;
                             
                             //alert(direccion);
-                            var conn=LeerPolizas();
+                            var conn=LeerPolizasByBuscar();
                         </script>
             </div>
             

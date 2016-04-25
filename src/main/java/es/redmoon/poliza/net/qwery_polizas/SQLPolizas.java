@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package qwery_polizas;
+package es.redmoon.poliza.net.qwery_polizas;
 
 import es.redmoon.poliza.net.session.PoolConn;
 import static es.redmoon.poliza.net.session.PoolConn.PGconectar;
@@ -143,6 +143,61 @@ public class SQLPolizas extends PoolConn {
         return tp;
     }
     
+    /**
+     * Leer una tupla de pólizas por su ID
+     * @param xIDPoliza
+     * @return
+     * @throws SQLException 
+     */
+    public TuplasPolizas getTuplaByID(int xIDPoliza) throws SQLException
+    {
+        Connection conn = PGconectar();
+        TuplasPolizas tp = null;
+        
+        try {
+         
+            
+            PreparedStatement st = conn.prepareStatement("SELECT * from polizas where id = ?");
+            st.setInt(1, xIDPoliza);
+            
+            
+            ResultSet rs = st.executeQuery();
+        
+            while (rs.next()) {
+                
+                 new TuplasPolizas.
+                        Builder(rs.getString("id")).
+                        Id_solicitud(rs.getString("id_solicitud")).
+                        Poliza(rs.getString("poliza")).
+                        Documento_adhesion(rs.getString("documento_adhesion")).
+                        Efecto(rs.getString("efecto")).
+                        Vencimiento(rs.getString("vencimiento")).
+                        Compania(rs.getString("compania")).
+                        Producto(rs.getString("producto")).
+                        Riesgo_asegurado(rs.getString("riesgo_asegurado")).
+                        Forma_pago(rs.getString("forma_pago")).
+                        Canal_pago(rs.getString("canal_pago")).
+                        Iban(rs.getString("iban")).
+                        Gestor(rs.getString("gestor")).
+                        Mediador1(rs.getString("mediador1")).
+                        Mediador2(rs.getString("mediador2")).
+                        Cobrador(rs.getString("cobrador")).
+                        Comercial(rs.getString("comercial")).
+                        build();
+                
+            }
+            
+        } catch (SQLException e) {
+
+            System.out.println("polizas Connection Failed!");
+
+        } finally {
+
+            conn.close();
+        }
+        
+        return tp;
+    }
     /**
      * Búsquedas por la cadena buscar, que es la suma de varios campos de datos
      * @param riesgo
