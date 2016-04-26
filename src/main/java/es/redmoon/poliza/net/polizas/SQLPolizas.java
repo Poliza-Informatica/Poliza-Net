@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.redmoon.poliza.net.qwery_polizas;
+package es.redmoon.poliza.net.polizas;
 
 import es.redmoon.poliza.net.session.PoolConn;
 import static es.redmoon.poliza.net.session.PoolConn.PGconectar;

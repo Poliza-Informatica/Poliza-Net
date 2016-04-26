@@ -6,7 +6,11 @@
     </servlet>
     <servlet>
         <servlet-name>AjaxPolizas</servlet-name>
-        <servlet-class>es.redmoon.poliza.net.qwery_polizas.AjaxPolizasMV</servlet-class>
+        <servlet-class>es.redmoon.poliza.net.polizas.AjaxPolizas</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AjaxRecibos</servlet-name>
+        <servlet-class>es.redmoon.poliza.net.recibos.AjaxRecibos</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletSesion</servlet-name>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>AjaxPolizas</servlet-name>
         <url-pattern>/AjaxPolizas.servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AjaxRecibos</servlet-name>
+        <url-pattern>/AjaxRecibos.servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -2,8 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.redmoon.poliza.net.qwery_polizas;
+package es.redmoon.poliza.net.recibos;
 
+import es.redmoon.poliza.net.polizas.AjaxPolizas;
+import es.redmoon.poliza.net.polizas.SQLPolizas;
+import es.redmoon.poliza.net.polizas.TuplasPolizasMV;
+import es.redmoon.poliza.net.polizas.TuplasPolizasBuscar;
+import es.redmoon.poliza.net.polizas.TuplasPolizas;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -21,7 +26,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author antonio
  */
-public class AjaxPolizasMV extends HttpServlet {
+public class AjaxRecibos extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -108,9 +113,9 @@ public class AjaxPolizasMV extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(AjaxPolizasMV.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AjaxPolizas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NamingException ex) {
-            Logger.getLogger(AjaxPolizasMV.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AjaxPolizas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -129,9 +134,9 @@ public class AjaxPolizasMV extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(AjaxPolizasMV.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AjaxPolizas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (NamingException ex) {
-            Logger.getLogger(AjaxPolizasMV.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AjaxPolizas.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

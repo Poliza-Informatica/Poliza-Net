@@ -383,16 +383,16 @@ CREATE TABLE Siniestros
    id                       serial      NOT NULL,
    id_poliza                integer references polizas(id),
    expe_agencia             varchar(20),
-   expe_cia                 varchar(60),
+   expe_cia                 varchar(20),
    fecha_hora_sini          varchar(20),
-   lugar                    varchar(15),
-   cp                       varchar(2) default 'ES',
-   localidad                varchar(10),
-   provincia                varchar(90),
+   lugar                    varchar(50),
+   cp                       varchar(5),
+   localidad                varchar(50),
+   provincia                varchar(50),
    tipo_siniestro           varchar(40),
-   situacion                varchar(2)  DEFAULT 'SL',
+   situacion                varchar(2),
    fecha_situacion          varchar(20),
-   descripcio               text,
+   descripcion              text,
    damage_asegurado         text,
    tramitador               varchar(90),
    primary key (id)
@@ -405,6 +405,7 @@ CREATE TABLE Seguimiento_siniestro
     id_siniestros           integer references siniestros(id),
     fecha_hora              varchar(20),
     texto                   text,
+    doc                     bytea,
    primary key (id)
 );
 
