@@ -155,16 +155,14 @@ CREATE TABLE identify
 --
 -- Tabla de compañías aseguradoras
 --
-CREATE TABLE companias
+CREATE TABLE cias
 (
-    id        serial         NOT NULL,
-    codigo      varchar(2) not null,
+    code        varchar(2) not null,
     nombre      varchar(50),
     logotipo    bytea,
-    primary key (id)
+    primary key (code)
 );
 
-create unique index companias_cod on companias(codigo);
 
 
 --
@@ -259,6 +257,16 @@ CREATE TABLE coberturas
    primary key (id)
 );
 
+--
+-- Productos
+--
+CREATE TABLE Productos
+(
+    code_cia            varchar(2) NOT NULL,
+    code_product        varchar(4) NOT NULL,
+    descripcion         text,
+    primary key (code_cia,code_product)
+);
 
 -- ******************** CREATE INDEX users_search_idx ON users USING gin (first_name gin_trgm_ops, last_name gin_trgm_ops);
 
@@ -268,14 +276,14 @@ CREATE TABLE coberturas
 
 CREATE TABLE polizas
 (
-   id                  serial         NOT NULL,
-   id_solicitud        bigint,
-   poliza              varchar(15),
-   documento_adhesion  varchar(15),
-   efecto              varchar(20),
-   vencimiento         varchar(20),
-   compania            varchar(2),
+   id                  serial NOT NULL,
+   code_cia            varchar(2) references cias(code),
+   id_solicitud        integer, -- id de la tabla de pólizas en su origen del applicativo polizawin
    producto            varchar(6),
+   poliza              varchar(15),
+   documento_adhesion  varchar(15),   
+   efecto              varchar(20),
+   vencimiento         varchar(20),   
    riesgo_asegurado    varchar(50),
    forma_pago          varchar(10),
    canal_pago          varchar(10),
@@ -287,7 +295,6 @@ CREATE TABLE polizas
    comercial           varchar(50),
    primary key (id)
 );
-
 
 create index polizas_poliza on polizas(poliza);
 create index polizas_riesgo on polizas(riesgo_asegurado);
