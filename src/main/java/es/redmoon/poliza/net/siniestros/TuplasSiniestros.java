@@ -10,9 +10,8 @@ package es.redmoon.poliza.net.siniestros;
  */
 public class TuplasSiniestros {
 
-    private final String id;
-    private final String id_poliza;
     private final String expe_agencia;
+    private final String id_poliza;
     private final String expe_cia;
     private final String fecha_hora_sini;
     private final String lugar;
@@ -26,9 +25,6 @@ public class TuplasSiniestros {
     private final String damage_asegurado;
     private final String tramitador;
 
-    public String getId() {
-        return id;
-    }
 
     public String getId_poliza() {
         return id_poliza;
@@ -90,9 +86,8 @@ public class TuplasSiniestros {
     
     public static class Builder {
         
-        private final String id;
+        private final String expe_agencia;
         private String id_poliza;
-        private String expe_agencia;
         private String expe_cia;
         private String fecha_hora_sini;
         private String lugar;
@@ -106,17 +101,12 @@ public class TuplasSiniestros {
         private String damage_asegurado;
         private String tramitador;
 
-        public Builder(String id) {
-            this.id = id;
+        public Builder(String expe_agencia) {
+            this.expe_agencia = expe_agencia;
         }
 
         public Builder Id_poliza(final String id_poliza) {
             this.id_poliza = id_poliza;
-            return this;
-        }
-
-        public Builder Expe_agencia(final String expe_agencia) {
-            this.expe_agencia = expe_agencia;
             return this;
         }
 
@@ -181,9 +171,9 @@ public class TuplasSiniestros {
     }
     
     private TuplasSiniestros(Builder builder){
-        this.id=builder.id;
-        this.id_poliza=builder.id_poliza;
+
         this.expe_agencia=builder.expe_agencia;
+        this.id_poliza=builder.id_poliza;
         this.expe_cia=builder.expe_cia;
         this.fecha_hora_sini=builder.fecha_hora_sini;
         this.lugar=builder.lugar;

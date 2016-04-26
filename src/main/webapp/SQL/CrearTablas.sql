@@ -442,8 +442,8 @@ ALTER TABLE recibos
 
 CREATE TABLE siniestros
 (
-   id_poliza         integer,
    expe_agencia      varchar(20)    NOT NULL,
+   id_poliza         integer,
    expe_cia          varchar(20),
    fecha_hora_sini   varchar(20),
    lugar             varchar(50),
@@ -456,12 +456,9 @@ CREATE TABLE siniestros
    descripcion       text,
    damage_asegurado  text,
    tramitador        varchar(90),
-    
+   primary key (expe_agencia)
 );
 
-ALTER TABLE siniestros
-   ADD CONSTRAINT siniestros_pkey
-   PRIMARY KEY (expe_agencia);
 
 ALTER TABLE siniestros
   ADD CONSTRAINT siniestros_polizas_fkey FOREIGN KEY (id_poliza)
@@ -476,11 +473,12 @@ ALTER TABLE siniestros
 
 CREATE TABLE seguimiento_siniestro
 (
-   id            bigint         NOT NULL,
+   id            integer         NOT NULL,
+   id_siniestro  varchar(20),
    fecha_hora    varchar(20),
    texto         text,
    doc           bytea,
-   id_siniestro  varchar(20)
+   primary key (id)
 );
 
 -- Column id is associated with sequence public.seguimiento_siniestro_id_seq

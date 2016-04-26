@@ -11,7 +11,7 @@ package es.redmoon.poliza.net.siniestros;
 public class TuplasSeguimiento {
 
     private final String id;
-    private final String id_siniestros;
+    private final String id_siniestro;
     private final String fecha_hora;
     private final String texto;
     private final byte[] doc;
@@ -20,8 +20,8 @@ public class TuplasSeguimiento {
         return id;
     }
 
-    public String getId_siniestros() {
-        return id_siniestros;
+    public String getId_siniestro() {
+        return id_siniestro;
     }
 
     public String getFecha_hora() {
@@ -40,7 +40,7 @@ public class TuplasSeguimiento {
     public static class Builder {
         
         private final String id;
-        private String id_siniestros;
+        private String id_siniestro;
         private String fecha_hora;
         private String texto;
         private byte[] doc;
@@ -49,8 +49,8 @@ public class TuplasSeguimiento {
             this.id = id;
         }
 
-        public Builder Id_siniestros(final String id_siniestros) {
-            this.id_siniestros = id_siniestros;
+        public Builder Id_siniestros(final String id_siniestro) {
+            this.id_siniestro = id_siniestro;
             return this;
         }
 
@@ -81,7 +81,7 @@ public class TuplasSeguimiento {
      */
     private TuplasSeguimiento(Builder builder){
         this.id=builder.id;
-        this.id_siniestros=builder.id_siniestros;
+        this.id_siniestro=builder.id_siniestro;
         this.fecha_hora=builder.fecha_hora;
         this.texto=builder.texto;
         this.doc=builder.doc;
