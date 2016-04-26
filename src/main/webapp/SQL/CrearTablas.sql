@@ -217,52 +217,6 @@ INSERT INTO user_app (tipo,email,nif,nombre)
 
 
 --
--- Clientes agrupados
---
-CREATE TABLE customers_grouped
-(
-   id                       serial      NOT NULL,
-   descripcion              varchar(50), -- ejemplo: familia "perez fajardo"
-   primary key (id)
-);
-
-DROP TABLE customers_grouped CASCADE;
-CREATE TABLE customers_grouped
-(
-   codigo_group  varchar(6)     NOT NULL,
-   nif           varchar(20)    NOT NULL
-);
-
-ALTER TABLE customers_grouped
-   ADD CONSTRAINT customers_grouped_pkey
-   PRIMARY KEY (codigo_group, nif);
-
-ALTER TABLE customers_grouped
-  ADD CONSTRAINT customers_grouped_customers_fkey FOREIGN KEY (nif)
-  REFERENCES customers (nif)
-  ON UPDATE NO ACTION
-  ON DELETE NO ACTION;
-
-ALTER TABLE customers_grouped
-  ADD CONSTRAINT customers_grouped_groups_fkey FOREIGN KEY (codigo_group)
-  REFERENCES customers_groups (codigo)
-  ON UPDATE NO ACTION
-  ON DELETE NO ACTION;
-
-DROP TABLE customers_groups CASCADE;
-CREATE TABLE customers_groups
-(
-   codigo  varchar(6)     NOT NULL,
-   nombre  varchar(50)
-);
-
-ALTER TABLE customers_groups
-   ADD CONSTRAINT customers_groups_pkey
-   PRIMARY KEY (codigo);
-
-
-
---
 -- Clientes
 --
 
@@ -289,6 +243,42 @@ CREATE TABLE customers
 
 
 create index customers_razon_social on customers(razon_social);
+
+--
+-- Clientes agrupados
+--
+CREATE TABLE customers_grouped
+(
+   codigo_group  varchar(6)     NOT NULL,
+   nif           varchar(20)    NOT NULL
+);
+
+ALTER TABLE customers_grouped
+   ADD CONSTRAINT customers_grouped_pkey
+   PRIMARY KEY (codigo_group, nif);
+
+ALTER TABLE customers_grouped
+  ADD CONSTRAINT customers_grouped_customers_fkey FOREIGN KEY (nif)
+  REFERENCES customers (nif)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+
+ALTER TABLE customers_grouped
+  ADD CONSTRAINT customers_grouped_groups_fkey FOREIGN KEY (codigo_group)
+  REFERENCES customers_groups (codigo)
+  ON UPDATE NO ACTION
+  ON DELETE NO ACTION;
+
+CREATE TABLE customers_groups
+(
+   codigo  varchar(6)     NOT NULL,
+   nombre  varchar(50)
+);
+
+ALTER TABLE customers_groups
+   ADD CONSTRAINT customers_groups_pkey
+   PRIMARY KEY (codigo);
+
 
 
 
@@ -318,10 +308,9 @@ CREATE TABLE Productos
 --
 -- Polizas
 --
-DROP TABLE polizas CASCADE;
 CREATE TABLE polizas
 (
-   id                  bigint         NOT NULL,
+   id                  integer NOT NULL,
    code_cia            varchar(2),
    producto            varchar(6),
    poliza              varchar(15),
@@ -336,15 +325,12 @@ CREATE TABLE polizas
    mediador1           varchar(50),
    mediador2           varchar(50),
    cobrador            varchar(50),
-   comercial           varchar(50)
+   comercial           varchar(50),
+   primary key (id)
 );
 
 -- Column id is associated with sequence public.polizas_id_seq
 
-
-ALTER TABLE polizas
-   ADD CONSTRAINT polizas_pkey
-   PRIMARY KEY (id);
 
 ALTER TABLE polizas
   ADD CONSTRAINT polizas_code_cia_fkey FOREIGN KEY (code_cia)
@@ -374,13 +360,13 @@ CREATE TABLE coberturas_poliza
 --
 CREATE TABLE intervinientes
 (
-   id                      serial      NOT NULL,
-   id_customers            integer references customers(id),
-   id_poliza               integer references polizas(id),
-   nif                     varchar(20),
-   en_calidad_de           varchar(20),
+   id             serial         NOT NULL,
+   id_poliza      integer,
+   nif            varchar(20),
+   en_calidad_de  varchar(20),
    primary key (id)
 );
+
 create index intervinientes_nif on intervinientes(nif);
 create index intervinientes_poliza on intervinientes(id_poliza);
 create index intervinientes_calidad on intervinientes(en_calidad_de,id_poliza);
@@ -397,11 +383,11 @@ ALTER TABLE intervinientes
 --
 -- Recibos
 --
-DROP TABLE recibos CASCADE;
+
 CREATE TABLE recibos
 (
-   id                  bigint         NOT NULL,
-   id_poliza           bigint,
+   id                  integer         NOT NULL,
+   id_poliza           integer,
    n_recibo            varchar(15),
    efecto              varchar(10),
    vencimiento         varchar(10),
@@ -435,15 +421,12 @@ CREATE TABLE recibos
    cobrador            varchar(50),
    comision_cobrador   varchar(15),
    estado_cobrador     varchar(2),
-   f_estado_cobrador   varchar(10)
+   f_estado_cobrador   varchar(10),
+   primary key (id)
 );
 
 -- Column id is associated with sequence public.recibos_id_seq
 
-
-ALTER TABLE recibos
-   ADD CONSTRAINT recibos_pkey
-   PRIMARY KEY (id);
 
 ALTER TABLE recibos
   ADD CONSTRAINT recibos_id_poliza_fkey FOREIGN KEY (id_poliza)
@@ -451,53 +434,12 @@ ALTER TABLE recibos
   ON UPDATE NO ACTION
   ON DELETE NO ACTION;
 
-CREATE TABLE Recibos
-(
-   id                       serial      NOT NULL,
-   id_poliza                integer references polizas(id),
-   n_recibo                 varchar(15),
-   efecto                   varchar(10),
-   vencimiento              varchar(10),
-   prima_neta               varchar(15),
-   total_recibo             varchar(15),
-   comision_bruta           varchar(15),
-   liquido_bruto            varchar(15),
-   forma_pago               varchar(5),
-   canal_pago               varchar(5),
-   tipo                     varchar(5),
-   estado_cliente           varchar(2),
-   fecha_cobro              varchar(10),
-   estado_cia               varchar(2),
-   fecha_estado_cia         varchar(10),
-   comercial                varchar(50),
-   comision_comercial       varchar(15),
-   estado_comercial         varchar(2),
-   f_estado_comercial       varchar(10),
-   division                 varchar(50),
-   comision_division        varchar(15),
-   estado_division          varchar(2),
-   f_estado_division        varchar(10),
-   delegado                 varchar(50),
-   comision_delegado        varchar(15),
-   estado_delegado          varchar(2),
-   f_estado_delegado        varchar(10),
-   agente                   varchar(50),
-   comision_agente          varchar(15),
-   estado_agente            varchar(2),
-   f_estado_agente          varchar(10),
-   cobrador                 varchar(50),
-   comision_cobrador        varchar(15),
-   estado_cobrador          varchar(2),
-   f_estado_cobrador        varchar(10),
-   primary key (id)
-);
-
 
 
 --
 -- Siniestros
 --
-DROP TABLE siniestros CASCADE;
+
 CREATE TABLE siniestros
 (
    id_poliza         integer,
@@ -513,7 +455,8 @@ CREATE TABLE siniestros
    fecha_situacion   varchar(20),
    descripcion       text,
    damage_asegurado  text,
-   tramitador        varchar(90)
+   tramitador        varchar(90),
+    
 );
 
 ALTER TABLE siniestros
@@ -527,30 +470,10 @@ ALTER TABLE siniestros
   ON DELETE NO ACTION;
 
 
-CREATE TABLE Siniestros
-(
-   id                       serial      NOT NULL,
-   id_poliza                integer references polizas(id),
-   expe_agencia             varchar(20),
-   expe_cia                 varchar(20),
-   fecha_hora_sini          varchar(20),
-   lugar                    varchar(50),
-   cp                       varchar(5),
-   localidad                varchar(50),
-   provincia                varchar(50),
-   tipo_siniestro           varchar(40),
-   situacion                varchar(2),
-   fecha_situacion          varchar(20),
-   descripcion              text,
-   damage_asegurado         text,
-   tramitador               varchar(90),
-   primary key (id)
-);
-
 --
 -- Seguimiento siniestro
 --
-DROP TABLE seguimiento_siniestro CASCADE;
+
 CREATE TABLE seguimiento_siniestro
 (
    id            bigint         NOT NULL,
@@ -573,15 +496,6 @@ ALTER TABLE seguimiento_siniestro
   ON UPDATE NO ACTION
   ON DELETE NO ACTION;
 
-CREATE TABLE Seguimiento_siniestro
-(
-    id                      serial      NOT NULL,
-    id_siniestros           integer references siniestros(id),
-    fecha_hora              varchar(20),
-    texto                   text,
-    doc                     bytea,
-   primary key (id)
-);
 
 
 -- Archivo documental
