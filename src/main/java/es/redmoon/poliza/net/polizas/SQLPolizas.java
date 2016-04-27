@@ -51,7 +51,7 @@ public class SQLPolizas extends PoolConn {
                 
                 tp.add( new TuplasPolizas.
                         Builder(rs.getString("id")).
-                        Id_solicitud(rs.getString("id_solicitud")).
+                        Code_cia(rs.getString("code_cia")).
                         Poliza(rs.getString("poliza")).
                         Documento_adhesion(rs.getString("documento_adhesion")).
                         Efecto(rs.getString("efecto")).
@@ -111,7 +111,7 @@ public class SQLPolizas extends PoolConn {
                 
                 tp.add( new TuplasPolizas.
                         Builder(rs.getString("id")).
-                        Id_solicitud(rs.getString("id_solicitud")).
+                        Code_cia(rs.getString("code_cia")).
                         Poliza(rs.getString("poliza")).
                         Documento_adhesion(rs.getString("documento_adhesion")).
                         Efecto(rs.getString("efecto")).

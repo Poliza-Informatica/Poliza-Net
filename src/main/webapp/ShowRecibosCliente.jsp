@@ -17,7 +17,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
         <link href="css/main.css" rel="stylesheet" type="text/css" />
-        <title>Datos del contrato</title>
+        <title>Datos del recibo</title>
         <!--[if IE 8]><link href="css/ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 
@@ -153,7 +153,7 @@
 
                     <%
                         String database = (String) sesion.getAttribute("xDataBaseName");
-                        String xIDPoliza = request.getParameter("xIDPoliza");
+                        String xIDRecibo = request.getParameter("xIDRecibo");
                         /*
                         if (xIDPoliza != null && !xIDPoliza.isEmpty()) {
                             SQLPolizas myPoliza = new SQLPolizas(database);
@@ -172,7 +172,7 @@
                         <div class="span12">
 
 
-                            <form class="form-horizontal" action="#" id="ViewPoliza" method="post">
+                            <form class="form-horizontal" action="#" id="ViewRecibo" method="post">
                                 <div  class="well">	
                                     <div id="cajaForm" class="navbar">
                                         <div class="navbar-inner"><h6 id="xTitulo2">Usuario :<%= sesion.getAttribute("xUser")%> Rol : <%= sesion.getAttribute("UserTipo")%></h6></div></div>

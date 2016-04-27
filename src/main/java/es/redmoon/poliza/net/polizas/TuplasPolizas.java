@@ -10,7 +10,7 @@ package es.redmoon.poliza.net.polizas;
  */
 public class TuplasPolizas {
     private final String id;
-    private final String id_solicitud;
+    private final String code_cia;
     private final String poliza;
     private final String documento_adhesion;
     private final String efecto;
@@ -31,8 +31,8 @@ public class TuplasPolizas {
         return id;
     }
 
-    public String getId_solicitud() {
-        return id_solicitud;
+    public String getCode_cia() {
+        return code_cia;
     }
 
     public String getPoliza() {
@@ -99,7 +99,7 @@ public class TuplasPolizas {
     
     public static class Builder {
         private final String id;
-        private String id_solicitud;
+        private String code_cia;
         private String poliza;
         private String documento_adhesion;
         private String efecto;
@@ -120,8 +120,8 @@ public class TuplasPolizas {
             this.id = id;
         }
 
-        public Builder Id_solicitud(final String id_solicitud) {
-            this.id_solicitud = id_solicitud;
+        public Builder Code_cia(final String code_cia) {
+            this.code_cia = code_cia;
             return this;
         }
 
@@ -211,7 +211,7 @@ public class TuplasPolizas {
      */
     private TuplasPolizas(Builder builder) {
         this.id = builder.id;
-        this.id_solicitud = builder.id_solicitud;
+        this.code_cia = builder.code_cia;
         this.poliza = builder.poliza;
         this.documento_adhesion = builder.documento_adhesion;
         this.efecto = builder.efecto;
