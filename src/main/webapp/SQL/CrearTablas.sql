@@ -247,6 +247,18 @@ create index customers_razon_social on customers(razon_social);
 --
 -- Clientes agrupados
 --
+CREATE TABLE customers_groups
+(
+   codigo  varchar(6)     NOT NULL,
+   nombre  varchar(50)
+);
+
+ALTER TABLE customers_groups
+   ADD CONSTRAINT customers_groups_pkey
+   PRIMARY KEY (codigo);
+
+
+
 CREATE TABLE customers_grouped
 (
    codigo_group  varchar(6)     NOT NULL,
@@ -269,15 +281,6 @@ ALTER TABLE customers_grouped
   ON UPDATE NO ACTION
   ON DELETE NO ACTION;
 
-CREATE TABLE customers_groups
-(
-   codigo  varchar(6)     NOT NULL,
-   nombre  varchar(50)
-);
-
-ALTER TABLE customers_groups
-   ADD CONSTRAINT customers_groups_pkey
-   PRIMARY KEY (codigo);
 
 
 
@@ -358,6 +361,55 @@ CREATE TABLE coberturas_poliza
 --
 -- Intervinientes, lista de tomadores
 --
+CREATE TABLE public.intervinientes
+(
+  id integer NOT NULL,
+  id_poliza integer NOT NULL,
+  nif character varying(20),
+  en_calidad_de character varying(20),
+  CONSTRAINT intervinientes_pkey PRIMARY KEY (id, id_poliza),
+  CONSTRAINT customers_fkey FOREIGN KEY (nif)
+      REFERENCES public.customers (nif) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT polizas_fkey FOREIGN KEY (id_poliza)
+      REFERENCES public.polizas (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.intervinientes
+  OWNER TO polizanet;
+
+-- Index: public.intervinientes_calidad
+
+-- DROP INDEX public.intervinientes_calidad;
+
+CREATE INDEX intervinientes_calidad
+  ON public.intervinientes
+  USING btree
+  (en_calidad_de COLLATE pg_catalog."default", id_poliza);
+
+-- Index: public.intervinientes_nif
+
+-- DROP INDEX public.intervinientes_nif;
+
+CREATE INDEX intervinientes_nif
+  ON public.intervinientes
+  USING btree
+  (nif COLLATE pg_catalog."default");
+
+-- Index: public.intervinientes_poliza
+
+-- DROP INDEX public.intervinientes_poliza;
+
+CREATE INDEX intervinientes_poliza
+  ON public.intervinientes
+  USING btree
+  (id_poliza);
+
+
+
 CREATE TABLE intervinientes
 (
    id             serial         NOT NULL,
@@ -383,6 +435,60 @@ ALTER TABLE intervinientes
 --
 -- Recibos
 --
+CREATE TABLE public.recibos
+(
+  id integer NOT NULL,
+  id_poliza integer,
+  n_recibo character varying(15),
+  fecha_efecto character varying(10),
+  fecha_vencimiento character varying(10),
+  prima_neta character varying(15),
+  total_recibo character varying(15),
+  comision character varying(15),
+  retencion character varying(15),
+  liquido character varying(15),
+  forma_pago character varying(20),
+  canal_pago character varying(20),
+  tipo character varying(20),
+  estado_cliente character varying(20),
+  fecha_estado_cliente character varying(10),
+  estado_cia character varying(20),
+  fecha_estado_cia character varying(10),
+  gestor character varying(6),
+  gestor_comision character varying(15),
+  gestor_retencion character varying(15),
+  gestor_estado  character varying(20),
+  gestor_fecha_estado character varying(10),
+  mediador1 character varying(6),
+  mediador1_comision character varying(15),
+  mediador1_retencion character varying(15),
+  mediador1_estado  character varying(20),
+  mediador1_fecha_estado character varying(10),
+  mediador2 character varying(6),
+  mediador2_comision character varying(15),
+  mediador2_retencion character varying(15),
+  mediador2_estado  character varying(20),
+  mediador2_fecha_estado character varying(10),
+  cobrador character varying(6),
+  cobrador_comision character varying(15),
+  cobrador_retencion character varying(15),
+  cobrador_estado  character varying(20),
+  cobrador_fecha_estado character varying(10),
+  comercial character varying(6),
+  comercial_comision character varying(15),
+  comercial_retencion character varying(15),
+  comercial_estado  character varying(20),
+  comercial_fecha_estado character varying(10),
+  CONSTRAINT recibos_pkey PRIMARY KEY (id),
+  CONSTRAINT recibos_id_poliza_fkey FOREIGN KEY (id_poliza)
+      REFERENCES public.polizas (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.recibos
+  OWNER TO polizanet;
 
 CREATE TABLE recibos
 (
@@ -482,11 +588,6 @@ CREATE TABLE seguimiento_siniestro
 );
 
 -- Column id is associated with sequence public.seguimiento_siniestro_id_seq
-
-
-ALTER TABLE seguimiento_siniestro
-   ADD CONSTRAINT seguimiento_siniestro_pkey
-   PRIMARY KEY (id);
 
 ALTER TABLE seguimiento_siniestro
   ADD CONSTRAINT seguimiento_siniestros_fkey FOREIGN KEY (id_siniestro)
