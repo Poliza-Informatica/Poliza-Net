@@ -12,6 +12,10 @@
         <servlet-name>AjaxRecibos</servlet-name>
         <servlet-class>es.redmoon.poliza.net.recibos.AjaxRecibos</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletSesionFacebook</servlet-name>
+        <servlet-class>es.redmoon.poliza.net.session.ServletSesionFacebook</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletSesion</servlet-name>
         <url-pattern>/ServletSesion.servlet</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>AjaxRecibos</servlet-name>
         <url-pattern>/AjaxRecibos.servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletSesionFacebook</servlet-name>
+        <url-pattern>/ServletSesionFacebook.servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -30,7 +30,7 @@ WHERE P.id=I.id_poliza and I.en_calidad_de='TOMADOR';
 
 -- ejemplo de uso
 -- todas las polizas donde aparezco como asegurado
-select * from vwpolizas_asegurado where nif='23781553J';
+select * from vwpolizas_tomador where nif='23781553J';
 
 -- Todas las polizas donde apareco en calidad de cualquier figura
 select nif,id_customers,id_poliza,en_calidad_de from Intervinientes where nif='23781553J';
@@ -38,7 +38,9 @@ select nif,id_customers,id_poliza,en_calidad_de from Intervinientes where nif='2
 select I.nif, C.razon_social, I.en_calidad_de, P.poliza,P.documento_adhesion,P.efecto,P.vencimiento,P.aseguradora 
     from Intervinientes I, Polizas P, Customers C where I.nif='23781553J' and P.id=I.id_poliza and C.id=I.id_customers;
 
+--
 -- vista de las polizas de un cliente agrupado
+--
 
 create or replace view vwpolizas_asegurado (nombre, nif,en_calidad_de, poliza,documento_adhesion,efecto,vencimiento,code_cia) 
 as select  C.nombre, I.nif, I.en_calidad_de, P.poliza,P.documento_adhesion,P.efecto,P.vencimiento,P.code_cia
@@ -79,3 +81,4 @@ as select R.id,R.id_poliza,R.n_recibo,R.efecto,R.vencimiento,R.prima_neta,R.tota
     R.estado_cliente,R.fecha_cobro,R.estado_cia,R.fecha_estado_cia,P.nif
 from recibos R, polizas P
 where R.id_poliza = P.id;
+

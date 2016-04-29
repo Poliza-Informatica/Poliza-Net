@@ -56,7 +56,6 @@ public class SQLPolizas extends PoolConn {
                         Documento_adhesion(rs.getString("documento_adhesion")).
                         Efecto(rs.getString("efecto")).
                         Vencimiento(rs.getString("vencimiento")).
-                        Compania(rs.getString("compania")).
                         Producto(rs.getString("producto")).
                         Riesgo_asegurado(rs.getString("riesgo_asegurado")).
                         Forma_pago(rs.getString("forma_pago")).
@@ -116,7 +115,6 @@ public class SQLPolizas extends PoolConn {
                         Documento_adhesion(rs.getString("documento_adhesion")).
                         Efecto(rs.getString("efecto")).
                         Vencimiento(rs.getString("vencimiento")).
-                        Compania(rs.getString("compania")).
                         Producto(rs.getString("producto")).
                         Riesgo_asegurado(rs.getString("riesgo_asegurado")).
                         Forma_pago(rs.getString("forma_pago")).

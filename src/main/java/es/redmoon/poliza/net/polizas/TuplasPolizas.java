@@ -11,12 +11,11 @@ package es.redmoon.poliza.net.polizas;
 public class TuplasPolizas {
     private final String id;
     private final String code_cia;
+    private final String producto;
     private final String poliza;
     private final String documento_adhesion;
     private final String efecto;
     private final String vencimiento;
-    private final String compania;
-    private final String producto;
     private final String riesgo_asegurado;
     private final String forma_pago;
     private final String canal_pago;
@@ -49,10 +48,6 @@ public class TuplasPolizas {
 
     public String getVencimiento() {
         return vencimiento;
-    }
-
-    public String getCompania() {
-        return compania;
     }
 
     public String getProducto() {
@@ -104,7 +99,6 @@ public class TuplasPolizas {
         private String documento_adhesion;
         private String efecto;
         private String vencimiento;
-        private String compania;
         private String producto;
         private String riesgo_asegurado;
         private String forma_pago;
@@ -142,11 +136,6 @@ public class TuplasPolizas {
 
         public Builder Vencimiento(final String vencimiento) {
             this.vencimiento = vencimiento;
-            return this;
-        }
-
-        public Builder Compania(final String compania) {
-            this.compania = compania;
             return this;
         }
 
@@ -216,7 +205,6 @@ public class TuplasPolizas {
         this.documento_adhesion = builder.documento_adhesion;
         this.efecto = builder.efecto;
         this.vencimiento = builder.vencimiento;
-        this.compania = builder.compania;
         this.producto = builder.producto;
         this.riesgo_asegurado = builder.riesgo_asegurado;
         this.forma_pago = builder.forma_pago;
