@@ -15,7 +15,7 @@ import java.util.List;
 import javax.naming.NamingException;
 
 /**
- *
+ * Acciones para dar de alta a los clientes
  * @author antonio
  */
 public class SQLAltaServicio extends PoolConnAltas {

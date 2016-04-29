@@ -1,12 +1,23 @@
+
+
 --
 -- Tablas del control de acceso
 --
+
+createdb pn-system-config;
+psql
+alter role polizanet with SUPERUSER PASSWORD 'Granada{2016}';
+create user polizanet with SUPERUSER password 'Granada{2016}';
+psql -d pn-system-config -U polizanet;
+
 
 
 CREATE TABLE AutoridadCA
 (
     id                  serial NOT NULL,
     descripcion         varchar(90),
+    mode_access         varchar(10) default 'singel',  -- singel una sola base de datos shared modo compartido multiples bases de datos
+    databasename        varchar(50) default 'jdbc/myConfig',
     raizCA              bytea,
     primary key (id)
 );
@@ -74,7 +85,7 @@ CREATE TABLE customers_hosting
 (
     id                       serial      NOT NULL,
     id_customers_pais        integer references customers_pais(id),
-    id_servidor              integer references Servidores(id)
+    id_servidor              integer references Servidores(id),
    primary key (id)
 );
 /
@@ -125,7 +136,7 @@ create index customers_certdatabase on customers_users(certdatabase);
 --
 CREATE TABLE customers_users_adviser
 (
-    id_customers            integer references customers(id),
+    id_customers            integer references customers_hosting(id),
     telefono_Twilio         varchar(25), -- telefono de la plataforma
     mail                    varchar(90), -- donde se encuentra el certificado del ASESOR en la tabla de customers_users
     rol                     varchar(50), -- Asesor Fiscal,Asesor Laboral, Asesor Juridico
@@ -140,7 +151,7 @@ CREATE TABLE DataBases_Servidor
 (
     id                  serial NOT NULL,
     id_servidor         integer references Servidores(id),
-    id_cliente          integer references customers(id),
+    id_cliente          integer references customers_hosting(id),
     fecha               date default CURRENT_DATE,
     Estado              varchar(10) default 'libre',
     primary key (id)

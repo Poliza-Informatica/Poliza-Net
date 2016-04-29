@@ -1,6 +1,7 @@
 
 package es.redmoon.poliza.net.altas;
 
+import static es.redmoon.poliza.net.altas.PoolConnAltas.PGconectar;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -26,6 +27,8 @@ public class SQLSesionAltas extends PoolConnAltas {
     private String databasename;
     private String passdatabase;
     private String descargo_token;
+    private String mode_access;
+    private String CADataBaseName; // nombre de la base de datos campo AutoridadCA
     private byte[] certificado;
     
     
@@ -33,7 +36,41 @@ public class SQLSesionAltas extends PoolConnAltas {
     public SQLSesionAltas() throws SQLException, NamingException {
         super();
     }
+
+    /**
+     * Control del modo de acceso
+     * En la tabla AutoridadCA guardamos un campo denominado mode_access que puede tomar
+     * dos valores single para configuraciones de un una sola base de datos
+     * shared para un servidor de múltiples bases de datos
+     * @throws SQLException 
+     */
+    public void ModeAccess() throws SQLException
+    {
+        PreparedStatement st =null;
+        Connection conn = PGconectar();
+        
+        try 
+        {
+            
+          st = conn.prepareStatement("select mode_access,databasename from AutoridadCA where id=1");
           
+            
+           ResultSet rs = st.executeQuery();
+           if (rs.next()) {
+               this.mode_access=rs.getString("mode_access");
+               this.CADataBaseName=rs.getString("databasename");
+           }
+           
+        }
+        catch (SQLException e) {
+            System.out.println("AutoridadCA Connection Failed!");
+        }
+        finally {
+            st.close();
+           conn.close();
+        }
+    }
+    
     /**
      * Comprobar el acceso del usuario a través de la tabla de usuarios
      * @param xUser
@@ -251,7 +288,7 @@ public class SQLSesionAltas extends PoolConnAltas {
      * @throws NoSuchAlgorithmException
      * @throws NoSuchProviderException 
      */
-    public boolean CheckMailGoogle(String xUser) 
+    public boolean CheckMailExit(String xUser) 
             throws SQLException, NamingException
     {
              
@@ -325,6 +362,16 @@ public class SQLSesionAltas extends PoolConnAltas {
         return certificado;
     }
 
+    public String getMode_access() {
+        return mode_access;
+    }
+
+    public String getCADataBaseName() {
+        return CADataBaseName;
+    }
+    
+    
+
     
     /**
      * Guardar los datos de acceso en la tabla LogSesion
@@ -335,23 +382,27 @@ public class SQLSesionAltas extends PoolConnAltas {
      */
     public void LogSesion(String IP, String HostName, String URI, String mail) throws SQLException
     {
-        try (Connection conn = PGconectar()) {
+        PreparedStatement st =null;
+        Connection conn = PGconectar();
+        
+        try 
+        {
             
-          PreparedStatement st = 
-          conn.prepareStatement("INSERT INTO LogSesion (IP,HOSTNAME,URI, mail) VALUES (?,?,?,?)");
+          st = conn.prepareStatement("INSERT INTO LogSesion (IP,HOSTNAME,URI, mail) VALUES (?,?,?,?)");
           st.setString(1, IP.trim());
           st.setString(2, HostName.trim());
           st.setString(3, URI.trim());
           st.setString(4, mail.trim());
             
            st.execute();
-                   
-           st.close();
-           conn.close();
            
         }
         catch (SQLException e) {
             System.out.println("LogSesion Connection Failed!");
+        }
+        finally {
+            st.close();
+           conn.close();
         }
         
         

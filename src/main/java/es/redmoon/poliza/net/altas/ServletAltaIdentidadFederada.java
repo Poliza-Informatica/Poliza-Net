@@ -46,9 +46,20 @@ public class ServletAltaIdentidadFederada extends HttpServlet {
         
         SQLSesionAltas mySesion= new SQLSesionAltas();
         mySesion.LogSesion(IP, HOST, URI, xMail);
+        mySesion.ModeAccess();
+        
+        if (mySesion.getMode_access().equals("single"))
+        {
+            // base de datos única
+            mySesion.getCADataBaseName();
+        }
+        else
+        {
+            // base de datos múltiple
+        }
         
          // si ya existe la cuenta
-    if (mySesion.CheckMailGoogle(xMail))
+    if (mySesion.CheckMailExit(xMail))
     {
         // Asignamos los valores de sesión y entramos
         // si no descargó el tokem.p12
@@ -98,7 +109,7 @@ public class ServletAltaIdentidadFederada extends HttpServlet {
         else
         {
             // ir a la pantalla de bienvenida
-            if (mySesion.CheckMailGoogle(xMail))
+            if (mySesion.CheckMailExit(xMail))
                 {
                     // Asignamos los valores de sesión y entramos
                     // si no descargó el tokem.p12

@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 //import org.checkthread.annotations.ThreadSafe;
 
 /**
- *
+ * conecta con la base de datos de configuración y control de acceso
  * @author antonio
  */
 //@ThreadSafe
@@ -30,7 +30,7 @@ public abstract class PoolConnAltas {
             Context ctx = new javax.naming.InitialContext();
 
             // 	 jdbc/myEmpresa001
-            datasource = (DataSource) ctx.lookup("jdbc/mySecure");
+            datasource = (DataSource) ctx.lookup("jdbc/myConfig");
 
     }
     

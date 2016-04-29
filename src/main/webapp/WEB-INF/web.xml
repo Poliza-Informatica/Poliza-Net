@@ -16,6 +16,10 @@
         <servlet-name>ServletSesionFacebook</servlet-name>
         <servlet-class>es.redmoon.poliza.net.session.ServletSesionFacebook</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletAltaIdentidadFederada</servlet-name>
+        <servlet-class>es.redmoon.poliza.net.alta.ServletAltaIdentidadFederada</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletSesion</servlet-name>
         <url-pattern>/ServletSesion.servlet</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>ServletSesionFacebook</servlet-name>
         <url-pattern>/ServletSesionFacebook.servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletAltaIdentidadFederada</servlet-name>
+        <url-pattern>/ServletAltaIdentidadFederada.servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
