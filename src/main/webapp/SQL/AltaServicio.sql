@@ -255,3 +255,48 @@ COST 100;
 
 
 
+-- **************************************************************
+-- Añadir un usuario adicional 
+-- **************************************************************
+--
+-- ejemplo llamada: 
+-- select AddUserSingleMode('admin@prodacon.es','antonio@prodacon.es','Empleado directivo');
+-- select AddUserSingleMode('admin@prodacon.es','laboral@prodacon.es','Empleado plantilla');
+-- select AddUserSingleMode('admin@prodacon.es','financiero@prodacon.es','Empleado plantilla');
+--
+CREATE OR REPLACE FUNCTION AddUserSingleMode(
+    xMailAdmin in varchar,
+    xMail in varchar,
+    xRol in varchar
+) 
+returns void
+AS
+$body$
+DECLARE
+
+    xid_customers integer;
+    xip varchar(20);
+    xdatabasename varchar(30);
+
+BEGIN
+
+
+-- Averiguar el ID de cliente
+
+SELECT id_customers, ip, databasename INTO xid_customers, xip, xdatabasename 
+    FROM customers_users WHERE mail=xMailAdmin;
+
+--
+-- Insertar el nuevo cliente, esto supone un cargo en la cuenta del cliente
+-- por usuario adicional
+--
+
+INSERT INTO customers_users (id_customers, mail,   rol,  ip, databasename, certificado, passdatabase) 
+                     values (xid_customers, xMail, xRol, xip, xdatabasename, pg_read_binary_file(xCertificado), 'PassMaquina1' );
+
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+SECURITY INVOKER
+COST 100;

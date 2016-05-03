@@ -3,6 +3,7 @@
 --
 -- Tablas del control de acceso
 --
+/*
 
 createdb pn-system-config;
 psql
@@ -10,6 +11,7 @@ alter role polizanet with SUPERUSER PASSWORD 'Granada{2016}';
 create user polizanet with SUPERUSER password 'Granada{2016}';
 psql -d pn-system-config -U polizanet;
 
+*/
 
 
 CREATE TABLE AutoridadCA
@@ -17,7 +19,7 @@ CREATE TABLE AutoridadCA
     id                  serial NOT NULL,
     descripcion         varchar(90),
     mode_access         varchar(10) default 'singel',  -- singel una sola base de datos shared modo compartido multiples bases de datos
-    databasename        varchar(50) default 'jdbc/myConfig',
+    databasename        varchar(50) default 'jdbc/myPolizaNet',
     raizCA              bytea,
     primary key (id)
 );

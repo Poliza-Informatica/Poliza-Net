@@ -90,16 +90,14 @@ COST 100;
 -- 3 May 2016
 --
 --
--- select AddNewServerSingle('37.153.108.75','www.poliza-net.es',1,30,'Telefonica',1);
+-- select AddNewServerSingle('37.153.108.75','www.poliza-net.es','antonio.gialnet@gmail.com','693065280');
 --
 
 CREATE OR REPLACE FUNCTION AddNewServerSingle(
     xIP in varchar,
     xServerName in varchar,
-    xRAM in numeric,
-    xHD in numeric,
-    xProveedor_Cloud in varchar,
-    xPais in integer
+    xMailAdmin in varchar,
+    xMovil in varchar
 ) 
 returns void
 AS
@@ -115,8 +113,8 @@ BEGIN
     -- Insertar el nuevo servidor en la base de datos de servidores
 
     WITH Servidores_ins AS (
-        INSERT INTO Servidores (IP,ServerName,RAM, HD, Proveedor_Cloud, id_pais) 
-        VALUES (xIP, xServerName, xRAM, xHD, xProveedor_Cloud, xPais)
+        INSERT INTO Servidores (IP,ServerName,id_pais) 
+        VALUES (xIP, xServerName, 1)
         returning ID
     )
     select id into xIDServidores from Servidores_ins;
@@ -131,8 +129,8 @@ BEGIN
     select id into xIDCustomers from customers_ins;
 
     -- AÑADIR el usuario administrador
-    INSERT INTO customers_users (id_customers, databasename, passdatabase, IP, rol) 
-                        VALUES (xIDCustomers, 'jdbc/myPolizaNet', 'PassMaquina1', xIP, 'Administrador');
+    INSERT INTO customers_users (id_customers, databasename, passdatabase, IP, rol, movil, mail) 
+           VALUES (xIDCustomers, 'jdbc/myPolizaNet', 'PassMaquina1', xIP, 'Administrador',xMovil,xMailAdmin);
 
     -- inserta una base de datos disponible
 
