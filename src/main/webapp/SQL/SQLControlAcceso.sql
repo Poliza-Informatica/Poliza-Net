@@ -171,7 +171,7 @@ CREATE TABLE AltaCustomersNoResueltas
     mail                    varchar(90),
     nombre                  varchar(60),
     estado                  varchar(50) default 'pendiente',
-    causa                   varchar(50) default 'País no implementado',
+    causa                   varchar(50) default 'No se encontro su email',
    primary key (id)
 );
 /

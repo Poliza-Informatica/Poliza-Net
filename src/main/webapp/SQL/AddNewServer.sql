@@ -144,3 +144,43 @@ LANGUAGE 'plpgsql'
 VOLATILE
 SECURITY INVOKER
 COST 100;
+
+
+--
+-- Cambiar los datos del servidor
+--
+CREATE OR REPLACE FUNCTION UpdateServerSingle(
+    xIP in varchar,
+    xServerName in varchar,
+    xMailAdmin in varchar,
+    xMovil in varchar
+) 
+returns void
+AS
+$body$
+DECLARE
+
+    xIDCustomers integer;
+    xIDServidores integer;
+    xCertificado varchar(15);
+
+BEGIN
+
+
+    -- actualizar en servidores
+    update Servidores SET IP=xIP,ServerName=xServerName where id=1;
+
+    -- Actualizar los datos del administrador
+    update customers_users  SET IP=xIP, movil=xMovil, mail=xMailAdmin 
+           where id=1;
+
+  
+
+
+
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+SECURITY INVOKER
+COST 100;

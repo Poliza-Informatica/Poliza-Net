@@ -20,6 +20,10 @@
         <servlet-name>ServletAltaIdentidadFederada</servlet-name>
         <servlet-class>es.redmoon.poliza.net.alta.ServletAltaIdentidadFederada</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletLoginFacebook</servlet-name>
+        <servlet-class>es.redmoon.poliza.net.altas.ServletLoginFacebook</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletSesion</servlet-name>
         <url-pattern>/ServletSesion.servlet</url-pattern>
@@ -39,6 +43,10 @@
     <servlet-mapping>
         <servlet-name>ServletAltaIdentidadFederada</servlet-name>
         <url-pattern>/ServletAltaIdentidadFederada.servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletLoginFacebook</servlet-name>
+        <url-pattern>/ServletLoginFacebook.servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

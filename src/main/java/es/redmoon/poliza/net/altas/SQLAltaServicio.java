@@ -93,7 +93,7 @@ public class SQLAltaServicio extends PoolConnAltas {
      * @return
      * @throws SQLException 
      */
-    public int AltaServicioGoogle(String xNombre, String xMail, String xPais, String xGenero, String xPlus) throws SQLException
+    public void SolicitudAltaServicio(String xNombre, String xMail, String xGenero, String xPlus) throws SQLException
     {
          Connection conn = PGconectar();
         
@@ -102,14 +102,13 @@ public class SQLAltaServicio extends PoolConnAltas {
          
         try {
             
-                PreparedStatement st = conn.prepareStatement("Select xidlibre,xurl_wellcome from AltaServicioGoogle(?,?,?,?,?)");
+                PreparedStatement st = conn.prepareStatement("Select SolicitudAltaServicio(?,?,?,?,?)");
 
                 //st.registerOutParameter(1,Types.INTEGER);
                 st.setString(1, xNombre);
                 st.setString(2, xMail);
-                st.setString(3, xPais);
-                st.setString(4, xGenero);
-                st.setString(5, xPlus);
+                st.setString(3, xGenero);
+                st.setString(4, xPlus);
 
                 ResultSet rs = st.executeQuery();
                 
@@ -129,37 +128,8 @@ public class SQLAltaServicio extends PoolConnAltas {
             conn.close();
         }
         
-        return id_newuser;
     }
     
-    /**
-     * Pedir una url de bienvenida
-     * @return
-     * @throws SQLException 
-     */
-    public String AltaServicioLinkedIn() throws SQLException
-    {
-
-        // Pedir una base de datos disponible mediante su url de bienvenida
-
-        
-        String url_wellcome=null;
-        
-        try (Connection conn = PGconectar()) {
-
-
-            CallableStatement st = conn.prepareCall("{ ? = call PeticionAltaServicioLinkedIn() }");
-            st.registerOutParameter(1,Types.VARCHAR);
-            
-            st.execute();
-            
-            url_wellcome=st.getString(1);
-            
-            conn.close();
-        }
-        
-        return url_wellcome;
-    }
     
     /**
      * Alta en el servicio vía Google

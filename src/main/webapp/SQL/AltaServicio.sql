@@ -300,3 +300,32 @@ LANGUAGE 'plpgsql'
 VOLATILE
 SECURITY INVOKER
 COST 100;
+
+
+-- ***************************************
+-- Alta en el servicio a través de Facebook
+-- select xIDLibre,xurl_wellcome from AltaServicioIDF('Antonio','antonio@redmoon.es','es','male','https://plus.google.com/108068397209142441065')
+-- ***************************************
+CREATE OR REPLACE FUNCTION SolicitudAltaServicio(
+    xNombre in varchar,
+    xMail in varchar,
+    xGenero in varchar,
+    xPlus in varchar
+) 
+returns record
+AS
+$body$
+DECLARE
+
+BEGIN
+
+
+INSERT INTO AltaCustomersNoResueltas (PAIS, MAIL, NOMBRE) VALUES (xPais, xMail, xNombre);
+
+
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+SECURITY INVOKER
+COST 100;

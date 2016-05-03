@@ -95,7 +95,7 @@ public class SQLSesionAltas extends PoolConnAltas {
         try {
             
           PreparedStatement st = 
-          conn.prepareStatement("SELECT ip,databasename,encode(digest(certificado, 'sha512'), 'hex') as cert from customers_users where mail=?");
+          conn.prepareStatement("SELECT ip,databasename from customers_users where mail=?");
           st.setString(1, xUser.trim());
             
             ResultSet rs = st.executeQuery();
@@ -105,25 +105,7 @@ public class SQLSesionAltas extends PoolConnAltas {
                     this.xMail=xUser;
                     this.ip=rs.getString("ip");
                     this.databasename=rs.getString("databasename");
-                    this.passdatabase=rs.getString("cert");
-                    
-               
-                    // coincide el hash del token con el de customers_user
-                    if (sha512.equals(this.passdatabase))
-                    {
-                        // si coincide
-                        System.out.println("OK login:"+xUser);
-                    }
-                    else
-                    {
-                        // no coincide
-                        //System.err.println("Error en login usuario sql session:"+xUser);
-                        conn.close();
-                        AccionesErrorLogin();
-                        return false;
-                    }
 
-                    //MessageDigest.isEqual(digesta, digestb)
 
                 }
                 else
@@ -148,135 +130,7 @@ public class SQLSesionAltas extends PoolConnAltas {
         return true;
     }
     
-    /**
-     * 
-     * @param xUser
-     * @param token
-     * @return
-     * @throws SQLException
-     * @throws NamingException
-     * @throws NoSuchAlgorithmException
-     * @throws NoSuchProviderException 
-     */
-    public boolean CheckLogin(String xUser, byte[] token) 
-            throws SQLException, NamingException, NoSuchAlgorithmException, NoSuchProviderException
-    {
-        Connection conn = PGconectar();
-        
-        Security.addProvider(new BouncyCastleProvider());
-        
-        MessageDigest mda = MessageDigest.getInstance("SHA-512", "BC");
-        byte [] digesta = mda.digest(token);
-
-        //System.out.println(digesta);
-        String sha512 = Hex.encodeHexString(digesta);
-        //System.out.println(Hex.encodeHex(digesta));
-
-        try {
-            
-          PreparedStatement st = 
-          conn.prepareStatement("SELECT ip,databasename,encode(digest(certificado, 'sha512'), 'hex') as cert from customers_users where mail=?");
-          st.setString(1, xUser.trim());
-            
-            ResultSet rs = st.executeQuery();
-
-                if (rs.next()) {
-
-                    this.xMail=xUser;
-                    this.ip=rs.getString("ip");
-                    this.databasename=rs.getString("databasename");
-                    this.passdatabase=rs.getString("cert");
-               
-                    // coincide el hash del token con el de customers_user
-                    if (sha512.equals(this.passdatabase))
-                    {
-                        // si coincide
-                        System.out.println("OK login:"+xUser);
-                    }
-                    else
-                    {
-                        // no coincide
-                        System.err.println("Error en login usuario sql session:"+xUser);
-                        System.err.println("Pass Token:"+sha512);
-                        System.err.println("Pass DataB:"+this.passdatabase);
-                        conn.close();
-                        AccionesErrorLogin();
-                        return false;
-                    }
-
-                    //MessageDigest.isEqual(digesta, digestb)
-
-                }
-                else
-                {
-                    //System.err.println("Error en login usuario sql session:"+xUser);
-                    conn.close();
-                    AccionesErrorLogin();
-                    return false;
-                }
-                   
-           rs.close();
-        }
-        catch (SQLException e) {
-            System.out.println("customers_users Connection Failed!");
-            conn.close();
-            return false;
-        }
-        finally{
-            conn.close();
-        }
-        
-        return true;
-    }
     
-    /**
-     * 
-     * @param xUser
-     * @param token
-     * @return
-     * @throws SQLException
-     * @throws NamingException
-     * @throws NoSuchAlgorithmException
-     * @throws NoSuchProviderException 
-     */
-    public boolean CheckLoginCert(String varOU, String SerialNumber) 
-            throws SQLException, NamingException
-    {
-
-        try (Connection conn = PGconectar()) {
-            
-          PreparedStatement st = 
-          conn.prepareStatement("SELECT mail,ip,databasename,encode(digest(certificado, 'sha512'), 'hex') as cert from customers_users where certdatabase=?");
-          st.setString(1, "jdbc/"+varOU);
-            
-            ResultSet rs = st.executeQuery();
-
-                if (rs.next()) {
-
-                    this.xMail=rs.getString("mail");
-                    this.ip=rs.getString("ip");
-                    this.databasename=rs.getString("databasename");
-                    this.passdatabase=rs.getString("cert");
-
-                }
-                else
-                {
-                    //System.err.println("Error en login usuario sql session:"+xUser);
-                    conn.close();
-                    AccionesErrorLogin();
-                    return false;
-                }
-                   
-           rs.close();
-           conn.close();
-        }
-        catch (SQLException e) {
-            System.out.println("customers_users Connection Failed!.CheckLoginCert");
-            return false;
-        }
-        
-        return true;
-    }
     
     /**
      * Login con solo la dirección de correo electrónico identidad federada
@@ -296,7 +150,7 @@ public class SQLSesionAltas extends PoolConnAltas {
         try (Connection conn = PGconectar()) {
             
           PreparedStatement st = 
-          conn.prepareStatement("SELECT ip,databasename,descargo_token,certificado,encode(digest(certificado, 'sha512'), 'hex') as cert from customers_users where mail=?");
+          conn.prepareStatement("SELECT ip,databasename from customers_users where mail=?");
           st.setString(1, xUser.trim());
           
             try (ResultSet rs = st.executeQuery()) {
@@ -306,9 +160,6 @@ public class SQLSesionAltas extends PoolConnAltas {
                     this.xMail=xUser;
                     this.ip=rs.getString("ip");
                     this.databasename=rs.getString("databasename");
-                    this.passdatabase=rs.getString("cert");
-                    this.descargo_token=rs.getString("descargo_token");
-                    this.certificado=rs.getBytes("certificado");
                     rs.close();
                     conn.close();
 
@@ -408,47 +259,5 @@ public class SQLSesionAltas extends PoolConnAltas {
         
     }
     
-
-    /**
-     * Activar la cuenta de usuario tras verificar repuesta a nuestro mail
-     * de bienvenida
-     * @param url_wellcome
-     * @throws SQLException 
-     */
-    public boolean verifyMail(String url_wellcome) throws SQLException
-    {
-        Connection conn = PGconectar();
-        
-        boolean resultado=false;
-        try {
-            
-            
-            // cambiar por un procedimiento almacenado *****************
-            
-          PreparedStatement st = 
-          conn.prepareStatement("Update customers_users Set estado='activa' where url_wellcome=? and estado='pendiente verificacion mail' ");
-          st.setString(1, url_wellcome.trim());
-            
-            ResultSet rs = st.executeQuery();
-
-                if (rs.next()) {
-
-                    // verificado
-                    // además tiene que cambiar el estado a verificado el mail cuenta activa
-                    resultado=true;
-
-                }
-                   
-           rs.close();
-        }
-        catch (SQLException e) {
-            System.out.println("Update customers_users Connection Failed!");
-        }
-        finally{
-            conn.close();
-        }
-        
-        return resultado;
-    }
     
 }
