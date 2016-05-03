@@ -288,7 +288,7 @@ public class SQLSesionAltas extends PoolConnAltas {
      * @throws NoSuchAlgorithmException
      * @throws NoSuchProviderException 
      */
-    public boolean CheckMailExit(String xUser) 
+    public boolean CheckMailExist(String xUser) 
             throws SQLException, NamingException
     {
              

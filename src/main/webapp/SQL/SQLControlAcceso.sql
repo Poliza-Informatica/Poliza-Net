@@ -107,7 +107,7 @@ CREATE TABLE customers_users
     direccion               varchar(90), -- Avenida Europa, 21
     objeto                  varchar(40), -- bloque A 2ºD
     poblacion               varchar(90), -- 18690 Almuñécar Granada
-    movil                   varchar(10),
+    movil                   varchar(20),
     saldo                   numeric(5),
     estado                  varchar(50),
     passwd                  varchar(128),

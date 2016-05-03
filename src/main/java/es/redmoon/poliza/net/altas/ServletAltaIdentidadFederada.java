@@ -59,10 +59,10 @@ public class ServletAltaIdentidadFederada extends HttpServlet {
         }
         
          // si ya existe la cuenta
-    if (mySesion.CheckMailExit(xMail))
+    if (mySesion.CheckMailExist(xMail))
     {
         // Asignamos los valores de sesión y entramos
-        // si no descargó el tokem.p12
+        // si no descargó el token.p12
         if (mySesion.getDescargo_token().equals("N"))
         {
         String sURL = "https://" + mySesion.getIp() 
@@ -80,7 +80,7 @@ public class ServletAltaIdentidadFederada extends HttpServlet {
         else
         {
             // Mostrar la pantalla de login vía Token
-            RequestDispatcher rd=request.getRequestDispatcher("https://www.myempresa.eu/index.jsp");
+            RequestDispatcher rd=request.getRequestDispatcher("https://www.poliza-net.es/index.jsp");
             rd.forward(request, response);
             //response.sendRedirect("https://www.myempresa.eu/index.jsp");
         }
@@ -109,7 +109,7 @@ public class ServletAltaIdentidadFederada extends HttpServlet {
         else
         {
             // ir a la pantalla de bienvenida
-            if (mySesion.CheckMailExit(xMail))
+            if (mySesion.CheckMailExist(xMail))
                 {
                     // Asignamos los valores de sesión y entramos
                     // si no descargó el tokem.p12
@@ -133,7 +133,7 @@ public class ServletAltaIdentidadFederada extends HttpServlet {
                     else
                     {
                         // Mostrar la pantalla de login vía Token
-                        RequestDispatcher rd=request.getRequestDispatcher("https://www.myempresa.eu/index.jsp");
+                        RequestDispatcher rd=request.getRequestDispatcher("https://www.poliza-net.es/index.jsp");
                         rd.forward(request, response);
                         //response.sendRedirect("https://myempresa.eu/index.jsp");
                     }

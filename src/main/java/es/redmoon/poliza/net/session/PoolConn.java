@@ -42,14 +42,14 @@ public abstract class PoolConn {
         
             Context ctx = new javax.naming.InitialContext();
 
-            // 	 jdbc/myEmpresa001
+            // 	 jdbc/myPolizaNet001
             datasource = (DataSource) ctx.lookup(myPool);
 
     }
     
     /**
      * entregar una conexión a PostgreSQL desde el Pool de Glassfish
-     * @return una conexión JDBC a PostgreSQL 9.2
+     * @return una conexión JDBC a PostgreSQL 9.5
      * @throws SQLException
      */
     public static Connection PGconectar() throws SQLException
