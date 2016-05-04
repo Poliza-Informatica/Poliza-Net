@@ -163,7 +163,7 @@ public class SQLPolizas extends PoolConn {
         
             while (rs.next()) {
                 
-                 new TuplasPolizasMV.
+                tp = new TuplasPolizasMV.
                         Builder(rs.getString("id")).
                         Nombre(rs.getString("nombre")).
                         Poliza(rs.getString("poliza")).

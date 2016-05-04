@@ -149,6 +149,7 @@ public class SQLSesionAltas extends PoolConnAltas {
 
         try (Connection conn = PGconectar()) {
             
+          // conectando con jdbc/myPNSystemConfig
           PreparedStatement st = 
           conn.prepareStatement("SELECT ip,databasename from customers_users where mail=?");
           st.setString(1, xUser.trim());

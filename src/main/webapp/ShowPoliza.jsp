@@ -24,12 +24,6 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 
-
-        <script type="text/javascript" src="js/plugins/charts/excanvas.min.js"></script>
-        <script type="text/javascript" src="js/plugins/charts/jquery.flot.js"></script>
-        <script type="text/javascript" src="js/plugins/charts/jquery.flot.resize.js"></script>
-        <script type="text/javascript" src="js/plugins/charts/jquery.sparkline.min.js"></script>
-
         <script type="text/javascript" src="js/plugins/ui/jquery.easytabs.min.js"></script>
         <script type="text/javascript" src="js/plugins/ui/jquery.collapsible.min.js"></script>
         <script type="text/javascript" src="js/plugins/ui/jquery.mousewheel.js"></script>
@@ -41,11 +35,6 @@
         <script type="text/javascript" src="js/plugins/ui/jquery.fancybox.js"></script>
         <script type="text/javascript" src="js/plugins/ui/jquery.fullcalendar.min.js"></script>
         <script type="text/javascript" src="js/plugins/ui/jquery.elfinder.js"></script>
-
-        <script type="text/javascript" src="js/plugins/uploader/plupload.js"></script>
-        <script type="text/javascript" src="js/plugins/uploader/plupload.html4.js"></script>
-        <script type="text/javascript" src="js/plugins/uploader/plupload.html5.js"></script>
-        <script type="text/javascript" src="js/plugins/uploader/jquery.plupload.queue.js"></script>
 
         <script type="text/javascript" src="js/plugins/forms/jquery.uniform.min.js"></script>
         <script type="text/javascript" src="js/plugins/forms/jquery.autosize.js"></script>
@@ -154,18 +143,21 @@
                     <%
                         String database = (String) sesion.getAttribute("xDataBaseName");
                         String xIDPoliza = request.getParameter("xIDPoliza");
-                        /*
+                        
                         if (xIDPoliza != null && !xIDPoliza.isEmpty()) {
                             SQLPolizas myPoliza = new SQLPolizas(database);
                             TuplasPolizasMV myTupla = myPoliza.getTuplaByIDFromMVpolizas_asegurado(Integer.parseInt(xIDPoliza));
                             poliza.setId(myTupla.getId());
                             poliza.setNif(myTupla.getNif());
                             poliza.setNombre(myTupla.getNombre());
+                            poliza.setRiesgo_asegurado(myTupla.getRiesgo_asegurado());
+                            poliza.setCia_name(myTupla.getCiaName());
+                            poliza.setPoliza(myTupla.getPoliza());
                         } else {
                             poliza.setId("0");
                             poliza.setNif("");
                             poliza.setNombre("");
-                        }*/
+                        }
                     %>
                     <div class="row-fluid">
 
