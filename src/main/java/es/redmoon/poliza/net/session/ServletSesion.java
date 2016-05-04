@@ -63,7 +63,7 @@ public class ServletSesion extends HttpServlet {
                 sesion.setAttribute("xDataBaseName",xDatabaseName);
                 sesion.setAttribute("xUser",mySesion.getxUser());
                 sesion.setAttribute("UserTipo",mySesion.getUserTipo());
-                sesion.setAttribute("NIF", mySesion.getNIF());
+                sesion.setAttribute("NIF", mySesion.getNIFUser());
                 sesion.setAttribute("RazonSocial",mySesion.getRazonSocial());
                 sesion.setAttribute("FormaJuridica", mySesion.getFormaJuridica());
                 sesion.setAttribute("Database", mySesion.getDatabase());

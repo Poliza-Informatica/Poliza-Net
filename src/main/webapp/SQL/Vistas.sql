@@ -2,7 +2,7 @@
 -- Tetbury Software Services LTD
 --
 -- SIC 62012 Business and domestic software development
---
+-- antoniocastillo@prodacon.es 23791319-G
 
 create or replace view vw_clientes (nombre,nif,domicilio,cp,localidad,telefono1,telefono2,mail,f_nacimiento,f_permiso_conducir,iban,iban2) 
     as select concat(razon_social,' ', apellidos),nif,domicilio,cp,localidad,telefono1,telefono2,mail,f_nacimiento,f_permiso_conducir,iban,iban2
