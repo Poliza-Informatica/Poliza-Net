@@ -84,7 +84,7 @@ public class ServletSesion extends HttpServlet {
                 sesion.setAttribute("myHD", mySesion.getMyHD());
                 
                 // ir a index   
-                rd=request.getRequestDispatcher("BrowsePolizasInit.jsp");
+                rd=request.getRequestDispatcher("BrowsePolizasClientes.jsp");
                 rd.forward(request, response);
             }
             else

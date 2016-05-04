@@ -35,7 +35,7 @@ public class ServletLoginFacebook extends HttpServlet {
         
         response.setContentType("text/html;charset=UTF-8");
         
-        String xPais = request.getParameter("locale").substring(0, 2).toUpperCase();
+        //String xPais = request.getParameter("locale").substring(0, 2).toUpperCase();
         String xMail = request.getParameter("email");
         String xNombre = request.getParameter("name");
         String xGenero = request.getParameter("gender");

@@ -160,3 +160,23 @@ function ShowPoliza(numFila)
     
     window.location.href = 'ShowPoliza.jsp?xIDPoliza='+oCelda.innerHTML;
 }
+
+/*
+ * Leer lista de polizas de un NIF
+ * 
+ */
+function LeerPolizasByNIF()
+{
+    var pag=window.pagina;
+    var tama=window.pagsize;
+    
+    var url='AjaxPolizas.servlet';
+    var dataToSend='accion=PolizasByNIF&pagina='+pag +'&size='+tama;
+    var conn = new Conectar(url, dataToSend);
+       
+    conn.pageRequest.onreadystatechange = function() { ListaPolizas(conn.pageRequest); };
+
+    conn.Enviar();
+    
+    return conn;
+}

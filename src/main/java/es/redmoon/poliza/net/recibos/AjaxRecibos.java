@@ -44,6 +44,7 @@ public class AjaxRecibos extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sesion = request.getSession(); 
         String xDataBase = (String) sesion.getAttribute("xDataBaseName");
+        String xNIF = (String) sesion.getAttribute("NIF");
         Gson gson = new Gson();
         request.setCharacterEncoding("UTF-8");
         String accion = request.getParameter("accion");
@@ -68,6 +69,15 @@ public class AjaxRecibos extends HttpServlet {
                     String buscar = request.getParameter("xBuscar");
                     List<TuplasPolizasBuscar> ListaPolizasBuscar = 
                             myPoliza.getTuplasPolizasByBuscar(buscar.trim(), Integer.parseInt(pagina),Integer.parseInt(size));
+                    response.getWriter().write(gson.toJson(ListaPolizasBuscar));
+                    break;
+                }
+            case "PolizasByNIF":
+                {
+                    SQLPolizas myPoliza = new SQLPolizas(xDataBase);
+                    
+                    List<TuplasPolizasBuscar> ListaPolizasBuscar = 
+                            myPoliza.getTuplasPolizasByNIF(xNIF.trim(), Integer.parseInt(pagina),Integer.parseInt(size));
                     response.getWriter().write(gson.toJson(ListaPolizasBuscar));
                     break;
                 }

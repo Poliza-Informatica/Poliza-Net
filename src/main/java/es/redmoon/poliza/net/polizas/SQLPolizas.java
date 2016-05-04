@@ -239,4 +239,52 @@ public class SQLPolizas extends PoolConn {
         return tp;
     }
     
+    /**
+     * Buscar las pólizas de un nif
+     * @param nif
+     * @param NumPage
+     * @param SizePage
+     * @return
+     * @throws SQLException 
+     */
+    public List<TuplasPolizasBuscar> getTuplasPolizasByNIF(String nif, int NumPage, int SizePage) throws SQLException
+    {
+        Connection conn = PGconectar();
+        List<TuplasPolizasBuscar> tp = new ArrayList<>();
+        
+        try {
+         
+            int Offset = SizePage * (NumPage-1);
+            PreparedStatement st = conn.prepareStatement("SELECT * from mwpolizas_asegurado where nif = ? order by id desc LIMIT ? OFFSET ?");
+            st.setString(1, nif);
+            st.setInt(2, SizePage);
+            st.setInt(3, Offset);
+            
+            
+            ResultSet rs = st.executeQuery();
+        
+            while (rs.next()) {
+                
+                tp.add( new TuplasPolizasBuscar.
+                        Builder(rs.getString("id")).
+                        Nif(rs.getString("nif")).
+                        Nombre(rs.getString("nombre")).
+                        Poliza(rs.getString("poliza")).
+                        Efecto(rs.getString("efecto")).
+                        Riesgo_asegurado(rs.getString("riesgo_asegurado")).
+                        build()
+                         );
+            }
+            
+        } catch (SQLException e) {
+
+            System.out.println("polizas Connection Failed!");
+
+        } finally {
+
+            conn.close();
+        }
+        
+        return tp;
+    }
 }
