@@ -153,6 +153,9 @@
                             poliza.setRiesgo_asegurado(myTupla.getRiesgo_asegurado());
                             poliza.setCia_name(myTupla.getCiaName());
                             poliza.setPoliza(myTupla.getPoliza());
+                            poliza.setTlf1(myTupla.getTlf1());
+                            poliza.setEmail(myTupla.getEmail());
+                            poliza.setIban(myTupla.getIban());
                         } else {
                             poliza.setId("0");
                             poliza.setNif("");
@@ -206,6 +209,7 @@
                                             <label class="control-label" for="NIF">NIF/CIF:</label>
                                             <div class="controls">
                                                 <input type="text" name="xNIF" id="xNIF" maxlength="10" class="input-medium"
+                                                       readonly = "readonly" 
                                                        value="<%= poliza.getNif()%>">
                                             </div>
                                         </div>
@@ -214,7 +218,7 @@
                                             <label class="control-label" for="Razonsocial">Tomador:</label>
                                             <div class="controls">
                                                 <input type="text" name="xNombre" maxlength="60" class="span12"
-                                                       required="required"
+                                                       readonly = "readonly"
                                                        value="<%= poliza.getNombre()%>">
                                             </div>
 
@@ -224,7 +228,8 @@
                                             <label class="control-label" for="Móvil">Teléfono/Móvil:</label>
                                             <div class="controls">
                                                 <input type="text" name="xMovil" maxlength="10" class="input-medium"
-                                                       value="">
+                                                       readonly = "readonly"
+                                                       value="<%= poliza.getTlf1() %>">
                                             </div>
                                         </div>
 
@@ -232,8 +237,8 @@
                                             <label class="control-label" for="eMailF">e-Mail:</label>
                                             <div class="controls">
                                                 <input type="email" name="xMail" maxlength="60"  class="span12"
-                                                       placeholder="sumail@suisp.es" 
-                                                       value="">
+                                                       readonly = "readonly"
+                                                       value="<%= poliza.getEmail() %>">
                                             </div>
                                         </div>
 
@@ -241,8 +246,8 @@
                                             <label class="control-label" for="iban">IBAN:</label>
                                             <div class="controls">
                                                 <input type="text" name="xIBAN" maxlength="34" class="input-large"
-                                                       placeholder="NÚMERO BANCARIO EUROPEO"
-                                                       value="">
+                                                       readonly = "readonly"
+                                                       value="<%= poliza.getIban() %>">
                                             </div>
                                         </div>
                                                                                         

@@ -56,11 +56,12 @@ public class AjaxRecibos extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         
         switch (accion) {
-            case "PolizasByID":
+            case "RecibosByPoliza":
                 {
-                    SQLPolizas myPoliza = new SQLPolizas(xDataBase);
-                    List<TuplasPolizas> ListaPolizas = myPoliza.getTuplasPolizas(Integer.parseInt(pagina),Integer.parseInt(size));
-                    response.getWriter().write(gson.toJson(ListaPolizas));
+                    SQLRecibos myRecibo = new SQLRecibos(xDataBase);
+                    String xIDPoliza = request.getParameter("xIDPoliza");
+                    TuplasRecibos ListaRecibos = myRecibo.getReciboByPolizaID(Integer.parseInt(xIDPoliza));
+                    response.getWriter().write(gson.toJson(ListaRecibos));
                     break;
                 }
             case "PolizasByBuscar":

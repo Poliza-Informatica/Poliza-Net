@@ -161,6 +161,19 @@ function ShowPoliza(numFila)
     window.location.href = 'ShowPoliza.jsp?xIDPoliza='+oCelda.innerHTML;
 }
 
+/**
+ * 
+ * @param {type} numFila
+ * @returns {undefined}
+ */
+function ShowListaRecibos(numFila)
+{
+    var xID='ofila'+numFila;
+    var oCelda = document.getElementById(xID).cells[0];
+    
+    window.location.href = 'BrowseRecibosClientes.jsp?xIDPoliza='+oCelda.innerHTML;
+}
+
 /*
  * Leer lista de polizas de un NIF
  * 

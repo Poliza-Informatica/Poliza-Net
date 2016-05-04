@@ -47,7 +47,52 @@ public class SQLRecibos extends PoolConn {
         
             while (rs.next()) {
                 
-                 new TuplasRecibos.
+                 tr = new TuplasRecibos.
+                        Builder(rs.getString("id")).
+                        Id_poliza(rs.getString("id_poliza")).
+                        N_recibo(rs.getString("n_recibo")).
+                        Efecto(rs.getString("efecto")).
+                        Vencimiento(rs.getString("vencimiento")).
+                        build();
+                
+            }
+            
+        } catch (SQLException e) {
+
+            System.out.println("recibos Connection Failed!");
+
+        } finally {
+
+            conn.close();
+        }
+        
+        return tr;
+    }
+    
+    
+    /**
+     * Leer una lista de recibos a través de su número de póliza ordenado por ID
+     * @param xIDPoliza
+     * @return
+     * @throws SQLException 
+     */
+    public TuplasRecibos getReciboByPolizaID(int xIDPoliza) throws SQLException{
+        
+        Connection conn = PGconectar();
+        TuplasRecibos tr = null;
+        
+        try {
+         
+            // vista materializada mwpolizas_asegurado
+            PreparedStatement st = conn.prepareStatement("SELECT * from recibos where id_poliza = ? order by id");
+            st.setInt(1, xIDPoliza);
+            
+            
+            ResultSet rs = st.executeQuery();
+        
+            while (rs.next()) {
+                
+                 tr = new TuplasRecibos.
                         Builder(rs.getString("id")).
                         Id_poliza(rs.getString("id_poliza")).
                         N_recibo(rs.getString("n_recibo")).

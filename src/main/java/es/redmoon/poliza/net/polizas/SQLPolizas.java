@@ -174,6 +174,8 @@ public class SQLPolizas extends PoolConn {
                         Cia_name(rs.getString("cia_name")).
                         En_calidad_de(rs.getString("en_calidad_de")).
                         Riesgo_asegurado(rs.getString("riesgo_asegurado")).
+                        Email(rs.getString("email")).
+                        Tlf1(rs.getString("tlf1")).
                         Iban(rs.getString("iban")).
                         build();
                 
