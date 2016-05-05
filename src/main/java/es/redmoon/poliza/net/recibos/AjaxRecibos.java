@@ -60,7 +60,8 @@ public class AjaxRecibos extends HttpServlet {
                 {
                     SQLRecibos myRecibo = new SQLRecibos(xDataBase);
                     String xIDPoliza = request.getParameter("xIDPoliza");
-                    TuplasRecibos ListaRecibos = myRecibo.getReciboByPolizaID(Integer.parseInt(xIDPoliza));
+                    //System.out.print(xIDPoliza);
+                    List<TuplasRecibos> ListaRecibos = myRecibo.getReciboByPolizaID(Integer.parseInt(xIDPoliza));
                     response.getWriter().write(gson.toJson(ListaRecibos));
                     break;
                 }

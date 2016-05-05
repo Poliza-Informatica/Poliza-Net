@@ -76,6 +76,7 @@ function CrearTablaPolizas(myJson)
     deleteLastRow("oTabla");
     
     //alert(myJson);
+    //alert(obj.length - 1);
     
     for (j = 0; j <= (obj.length - 1); j++)
     {

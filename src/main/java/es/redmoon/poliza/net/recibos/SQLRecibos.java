@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
 
 /**
@@ -76,10 +78,10 @@ public class SQLRecibos extends PoolConn {
      * @return
      * @throws SQLException 
      */
-    public TuplasRecibos getReciboByPolizaID(int xIDPoliza) throws SQLException{
+    public List<TuplasRecibos> getReciboByPolizaID(int xIDPoliza) throws SQLException{
         
         Connection conn = PGconectar();
-        TuplasRecibos tr = null;
+        List<TuplasRecibos> tr = new ArrayList<>();
         
         try {
          
@@ -92,14 +94,17 @@ public class SQLRecibos extends PoolConn {
         
             while (rs.next()) {
                 
-                 tr = new TuplasRecibos.
+                 tr.add( new TuplasRecibos.
                         Builder(rs.getString("id")).
                         Id_poliza(rs.getString("id_poliza")).
                         N_recibo(rs.getString("n_recibo")).
-                        Efecto(rs.getString("efecto")).
-                        Vencimiento(rs.getString("vencimiento")).
-                        build();
-                
+                        Efecto(rs.getString("fecha_efecto")).
+                        Vencimiento(rs.getString("fecha_vencimiento")).
+                        Estado_cliente(rs.getString("estado_cliente")).
+                        Total_recibo(rs.getString("total_recibo")).
+                        Agente(rs.getString("gestor")).
+                        build()
+                );
             }
             
         } catch (SQLException e) {

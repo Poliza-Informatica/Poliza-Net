@@ -80,7 +80,7 @@ function CrearTablaRecibos(myJson)
     
     for (j = 0; j <= (obj.length - 1); j++)
     {
-        //alert(obj[j].Descripcion);
+        //alert(obj[j].n_recibo);
         var row = tabla.AddRowTable(j + 1);
 
         //tabla.AddRowCellText(row, 0, obj[j].id);
@@ -88,9 +88,9 @@ function CrearTablaRecibos(myJson)
         celda.setAttribute('hidden', 'true'); // ocultar la columna ID
         tabla.AddRowCellText(row, 1, obj[j].n_recibo );
         tabla.AddRowCellText(row, 2, obj[j].estado_cliente );
-        tabla.AddRowCellText(row, 3, obj[j].fecha_efecto );
+        tabla.AddRowCellText(row, 3, obj[j].efecto );
         tabla.AddRowCellText(row, 4, obj[j].total_recibo );
-        tabla.AddRowCellText(row, 5, obj[j].gestor );
+        tabla.AddRowCellText(row, 5, obj[j].agente );
         
         tabla.AddRowCellText(row, 6,
         '<ul class="table-controls">'+
@@ -108,9 +108,11 @@ function CrearTablaRecibos(myJson)
 }
 
 
-//
-// Mostrar los datos de una póliza
-//
+/**
+ * Mostrar los datos de un recibo
+ * @param {type} numFila
+ * @returns {undefined}
+ */
 function ShowRecibo(numFila)
 {
     var xID='ofila'+numFila;
