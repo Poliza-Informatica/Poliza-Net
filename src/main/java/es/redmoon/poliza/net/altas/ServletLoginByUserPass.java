@@ -40,6 +40,8 @@ public class ServletLoginByUserPass extends HttpServlet {
         String xUser = request.getParameter("xUser");
         String xPass = request.getParameter("xPass");
         
+        System.out.print(xUser+"passw"+xPass);
+        
         // Leer los datos de procedencia HOST, IP, URL
         String IP= request.getRemoteAddr();
         String HOST= request.getRemoteHost();
