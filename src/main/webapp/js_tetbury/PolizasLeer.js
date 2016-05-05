@@ -167,6 +167,19 @@ function ShowPoliza(numFila)
  * @param {type} numFila
  * @returns {undefined}
  */
+function ShowListaSiniestros(numFila)
+{
+    var xID='ofila'+numFila;
+    var oCelda = document.getElementById(xID).cells[0];
+    
+    window.location.href = 'BrowseSiniestrosPoliza.jsp?xIDPoliza='+oCelda.innerHTML;
+}
+
+/**
+ * 
+ * @param {type} numFila
+ * @returns {undefined}
+ */
 function ShowListaRecibos(numFila)
 {
     var xID='ofila'+numFila;

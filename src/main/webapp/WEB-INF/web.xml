@@ -13,16 +13,16 @@
         <servlet-class>es.redmoon.poliza.net.recibos.AjaxRecibos</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletSesionFacebook</servlet-name>
-        <servlet-class>es.redmoon.poliza.net.session.ServletSesionFacebook</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletAltaIdentidadFederada</servlet-name>
-        <servlet-class>es.redmoon.poliza.net.alta.ServletAltaIdentidadFederada</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ServletLoginFacebook</servlet-name>
         <servlet-class>es.redmoon.poliza.net.altas.ServletLoginFacebook</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AjaxSiniestros</servlet-name>
+        <servlet-class>es.redmoon.poliza.net.siniestros.AjaxSiniestros</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletLoginByUserPass</servlet-name>
+        <servlet-class>es.redmoon.poliza.net.altas.ServletLoginByUserPass</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ServletSesion</servlet-name>
@@ -37,16 +37,16 @@
         <url-pattern>/AjaxRecibos.servlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletSesionFacebook</servlet-name>
-        <url-pattern>/ServletSesionFacebook.servlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletAltaIdentidadFederada</servlet-name>
-        <url-pattern>/ServletAltaIdentidadFederada.servlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ServletLoginFacebook</servlet-name>
         <url-pattern>/ServletLoginFacebook.servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AjaxSiniestros</servlet-name>
+        <url-pattern>/AjaxSiniestros.servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletLoginByUserPass</servlet-name>
+        <url-pattern>/ServletLoginByUserPass.servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

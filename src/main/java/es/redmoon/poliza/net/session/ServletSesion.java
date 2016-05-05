@@ -54,7 +54,7 @@ public class ServletSesion extends HttpServlet {
             // Obtenemos los valores de sesión
             SQLSesion mySesion= new SQLSesion(xDatabaseName);
         
-            if (mySesion.CheckLogin(xUser, xPass))
+            if (mySesion.GetDataSessionUser(xUser))
             {
                 // Asignamos los valores de sesión
                 HttpSession sesion = request.getSession();

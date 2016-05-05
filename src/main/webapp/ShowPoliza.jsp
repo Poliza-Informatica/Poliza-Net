@@ -251,10 +251,6 @@
                                             </div>
                                         </div>
                                                                                         
-                                        <div class="form-actions align-right">
-
-                                            <input class="btn btn-primary" type="submit" value="guardar" />
-                                        </div>
                                     </fieldset>
                             </form>
                         </div>

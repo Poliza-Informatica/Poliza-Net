@@ -259,6 +259,56 @@ public class SQLSesionAltas extends PoolConnAltas {
         
         
     }
+
+    /**
+     * Login a través de usuario y contraseña
+     * @param xUser
+     * @param xPass
+     * @return 
+     */
+    public boolean CheckLogin(String xUser, String xPass) throws SQLException {
+        
+        Connection conn = PGconectar();
+        
+        
+        try {
+            
+          PreparedStatement st = 
+          conn.prepareStatement("SELECT ip,databasename from customers_users where mail=? and passwd=?");
+          st.setString(1, xUser.trim());
+          st.setString(2, xPass.trim());
+            
+            ResultSet rs = st.executeQuery();
+
+                if (rs.next()) {
+
+                    this.xMail=xUser;
+                    this.ip=rs.getString("ip");
+                    this.databasename=rs.getString("databasename");
+
+
+                }
+                else
+                {
+                    //System.err.println("Error en login usuario sql session:"+xUser);
+                    conn.close();
+                    AccionesErrorLogin();
+                    return false;
+                }
+                   
+           rs.close();
+        }
+        catch (SQLException e) {
+            System.out.println("customers_users Connection Failed!");
+            conn.close();
+            return false;
+        }
+        finally{
+            conn.close();
+        }
+        
+        return true;
+    }
     
     
 }

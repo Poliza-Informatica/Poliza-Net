@@ -36,7 +36,6 @@ public class SQLSesion extends PoolConn {
     private String Database;
     private String NumeroMaxUsuarios;
     private String Fecha;
-    private String myCertHash;
     private byte[] myCertificado;
     private int tipo_de_cuenta;
     
@@ -91,7 +90,6 @@ public class SQLSesion extends PoolConn {
                     this.NombreUsuario=rs.getString("nombre");
                     this.UserTipo=rs.getString("tipo");
                     this.myCertificado=rs.getBytes("certificado");
-                    this.myCertHash=rs.getString("certhash");
                     this.permisos=(StringUtils.isEmpty(rs.getString("permisos"))) ? "{\"panel\":\"yes\",\"clientes\":\"yes\",\"ventas\":\"yes\",\"proveedores\":\"yes\",\"compras\":\"yes\",\"nominas\":\"no\",\"bancos\":\"no\",\"contabilidad\":\"no\"}": rs.getString("permisos");
                     
                     // Parte de las variables de sesión de la tabla DatosPer
@@ -126,14 +124,13 @@ public class SQLSesion extends PoolConn {
     }
     
     /**
-     * Hacer login en la aplicación mediante el email y la password de la BBDD
+     * Ajustar los valores de sesión de un usuario a través de su email
      * @param xUser
-     * @param xPass
      * @return
      * @throws SQLException
      * @throws NamingException 
      */
-    public boolean CheckLogin(String xUser, String xPass) throws SQLException, NamingException
+    public boolean GetDataSessionUser(String xUser) throws SQLException, NamingException
     {
         
         try (Connection conn = PGconectar()) {
@@ -152,7 +149,6 @@ public class SQLSesion extends PoolConn {
                     this.NombreUsuario=rs.getString("nombre");
                     this.UserTipo=rs.getString("tipo");
                     this.myCertificado=rs.getBytes("certificado");
-                    this.myCertHash=xPass;
                     this.permisos=(StringUtils.isEmpty(rs.getString("permisos"))) ? "{\"panel\":\"yes\",\"clientes\":\"yes\",\"ventas\":\"yes\",\"proveedores\":\"yes\"}": rs.getString("permisos");
                     
                     // Parte de las variables de sesión de la tabla DatosPer
@@ -480,10 +476,6 @@ public class SQLSesion extends PoolConn {
 
     public String getIndexacion() {
         return Indexacion;
-    }
-
-    public String getMyCertHash() {
-        return myCertHash;
     }
 
     public byte[] getMyCertificado() {
