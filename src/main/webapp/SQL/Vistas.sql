@@ -76,9 +76,9 @@ create or replace view vw () as select from where
 
 -- TuplasRecibosClientes
 create or replace view vwrecibos_clientes (id, id_poliza,n_recibo,efecto,vencimiento,prima_neta,total_recibo,forma_pago,canal_pago,
-    tipo, estado_cliente,fecha_cobro,estado_cia,fecha_estado_cia,nif) 
-as select R.id,R.id_poliza,R.n_recibo,R.efecto,R.vencimiento,R.prima_neta,R.total_recibo,R.forma_pago,R.canal_pago,
-    R.estado_cliente,R.fecha_cobro,R.estado_cia,R.fecha_estado_cia,P.nif
-from recibos R, polizas P
+    tipo, estado_cliente,fecha_estado_cliente,estado_cia,fecha_estado_cia,nif,riesgo_asegurado,poliza,nombre,cia_name) 
+as select R.id,R.id_poliza,R.n_recibo,R.fecha_efecto,R.fecha_vencimiento,R.prima_neta,R.total_recibo,R.forma_pago,R.canal_pago,
+    R.tipo,R.estado_cliente,R.fecha_estado_cliente,R.estado_cia,R.fecha_estado_cia,P.nif,P.riesgo_asegurado,P.poliza,P.nombre,P.cia_name
+from recibos R, mwpolizas_asegurado P
 where R.id_poliza = P.id;
 

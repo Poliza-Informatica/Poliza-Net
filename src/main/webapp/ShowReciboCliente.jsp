@@ -4,12 +4,13 @@
     Author     : antonio
 --%>
 
+<%@page import="es.redmoon.poliza.net.recibos.TuplasVWrecibos_clientes"%>
+<%@page import="es.redmoon.poliza.net.recibos.TuplasRecibos"%>
 <%@include file="sesion.jsp" %>
 <%@page import="java.util.List"%>
-<%@page import="es.redmoon.poliza.net.polizas.TuplasPolizasMV"%>
-<%@page import="es.redmoon.poliza.net.polizas.SQLPolizas"%>
+<%@page import="es.redmoon.poliza.net.recibos.SQLRecibos"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="poliza" class="es.redmoon.poliza.net.polizas.BeanPolizasMV" scope="session"/>
+<jsp:useBean id="recibo" class="es.redmoon.poliza.net.recibos.BeanTuplasVWrecibos_clientes" scope="session"/>
 <!DOCTYPE html>
 <html>
 
@@ -130,8 +131,8 @@
                     <!-- Breadcrumbs line -->
                     <div class="crumbs">
                         <ul id="breadcrumbs" class="breadcrumb"> 
-                            <li><a href="BrowsePolizasInit.jsp">Lista de pólizas</a></li>
-                            <li class="active"><a href="#">Datos del contrato</a></li>
+                            <li><a href="#">Lista de pólizas</a></li>
+                            <li class="active"><a href="#">Datos del recibo</a></li>
                             <!--<li class="active"><a href="calendar.html" title="">Calendar</a></li>-->
                         </ul>
 
@@ -141,32 +142,38 @@
                     </div>
                     <!-- /breadcrumbs line -->
 
+                    <%
+                        String database = (String) sesion.getAttribute("xDataBaseName");
+                        String xIDRecibo = request.getParameter("xIDRecibo");
+                        
+                        if (xIDRecibo != null && !xIDRecibo.isEmpty()) {
+                            SQLRecibos myRecibo = new SQLRecibos(database);
+                            TuplasVWrecibos_clientes myTupla = myRecibo.getReciboByID(Integer.parseInt(xIDRecibo));
+                            recibo.setId(myTupla.getId());
+                            recibo.setRiesgo_asegurado(myTupla.getRiesgo_asegurado());
+                            recibo.setPoliza(myTupla.getPoliza());
+                            recibo.setCia_name(myTupla.getCia_name());
+                            recibo.setTotal_recibo(myTupla.getTotal_recibo());
+                            recibo.setNombre(myTupla.getNombre());
+                            recibo.setEfecto(myTupla.getEfecto());
+                            
+                        } else {
+                            recibo.setId("0");
+                            
+                        }
+                    %>
+                    
                     <!-- Page header -->
                     <div class="page-header">
                         <div class="page-title">
 
-                            <h5 id="xTitulo">Datos del contrato</h5>
+                            <h5 id="xTitulo">Datos del recibo <%= recibo.getRiesgo_asegurado() %></h5>
 
                         </div>			    	
                     </div>
                     <!-- /page header -->
 
-                    <%
-                        String database = (String) sesion.getAttribute("xDataBaseName");
-                        String xIDRecibo = request.getParameter("xIDRecibo");
-                        /*
-                        if (xIDPoliza != null && !xIDPoliza.isEmpty()) {
-                            SQLPolizas myPoliza = new SQLPolizas(database);
-                            TuplasPolizasMV myTupla = myPoliza.getTuplaByIDFromMVpolizas_asegurado(Integer.parseInt(xIDPoliza));
-                            poliza.setId(myTupla.getId());
-                            poliza.setNif(myTupla.getNif());
-                            poliza.setNombre(myTupla.getNombre());
-                        } else {
-                            poliza.setId("0");
-                            poliza.setNif("");
-                            poliza.setNombre("");
-                        }*/
-                    %>
+                    
                     <div class="row-fluid">
 
                         <div class="span12">
@@ -178,14 +185,14 @@
                                         <div class="navbar-inner"><h6 id="xTitulo2">Usuario :<%= sesion.getAttribute("xUser")%> Rol : <%= sesion.getAttribute("UserTipo")%></h6></div></div>
 
                                     <fieldset>
-                                        <input type="hidden" name="xIDPoliza" id="xIDPoliza" value="<%= poliza.getId()%>">
+                                        <input type="hidden" name="xIDPoliza" id="xIDPoliza" value="<%= recibo.getId()%>">
 
                                         <div class="control-group">
                                             <label class="control-label" for="Riesgo">Riesgo asegurado:</label>
                                             <div class="controls">
-                                                <input type="text" name="xRiesgo" maxlength="60" class="span12"
+                                                <input type="text" name="xRiesgo" maxlength="40" class="span12"
                                                        readonly = "readonly"
-                                                       value="<%= poliza.getRiesgo_asegurado()%>">
+                                                       value="<%= recibo.getRiesgo_asegurado()%>">
                                             </div>
 
                                         </div>
@@ -193,9 +200,9 @@
                                         <div class="control-group">
                                             <label class="control-label" for="CiaName">Compañía:</label>
                                             <div class="controls">
-                                                <input type="text" name="CiaName" maxlength="60" class="span12"
+                                                <input type="text" name="CiaName" maxlength="40" class="span12"
                                                        readonly = "readonly"
-                                                       value="<%= poliza.getCia_name()%>">
+                                                       value="<%= recibo.getCia_name()%>">
                                             </div>
 
                                         </div>
@@ -203,61 +210,41 @@
                                         <div class="control-group">
                                             <label class="control-label" for="Poliza">Póliza:</label>
                                             <div class="controls">
-                                                <input type="text" name="Poliza" maxlength="60" class="span12"
+                                                <input type="text" name="Poliza" maxlength="40" class="span12"
                                                        readonly = "readonly"
-                                                       value="<%= poliza.getPoliza()%>">
+                                                       value="<%= recibo.getPoliza()%>">
                                             </div>
 
-                                        </div>
-                                            
-                                        <div class="control-group">
-                                            <label class="control-label" for="NIF">NIF/CIF:</label>
-                                            <div class="controls">
-                                                <input type="text" name="xNIF" id="xNIF" maxlength="10" class="input-medium"
-                                                       value="<%= poliza.getNif()%>">
-                                            </div>
                                         </div>
 
                                         <div class="control-group">
                                             <label class="control-label" for="Razonsocial">Tomador:</label>
                                             <div class="controls">
-                                                <input type="text" name="xNombre" maxlength="60" class="span12"
-                                                       required="required"
-                                                       value="<%= poliza.getNombre()%>">
+                                                <input type="text" name="xNombre" maxlength="40" class="span12"
+                                                       readonly = "readonly"
+                                                       value="<%= recibo.getNombre()%>">
                                             </div>
 
                                         </div>
 
                                         <div class="control-group">
-                                            <label class="control-label" for="Móvil">Teléfono/Móvil:</label>
+                                            <label class="control-label" for="efecto">fecha efecto:</label>
                                             <div class="controls">
-                                                <input type="text" name="xMovil" maxlength="10" class="input-medium"
-                                                       value="">
+                                                <input type="text" name="efecto" maxlength="40" class="span12"
+                                                       readonly = "readonly"
+                                                       value="<%= recibo.getEfecto() %>">
                                             </div>
                                         </div>
 
                                         <div class="control-group">
-                                            <label class="control-label" for="eMailF">e-Mail:</label>
+                                            <label class="control-label" for="importe">Importe recibo</label>
                                             <div class="controls">
-                                                <input type="email" name="xMail" maxlength="60"  class="span12"
-                                                       placeholder="sumail@suisp.es" 
-                                                       value="">
-                                            </div>
-                                        </div>
-
-                                        <div class="control-group">
-                                            <label class="control-label" for="iban">IBAN:</label>
-                                            <div class="controls">
-                                                <input type="text" name="xIBAN" maxlength="34" class="input-large"
-                                                       placeholder="NÚMERO BANCARIO EUROPEO"
-                                                       value="">
+                                                <input type="text" name="importe" maxlength="40"  class="span12"
+                                                       readonly = "readonly"
+                                                       value="<%= recibo.getTotal_recibo() %>">
                                             </div>
                                         </div>
                                                                                         
-                                        <div class="form-actions align-right">
-
-                                            <input class="btn btn-primary" type="submit" value="guardar" />
-                                        </div>
                                     </fieldset>
                             </form>
                         </div>

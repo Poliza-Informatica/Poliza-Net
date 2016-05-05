@@ -73,7 +73,9 @@
         </div>
 <!-- /fixed top -->
 
-
+<%
+                   String xIDPoliza = request.getParameter("xIDPoliza");
+%>
 <!-- Content container -->
 <div id="container">
 
@@ -131,9 +133,7 @@
             <div class="page-header">
                 <div class="page-title">
 
-                    <h5 id="conexion">Cartera de pólizas <%= sesion.getAttribute("NIF") %> <%= sesion.getAttribute("RazonSocial") %>
-                        <%= sesion.getAttribute("FormaJuridica") %></h5>
-                    
+                   <h5 id="conexion">Recibos de la póliza <%= xIDPoliza %></h5> 
                    
                 </div>			    	
             </div>
@@ -147,13 +147,12 @@
                 </div>                            
 
             </div>
-               <%
-                   String xIDPoliza = request.getParameter("xIDPoliza");
-               %>
+               
             <ul class="toolbar">
                 <li><a title="" href="#"><i class="icon-plus"></i>
                         <span>Opción</span></a>
                     <input type="text" name="xIDPoliza"  id="xIDPoliza" hidden="hidden"
+                           readonly = "readonly"
                            value="<%= xIDPoliza %>">
                 </li>
             </ul>
@@ -166,10 +165,9 @@
                     <tr>
                         <td width="1%" hidden="hidden"><strong>id</strong></td>
                         <td width="8%"><strong>Número</strong></td>
-                        <td width="35%"><strong>Estado</strong></td>
+                        <td width="5%"><strong>Estado</strong></td>
                         <td width="5%"><strong>Efecto</strong></td>
                         <td width="5%"><strong>Importe</strong></td>
-                        <td width="20%"><strong>gestor</strong></td>
                         <td width="15%"></td>
                     </tr>
             </table>

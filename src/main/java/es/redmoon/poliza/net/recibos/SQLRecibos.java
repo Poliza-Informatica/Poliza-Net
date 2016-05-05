@@ -28,20 +28,20 @@ public class SQLRecibos extends PoolConn {
     }
     
     /**
-     * Leer un recibo por su ID
+     * Leer un recibo por su ID desde la vista vwrecibos_clientes
      * @param xIDRecibo
      * @return
      * @throws SQLException 
      */
-    public TuplasRecibos getReciboByID(int xIDRecibo) throws SQLException{
+    public TuplasVWrecibos_clientes getReciboByID(int xIDRecibo) throws SQLException{
         
         Connection conn = PGconectar();
-        TuplasRecibos tr = null;
+        TuplasVWrecibos_clientes tr = null;
         
         try {
          
             // vista materializada mwpolizas_asegurado
-            PreparedStatement st = conn.prepareStatement("SELECT * from recibos where id = ?");
+            PreparedStatement st = conn.prepareStatement("SELECT * from vwrecibos_clientes where id = ?");
             st.setInt(1, xIDRecibo);
             
             
@@ -49,12 +49,18 @@ public class SQLRecibos extends PoolConn {
         
             while (rs.next()) {
                 
-                 tr = new TuplasRecibos.
-                        Builder(rs.getString("id")).
-                        Id_poliza(rs.getString("id_poliza")).
-                        N_recibo(rs.getString("n_recibo")).
-                        Efecto(rs.getString("efecto")).
-                        Vencimiento(rs.getString("vencimiento")).
+                 tr = new TuplasVWrecibos_clientes.
+                         Builder(rs.getString("id")).
+                         Id_poliza(rs.getString("id_poliza")).
+                         N_recibo(rs.getString("n_recibo")).
+                         Efecto(rs.getString("efecto")).
+                         Vencimiento(rs.getString("vencimiento")).
+                         Total_recibo(rs.getString("total_recibo")).
+                         Nif(rs.getString("nif")).
+                         Nombre(rs.getString("nombre")).
+                         Poliza(rs.getString("poliza")).
+                         Riesgo_asegurado(rs.getString("riesgo_asegurado")).
+                         Cia_name(rs.getString("cia_name")).
                         build();
                 
             }
@@ -74,6 +80,7 @@ public class SQLRecibos extends PoolConn {
     
     /**
      * Leer una lista de recibos a través de su número de póliza ordenado por ID
+     * vista BrowseRecibosClientes.jsp
      * @param xIDPoliza
      * @return
      * @throws SQLException 
@@ -86,7 +93,7 @@ public class SQLRecibos extends PoolConn {
         try {
          
             // vista materializada mwpolizas_asegurado
-            PreparedStatement st = conn.prepareStatement("SELECT * from recibos where id_poliza = ? order by id");
+            PreparedStatement st = conn.prepareStatement("SELECT * from vwrecibos_clientes where id_poliza = ? order by id");
             st.setInt(1, xIDPoliza);
             
             
@@ -98,11 +105,11 @@ public class SQLRecibos extends PoolConn {
                         Builder(rs.getString("id")).
                         Id_poliza(rs.getString("id_poliza")).
                         N_recibo(rs.getString("n_recibo")).
-                        Efecto(rs.getString("fecha_efecto")).
-                        Vencimiento(rs.getString("fecha_vencimiento")).
+                        Efecto(rs.getString("efecto")).
+                        Vencimiento(rs.getString("vencimiento")).
                         Estado_cliente(rs.getString("estado_cliente")).
                         Total_recibo(rs.getString("total_recibo")).
-                        Agente(rs.getString("gestor")).
+                        Agente(rs.getString("riesgo_asegurado")).
                         build()
                 );
             }

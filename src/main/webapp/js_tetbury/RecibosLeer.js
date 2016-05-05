@@ -90,13 +90,10 @@ function CrearTablaRecibos(myJson)
         tabla.AddRowCellText(row, 2, obj[j].estado_cliente );
         tabla.AddRowCellText(row, 3, obj[j].efecto );
         tabla.AddRowCellText(row, 4, obj[j].total_recibo );
-        tabla.AddRowCellText(row, 5, obj[j].agente );
         
-        tabla.AddRowCellText(row, 6,
+        tabla.AddRowCellText(row, 5,
         '<ul class="table-controls">'+
         '<li><a onclick="ShowRecibo('+(j+1)+');" class="btn tip" title="Ver Recibo"><i class="icon-eye-open"></i></a> </li>'+
-        '<li><a onclick="ShowListaRecibos('+(j+1)+');" class="btn tip" title="Ver Recibos"><i class="icon-money"></i></a> </li>'+
-        '<li><a onclick="ShowListaSiniestros('+(j+1)+');" class="btn tip" title="Ver Siniestros"><i class="icon-bell"></i></a> </li>'+
         '</ul>');
     
         window.fila++;
@@ -118,6 +115,6 @@ function ShowRecibo(numFila)
     var xID='ofila'+numFila;
     var oCelda = document.getElementById(xID).cells[0];
     
-    window.location.href = 'ShowRecibo.jsp?xIDRecibo='+oCelda.innerHTML;
+    window.location.href = 'ShowReciboCliente.jsp?xIDRecibo='+oCelda.innerHTML;
 }
 

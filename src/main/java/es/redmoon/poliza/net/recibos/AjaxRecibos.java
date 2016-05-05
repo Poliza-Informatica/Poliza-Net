@@ -5,10 +5,6 @@
 package es.redmoon.poliza.net.recibos;
 
 import es.redmoon.poliza.net.polizas.AjaxPolizas;
-import es.redmoon.poliza.net.polizas.SQLPolizas;
-import es.redmoon.poliza.net.polizas.TuplasPolizasMV;
-import es.redmoon.poliza.net.polizas.TuplasPolizasBuscar;
-import es.redmoon.poliza.net.polizas.TuplasPolizas;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -65,40 +61,13 @@ public class AjaxRecibos extends HttpServlet {
                     response.getWriter().write(gson.toJson(ListaRecibos));
                     break;
                 }
-            case "PolizasByBuscar":
+            case "ReciboByID":
                 {
-                    SQLPolizas myPoliza = new SQLPolizas(xDataBase);
-                    String buscar = request.getParameter("xBuscar");
-                    List<TuplasPolizasBuscar> ListaPolizasBuscar = 
-                            myPoliza.getTuplasPolizasByBuscar(buscar.trim(), Integer.parseInt(pagina),Integer.parseInt(size));
-                    response.getWriter().write(gson.toJson(ListaPolizasBuscar));
-                    break;
-                }
-            case "PolizasByNIF":
-                {
-                    SQLPolizas myPoliza = new SQLPolizas(xDataBase);
-                    
-                    List<TuplasPolizasBuscar> ListaPolizasBuscar = 
-                            myPoliza.getTuplasPolizasByNIF(xNIF.trim(), Integer.parseInt(pagina),Integer.parseInt(size));
-                    response.getWriter().write(gson.toJson(ListaPolizasBuscar));
-                    break;
-                }
-            case "PolizasByRiesgo":
-                {
-                    SQLPolizas myPoliza = new SQLPolizas(xDataBase);
-                    String riesgo = request.getParameter("xRiesgo");
-                    List<TuplasPolizas> ListaPolizas = 
-                            myPoliza.getTuplasPolizasByRiesgo(riesgo.trim(), Integer.parseInt(pagina),Integer.parseInt(size));
-                    response.getWriter().write(gson.toJson(ListaPolizas));
-                    break;
-                }
-            case "IDFromMVpolizas_asegurado":
-                {
-                    SQLPolizas myPoliza = new SQLPolizas(xDataBase);
-                    String xIDPoliza = request.getParameter("xIDPoliza");
-                    TuplasPolizasMV tpPoliza = 
-                            myPoliza.getTuplaByIDFromMVpolizas_asegurado(Integer.parseInt(xIDPoliza));
-                    response.getWriter().write(gson.toJson(tpPoliza));
+                    SQLRecibos myRecibo = new SQLRecibos(xDataBase);
+                    String xIDRecibo = request.getParameter("xIDRecibo");
+                    TuplasVWrecibos_clientes myTupla = 
+                            myRecibo.getReciboByID(Integer.parseInt(xIDRecibo));
+                    response.getWriter().write(gson.toJson(myTupla));
                     break;
                 }
             default:
