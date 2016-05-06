@@ -83,8 +83,19 @@ public class ServletSesion extends HttpServlet {
                 sesion.setAttribute("Indexacion", mySesion.getIndexacion());
                 sesion.setAttribute("myHD", mySesion.getMyHD());
                 
-                // ir a index   
-                rd=request.getRequestDispatcher("BrowsePolizasClientes.jsp");
+                // vista de administrador
+                if (mySesion.getUserTipo().equalsIgnoreCase("administrador"))
+                {
+                    rd=request.getRequestDispatcher("BrowsePolizasAdmin.jsp");
+                }
+                // vista de clientes
+                else if (mySesion.getUserTipo().equalsIgnoreCase("cliente"))
+                {
+                    rd=request.getRequestDispatcher("BrowsePolizasClientes.jsp");
+                }
+                else
+                    rd=request.getRequestDispatcher("BrowsePolizasClientes.jsp");
+                
                 rd.forward(request, response);
             }
             else
