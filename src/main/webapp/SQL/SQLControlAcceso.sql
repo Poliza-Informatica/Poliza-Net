@@ -119,6 +119,7 @@ CREATE TABLE customers_users
     passdatabase            varchar(128),
     url_wellcome            varchar(512),
     url_site                varchar(512),
+    visibility_client       json,
     visibility_polizas      json,
     visibility_recibos      json,
     visibility_sinister     json,
