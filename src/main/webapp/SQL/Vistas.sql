@@ -63,6 +63,17 @@ drop materialized view mwpolizas_asegurado;
 
 
 
+--
+-- VISTA DE PÓLIZAS PARA LISTADOS
+--
+
+    create or replace view vw_lista_polizas (nif,nombre,poliza,documento_adhesion,efecto,riesgo,
+        gestor,mediador1,mediador2,cobrador,comercial,anulada, f_anulada)
+    AS SELECT I.nif,C.nombre,P.poliza,P.documento_adhesion,P.efecto,P.riesgo_asegurado,
+        P.gestor,P.mediador1,P.mediador2,P.cobrador,P.comercial,P.anulada, P.f_anulada
+    FROM Polizas P, Intervinientes I, mv_clientes C
+    WHERE P.id=I.id_poliza and I.en_calidad_de='TOMADOR' and c.nif=I.nif;
+
 
 
 /* ****************************************************

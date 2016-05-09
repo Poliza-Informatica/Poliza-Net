@@ -309,7 +309,7 @@ CREATE TABLE Productos
 -- ******************** CREATE INDEX users_search_idx ON users USING gin (first_name gin_trgm_ops, last_name gin_trgm_ops);
 
 --
--- Polizas
+-- Pólizas
 --
 CREATE TABLE polizas
 (
@@ -324,11 +324,13 @@ CREATE TABLE polizas
    forma_pago          varchar(10),
    canal_pago          varchar(10),
    iban                varchar(34),
-   gestor              varchar(50),
-   mediador1           varchar(50),
-   mediador2           varchar(50),
-   cobrador            varchar(50),
-   comercial           varchar(50),
+   gestor              varchar(6),
+   mediador1           varchar(6),
+   mediador2           varchar(6),
+   cobrador            varchar(6),
+   comercial           varchar(6),
+   anulada             char(1)        DEFAULT 'N'::bpchar,
+   f_anulada           varchar(20),
    primary key (id)
 );
 
