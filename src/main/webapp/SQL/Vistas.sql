@@ -42,15 +42,15 @@ select I.nif, C.razon_social, I.en_calidad_de, P.poliza,P.documento_adhesion,P.e
 -- vista de las polizas de un cliente agrupado
 --
 
-create or replace view vwpolizas_asegurado (nombre, nif,en_calidad_de, poliza,documento_adhesion,efecto,vencimiento,code_cia) 
-as select  C.nombre, I.nif, I.en_calidad_de, P.poliza,P.documento_adhesion,P.efecto,P.vencimiento,P.code_cia
+create or replace view vwpolizas_asegurado (nombre, nif,en_calidad_de, poliza,documento_adhesion,efecto,vencimiento,code_cia,producto,gestor,comercial) 
+as select  C.nombre, I.nif, I.en_calidad_de, P.poliza,P.documento_adhesion,P.efecto,P.vencimiento,P.code_cia,P.producto,P.gestor,P.comercial
 FROM Polizas P, Intervinientes I, mv_clientes C
 WHERE P.id=I.id_poliza and I.en_calidad_de='TOMADOR' and c.nif=I.nif;
 
 create materialized view mwpolizas_asegurado (id,nombre, nif,en_calidad_de, poliza,riesgo_asegurado,efecto,vencimiento,
-    cia_code,cia_name, iban,tlf1,tlf2,email, buscar) 
+    cia_code,cia_name, iban,tlf1,tlf2,email,producto,gestor,comercial, buscar) 
 as select  P.id,C.nombre, I.nif, I.en_calidad_de, P.poliza,P.riesgo_asegurado,P.efecto,P.vencimiento,P.code_cia,m.nombre,P.iban,
-C.telefono1,C.telefono2,C.mail,
+C.telefono1,C.telefono2,C.mail,P.producto,P.gestor,P.comercial,
 concat(C.nombre,' ', I.nif,' ', P.riesgo_asegurado)
 FROM Polizas P, Intervinientes I, mv_clientes C, Cias M
 WHERE P.id=I.id_poliza and I.en_calidad_de='TOMADOR' and c.nif=I.nif and P.code_cia=M.code;

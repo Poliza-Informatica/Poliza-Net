@@ -24,6 +24,10 @@
         <servlet-name>ServletLoginByUserPass</servlet-name>
         <servlet-class>es.redmoon.poliza.net.altas.ServletLoginByUserPass</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletpdfListadoPolizas</servlet-name>
+        <servlet-class>es.redmoon.poliza.net.polizas.ServletpdfListadoPolizas</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ServletSesion</servlet-name>
         <url-pattern>/ServletSesion.servlet</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>ServletLoginByUserPass</servlet-name>
         <url-pattern>/ServletLoginByUserPass.servlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletpdfListadoPolizas</servlet-name>
+        <url-pattern>/ServletpdfListadoPolizas.servlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

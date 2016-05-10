@@ -17,14 +17,11 @@ import com.lowagie.text.pdf.PdfWriter;
 import es.redmoon.poliza.net.session.PoolConn;
 import java.awt.Color;
 import java.io.ByteArrayOutputStream;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.NumberFormat;
 import java.util.Calendar;
-import java.util.Locale;
 import javax.naming.NamingException;
 
 /**
@@ -35,12 +32,7 @@ public class ListadoPolizas extends PoolConn {
 
     private final String version;
     private static final Font FUENTE_CUERPO = FontFactory.getFont(FontFactory.HELVETICA, 9, Font.NORMAL, Color.BLACK);
-    private BigDecimal SumaTotal= new BigDecimal(0);
-    private BigDecimal iva= new BigDecimal(0);
-    private BigDecimal Suma21iva= new BigDecimal(0);
-    private BigDecimal Suma10iva= new BigDecimal(0);
-    private BigDecimal Suma4iva= new BigDecimal(0);
-    private BigDecimal SumaBases= new BigDecimal(0);
+    
     private PdfWriter writer;
     private Document document;
     private ByteArrayOutputStream PDFenMemoria = new ByteArrayOutputStream();
@@ -63,28 +55,18 @@ public class ListadoPolizas extends PoolConn {
      * @throws DocumentException
      * @throws SQLException 
      */
-    public byte[] makeListado(String xTipo, String xYear, String xTrimestre, String xNIF, String xNombre) throws DocumentException, SQLException
+    public byte[] makeListado() throws DocumentException, SQLException
     {
         String sentencia;
-        if ("V".equals(xTipo))
-            sentencia="select T.base*T.iva/100 as impIVA,T.id_bill,T.iva,B.fecha,B.numero,B.nif,B.nombre,T.base,T.base+(T.base*T.iva/100) as total from total_bill T, vwhead_bill B \n" +
-            "where B.id=T.id_bill and B.fiscal_year='"+xYear+"' and B.trimestre='"+xTrimestre+"'\n" +
-            "order by T.id_bill";
-        else
-            sentencia="select get_BaseImponible(importe, por_dto, unidades) as base, get_IVAImporte(importe, por_dto, unidades, por_vat) as impiva, por_vat as iva,\n" +
-            "total, fecha,\n" +
-            "v.id::char as numero,nif,nombre\n" +
-            "from row_invoices_received r, vw_recibidas v\n" +
-            "where r.id_inre = v.id\n" +
-            "and fiscal_year='"+xYear+"' and trimestre='"+xTrimestre+"'\n" +
-            "order by v.id";
         
-        sentencia="select * from vw_lista_polizas";
+        sentencia="select * from mwpolizas_asegurado";
         
         CreatePDF();
-        HeaderTable(xTipo, xYear, xTrimestre, xNIF, xNombre);
+        
+        HeaderTable();
+        
         CuerpoTable(sentencia);
-        Totales();
+
         Grabar();
         return PDFenMemoria.toByteArray();
     }
@@ -112,7 +94,7 @@ public class ListadoPolizas extends PoolConn {
      * @param xNIF
      * @param xNombre 
      */
-    private void HeaderTable(String xTipo, String xYear, String xTrimestre, String xNIF, String xNombre)
+    private void HeaderTable()
     {
         Calendar javaCalendar = null;
         String currentDate = "";
@@ -123,18 +105,14 @@ public class ListadoPolizas extends PoolConn {
                 "/" + (javaCalendar.get(Calendar.MONTH) + 1) + 
                 "/" + javaCalendar.get(Calendar.DATE);
         
-        float[] widths1 = { 0.5f, 1f, 1f, 1f, 3f, 1f, 1f, 1f, 1f, 1f};
+        float[] widths1 = { 1f, 1f, 1f, 1f, 3f, 2f, 1f, 1f, 0.7f, 0.7f};
         
         this.table = new PdfPTable(widths1);
         
         table.setWidthPercentage(100);
         table.setHeaderRows(3);
         
-        String titulo;
-        if ("V".equals(xTipo))
-            titulo = "Listado de Pólizas "+xYear+" Trimestre "+xTrimestre;
-        else
-            titulo = "Listado de Pólizas "+xYear+" Trimestre "+xTrimestre;
+        String titulo="Listado de Pólizas";
         
         PdfPCell h1 = new PdfPCell(new Paragraph(titulo));
         
@@ -144,7 +122,7 @@ public class ListadoPolizas extends PoolConn {
         
         table.addCell(h1);
         
-        PdfPCell h2 = new PdfPCell(new Paragraph(xNIF+" "+xNombre+" a fecha "+currentDate));
+        PdfPCell h2 = new PdfPCell(new Paragraph(" A fecha "+currentDate));
         h2.setGrayFill(0.7f);
         h2.setColspan(10);
         h2.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -154,13 +132,13 @@ public class ListadoPolizas extends PoolConn {
         PdfPCell h21 = new PdfPCell(new Paragraph("Póliza"));
         PdfPCell h22 = new PdfPCell(new Paragraph("Producto"));
         PdfPCell h23 = new PdfPCell(new Paragraph("NIF/CIF"));
-        PdfPCell h24 = new PdfPCell(new Paragraph("Tomador"));
-        PdfPCell h25 = new PdfPCell(new Paragraph("Riesgo Asegurado"));
-        PdfPCell h26 = new PdfPCell(new Paragraph("Efecto"));
-        PdfPCell h27 = new PdfPCell(new Paragraph("IVA 21%"));
-        PdfPCell h28 = new PdfPCell(new Paragraph("IVA 10%"));
-        PdfPCell h29 = new PdfPCell(new Paragraph("IVA  4%"));
-        PdfPCell h20 = new PdfPCell(new Paragraph("Total"));
+        PdfPCell h24 = new PdfPCell(new Paragraph("e-mail"));
+        PdfPCell h25 = new PdfPCell(new Paragraph("Tomador"));
+        PdfPCell h26 = new PdfPCell(new Paragraph("Riesgo Asegurado"));
+        PdfPCell h27 = new PdfPCell(new Paragraph("Efecto"));
+        PdfPCell h28 = new PdfPCell(new Paragraph("Vencim"));
+        PdfPCell h29 = new PdfPCell(new Paragraph("gestor"));
+        PdfPCell h20 = new PdfPCell(new Paragraph("comerc"));
 
 
         h21.setGrayFill(0.7f);
@@ -203,25 +181,25 @@ public class ListadoPolizas extends PoolConn {
         while (rs.next())
         {
             
-            p = new Paragraph(Integer.toString(j),FUENTE_CUERPO);
+            p = new Paragraph(rs.getString("poliza"),FUENTE_CUERPO);
             p.setAlignment(Element.ALIGN_RIGHT);
             cell = new PdfPCell();
             cell.addElement(p);
             table.addCell(cell);
             
-            p = new Paragraph(rs.getString("numero"),FUENTE_CUERPO);
+            p = new Paragraph(rs.getString("producto"),FUENTE_CUERPO);
             p.setAlignment(Element.ALIGN_LEFT);
             cell = new PdfPCell();
             cell.addElement(p);
             table.addCell(cell);
             
-            p = new Paragraph(rs.getDate("fecha").toString(),FUENTE_CUERPO);
+            p = new Paragraph(rs.getString("nif"),FUENTE_CUERPO);
             p.setAlignment(Element.ALIGN_LEFT);
             cell = new PdfPCell();
             cell.addElement(p);
             table.addCell(cell);
 
-            p = new Paragraph(rs.getString("nif"),FUENTE_CUERPO);
+            p = new Paragraph(rs.getString("email"),FUENTE_CUERPO);
             p.setAlignment(Element.ALIGN_LEFT);
             cell = new PdfPCell();
             cell.addElement(p);
@@ -233,110 +211,43 @@ public class ListadoPolizas extends PoolConn {
             cell.addElement(p);
             table.addCell(cell);
             
-            p = new Paragraph(NumberFormat.getCurrencyInstance(Locale.GERMANY).format(rs.getBigDecimal("base")),FUENTE_CUERPO);
-            p.setAlignment(Element.ALIGN_RIGHT);
+            p = new Paragraph(rs.getString("riesgo_asegurado"),FUENTE_CUERPO);
+            p.setAlignment(Element.ALIGN_LEFT);
             cell = new PdfPCell();
             cell.addElement(p);
             table.addCell(cell);
             
-            iva=rs.getBigDecimal("iva");
-            if (iva.compareTo(new BigDecimal(21))==0)
-            {
-                p = new Paragraph(NumberFormat.getCurrencyInstance(Locale.GERMANY).format(rs.getBigDecimal("impiva")),FUENTE_CUERPO);
-                p.setAlignment(Element.ALIGN_RIGHT);
-                cell = new PdfPCell();
-                cell.addElement(p);
-                table.addCell(cell);
-                table.addCell("");
-                table.addCell("");
-                Suma21iva=Suma21iva.add(rs.getBigDecimal("impiva"));
-            }
-            if (iva.compareTo(new BigDecimal(10))==0)
-            {
-                table.addCell("");
-                p = new Paragraph(NumberFormat.getCurrencyInstance(Locale.GERMANY).format(rs.getBigDecimal("impiva")),FUENTE_CUERPO);
-                p.setAlignment(Element.ALIGN_RIGHT);
-                cell = new PdfPCell();
-                cell.addElement(p);
-                table.addCell(cell);
-                table.addCell("");
-                Suma10iva=Suma10iva.add(rs.getBigDecimal("impiva"));
-            }
-            if (iva.compareTo(new BigDecimal(4))==0)
-            {
-                table.addCell("");
-                table.addCell("");
-                p = new Paragraph(NumberFormat.getCurrencyInstance(Locale.GERMANY).format(rs.getBigDecimal("impiva")),FUENTE_CUERPO);
-                p.setAlignment(Element.ALIGN_RIGHT);
-                cell = new PdfPCell();
-                cell.addElement(p);
-                table.addCell(cell);
-                Suma4iva=Suma4iva.add(rs.getBigDecimal("impiva"));
-            }
-            
-            
-            p = new Paragraph(NumberFormat.getCurrencyInstance(Locale.GERMANY).format(rs.getBigDecimal("total")),FUENTE_CUERPO);
-            p.setAlignment(Element.ALIGN_RIGHT);
+            p = new Paragraph(rs.getString("efecto"),FUENTE_CUERPO);
+            p.setAlignment(Element.ALIGN_LEFT);
             cell = new PdfPCell();
             cell.addElement(p);
             table.addCell(cell);
             
-            SumaTotal=SumaTotal.add(rs.getBigDecimal("total"));
-            SumaBases=SumaBases.add(rs.getBigDecimal("base"));
-    
+            p = new Paragraph(rs.getString("vencimiento"),FUENTE_CUERPO);
+            p.setAlignment(Element.ALIGN_LEFT);
+            cell = new PdfPCell();
+            cell.addElement(p);
+            table.addCell(cell);
+            
+            p = new Paragraph(rs.getString("gestor"),FUENTE_CUERPO);
+            p.setAlignment(Element.ALIGN_LEFT);
+            cell = new PdfPCell();
+            cell.addElement(p);
+            table.addCell(cell);
+            
+            p = new Paragraph(rs.getString("comercial"),FUENTE_CUERPO);
+            p.setAlignment(Element.ALIGN_LEFT);
+            cell = new PdfPCell();
+            cell.addElement(p);
+            table.addCell(cell);
+            
         j++;
         }
         
         st.close();
         conn.close();
     }
-    
-    /**
-     * Imprimir los totales de la factura
-     */
-    private void Totales()
-    {
-        // añadir los totales
-        PdfPCell pie = new PdfPCell(new Paragraph("Total"));
-        pie.setColspan(5);
-        pie.setGrayFill(0.7f);
-        pie.setHorizontalAlignment(Element.ALIGN_RIGHT);
-        table.addCell(pie);
         
-        p = new Paragraph(NumberFormat.getCurrencyInstance(Locale.GERMANY).format(SumaBases),FUENTE_CUERPO);
-        p.setAlignment(Element.ALIGN_RIGHT);
-        cell = new PdfPCell();
-        cell.addElement(p);
-        table.addCell(cell);
-        
-        p = new Paragraph(NumberFormat.getCurrencyInstance(Locale.GERMANY).format(Suma21iva),FUENTE_CUERPO);
-        p.setAlignment(Element.ALIGN_RIGHT);
-        cell = new PdfPCell();
-        cell.addElement(p);
-        table.addCell(cell);
-        
-        
-        p = new Paragraph(NumberFormat.getCurrencyInstance(Locale.GERMANY).format(Suma10iva),FUENTE_CUERPO);
-        p.setAlignment(Element.ALIGN_RIGHT);
-        cell = new PdfPCell();
-        cell.addElement(p);
-        table.addCell(cell);
-        
-        
-        p = new Paragraph(NumberFormat.getCurrencyInstance(Locale.GERMANY).format(Suma4iva),FUENTE_CUERPO);
-        p.setAlignment(Element.ALIGN_RIGHT);
-        cell = new PdfPCell();
-        cell.addElement(p);
-        table.addCell(cell);
-        
-      
-        p = new Paragraph(NumberFormat.getCurrencyInstance(Locale.GERMANY).format(SumaTotal),FUENTE_CUERPO);
-        p.setAlignment(Element.ALIGN_RIGHT);
-        cell = new PdfPCell();
-        cell.addElement(p);
-        table.addCell(cell);
-    }
-    
     /**
      * 
      * @throws DocumentException 

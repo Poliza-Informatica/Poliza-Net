@@ -42,16 +42,16 @@ public class ServletpdfListadoPolizas extends HttpServlet {
         HttpSession sesion = request.getSession();
         String xDataBase = (String) sesion.getAttribute("xDataBaseName");
         
+        /*
         String xTipo = request.getParameter("xTipo");
         String xYear = request.getParameter("xYear");
         String xTrimestre = request.getParameter("xTrimestre");
         String xNIF = request.getParameter("xNIF");
         String xNombre = request.getParameter("xNombre");
+        */
         
-        //ListadoVentas listado = new ListadoVentas();
-        //xTipo = "V" entras "C"ompras
-        byte[] pdfListado = new ListadoPolizas(xDataBase).makeListado(xTipo,xYear, xTrimestre, xNIF, xNombre);
-        //myDoc.PDFDocByID_issued(Integer.parseInt(xID));
+        
+        byte[] pdfListado = new ListadoPolizas(xDataBase).makeListado();
         
         ByteArrayInputStream in = new ByteArrayInputStream(pdfListado);
         
@@ -61,7 +61,7 @@ public class ServletpdfListadoPolizas extends HttpServlet {
         IOUtils.closeQuietly(in);
                 
         response.setContentType("application/pdf");
-        response.setHeader("Content-Disposition"," inline; filename=ventas.pdf");
+        response.setHeader("Content-Disposition"," inline; filename=ListaPolizas.pdf");
         response.setContentLength(PDFenMemoria.size());
         ServletOutputStream out = response.getOutputStream();
 
