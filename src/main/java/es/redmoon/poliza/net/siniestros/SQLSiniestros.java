@@ -70,4 +70,53 @@ public class SQLSiniestros extends PoolConn {
         return ts;
     }
     
+    /**
+     * Leer una tupla de siniestro por el expediente de la Agencia
+     * @param xExpe
+     * @return
+     * @throws SQLException 
+     */
+    public TuplasSiniestros getSinistroByExpeAgencia(String xExpe) throws SQLException{
+        
+        Connection conn = PGconectar();
+        TuplasSiniestros ts = null;
+        
+        try {
+         
+            // vista materializada mwpolizas_asegurado
+            PreparedStatement st = conn.prepareStatement("SELECT * from siniestros where expe_agencia = ?");
+            st.setString(1, xExpe);
+            
+            
+            ResultSet rs = st.executeQuery();
+        
+            while (rs.next()) {
+                
+                 ts= new TuplasSiniestros.
+                         Builder(rs.getString("expe_agencia")).
+                         Expe_cia(rs.getString("expe_cia")).
+                         Id_poliza(rs.getString("id_poliza")).
+                         Fecha_hora_sini(rs.getString("fecha_hora_sini")).
+                         Lugar(rs.getString("lugar")).
+                         Cp(rs.getString("cp")).
+                         Localidad(rs.getString("localidad")).
+                         Provincia(rs.getString("provincia")).
+                         Situacion(rs.getString("situacion")).
+                         Tipo_siniestro(rs.getString("tipo_siniestro")).
+                         Tramitador(rs.getString("tramitador")).
+                        build();
+                
+            }
+            
+        } catch (SQLException e) {
+
+            System.out.println("siniestros Connection Failed!");
+
+        } finally {
+
+            conn.close();
+        }
+        
+        return ts;
+    }
 }
