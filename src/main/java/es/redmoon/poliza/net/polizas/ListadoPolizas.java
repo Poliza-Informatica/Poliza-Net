@@ -79,6 +79,8 @@ public class ListadoPolizas extends PoolConn {
             "and fiscal_year='"+xYear+"' and trimestre='"+xTrimestre+"'\n" +
             "order by v.id";
         
+        sentencia="select * from vw_lista_polizas";
+        
         CreatePDF();
         HeaderTable(xTipo, xYear, xTrimestre, xNIF, xNombre);
         CuerpoTable(sentencia);
@@ -130,9 +132,9 @@ public class ListadoPolizas extends PoolConn {
         
         String titulo;
         if ("V".equals(xTipo))
-            titulo = "Listado de Ventas "+xYear+" Trimestre "+xTrimestre;
+            titulo = "Listado de Pólizas "+xYear+" Trimestre "+xTrimestre;
         else
-            titulo = "Listado de compras y Gastos "+xYear+" Trimestre "+xTrimestre;
+            titulo = "Listado de Pólizas "+xYear+" Trimestre "+xTrimestre;
         
         PdfPCell h1 = new PdfPCell(new Paragraph(titulo));
         
@@ -149,12 +151,12 @@ public class ListadoPolizas extends PoolConn {
         
         table.addCell(h2);
 
-        PdfPCell h21 = new PdfPCell(new Paragraph("Nº"));
-        PdfPCell h22 = new PdfPCell(new Paragraph("NºFact"));
-        PdfPCell h23 = new PdfPCell(new Paragraph("Fecha"));
-        PdfPCell h24 = new PdfPCell(new Paragraph("NIF/CIF"));
-        PdfPCell h25 = new PdfPCell(new Paragraph("Cliente"));
-        PdfPCell h26 = new PdfPCell(new Paragraph("Base"));
+        PdfPCell h21 = new PdfPCell(new Paragraph("Póliza"));
+        PdfPCell h22 = new PdfPCell(new Paragraph("Producto"));
+        PdfPCell h23 = new PdfPCell(new Paragraph("NIF/CIF"));
+        PdfPCell h24 = new PdfPCell(new Paragraph("Tomador"));
+        PdfPCell h25 = new PdfPCell(new Paragraph("Riesgo Asegurado"));
+        PdfPCell h26 = new PdfPCell(new Paragraph("Efecto"));
         PdfPCell h27 = new PdfPCell(new Paragraph("IVA 21%"));
         PdfPCell h28 = new PdfPCell(new Paragraph("IVA 10%"));
         PdfPCell h29 = new PdfPCell(new Paragraph("IVA  4%"));

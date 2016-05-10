@@ -40,7 +40,7 @@ public class SQLSiniestros extends PoolConn {
         try {
          
             // vista materializada mwpolizas_asegurado
-            PreparedStatement st = conn.prepareStatement("SELECT * from siniestros where id_poliza = ? order by id");
+            PreparedStatement st = conn.prepareStatement("SELECT * from siniestros where id_poliza = ? order by expe_agencia desc");
             st.setInt(1, xIDPoliza);
             
             
@@ -49,9 +49,11 @@ public class SQLSiniestros extends PoolConn {
             while (rs.next()) {
                 
                  ts.add( new TuplasSiniestros.
-                        Builder(rs.getString("id")).
+                        Builder(rs.getString("expe_agencia")).
+                        Expe_cia(rs.getString("expe_cia")).
                         Id_poliza(rs.getString("id_poliza")).
-                        
+                        Fecha_hora_sini(rs.getString("fecha_hora_sini")).
+                        Lugar(rs.getString("lugar")).
                         build()
                 );
             }

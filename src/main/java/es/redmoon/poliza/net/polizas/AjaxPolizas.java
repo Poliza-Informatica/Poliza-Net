@@ -71,6 +71,8 @@ public class AjaxPolizas extends HttpServlet {
                 {
                     SQLPolizas myPoliza = new SQLPolizas(xDataBase);
                     
+                    //System.out.print(xNIF);
+                    
                     List<TuplasPolizasBuscar> ListaPolizasBuscar = 
                             myPoliza.getTuplasPolizasByNIF(xNIF.trim(), Integer.parseInt(pagina),Integer.parseInt(size));
                     response.getWriter().write(gson.toJson(ListaPolizasBuscar));

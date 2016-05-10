@@ -163,11 +163,11 @@
             <table class="table table-striped table-bordered" id="oTabla">
                 <thead>
                     <tr>
-                        <td width="1%" hidden="hidden"><strong>id</strong></td>
-                        <td width="8%"><strong>Número</strong></td>
-                        <td width="5%"><strong>Estado</strong></td>
-                        <td width="5%"><strong>Efecto</strong></td>
-                        <td width="5%"><strong>Importe</strong></td>
+                        <td width="5%"><strong>Exp.Agencia</strong></td>
+                        <td width="5%"><strong>Póliza</strong></td>
+                        <td width="5%"><strong>Exp.Cía</strong></td>
+                        <td width="5%"><strong>Fecha</strong></td>
+                        <td width="15%"><strong>Lugar</strong></td>
                         <td width="15%"></td>
                     </tr>
             </table>

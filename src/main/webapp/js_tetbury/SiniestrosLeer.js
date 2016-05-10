@@ -12,7 +12,7 @@ function LeerSiniestros()
     var xIDPoliza=document.getElementById("xIDPoliza").value;
     
     
-    var url='AjaxRecibos.servlet';
+    var url='AjaxSiniestros.servlet';
     var dataToSend='accion=SiniestrosByPoliza&pagina='+pag +'&size='+tama+'&xIDPoliza='+xIDPoliza;
     var conn = new Conectar(url, dataToSend);
        
@@ -71,6 +71,10 @@ function CrearTablaSiniestros(myJson)
     deleteLastRow("oTabla");
     
     //alert(myJson);
+    /*
+     [{"expe_agencia":"2015/147","id_poliza":"9867","expe_cia":"965140659","fecha_hora_sini":"07/06/2015","lugar":"hogar"},
+     {"expe_agencia":"2015/19","id_poliza":"9867","expe_cia":"5022810","fecha_hora_sini":"27/01/2015","lugar":"HOGAR. MANUEL DE FALLA 10"}]
+     */
     
     for (j = 0; j <= (obj.length - 1); j++)
     {
@@ -78,12 +82,12 @@ function CrearTablaSiniestros(myJson)
         var row = tabla.AddRowTable(j + 1);
 
         //tabla.AddRowCellText(row, 0, obj[j].id);
-        var celda = tabla.AddRowCellText(row, 0, obj[j].id);
-        celda.setAttribute('hidden', 'true'); // ocultar la columna ID
-        tabla.AddRowCellText(row, 1, obj[j].n_recibo );
-        tabla.AddRowCellText(row, 2, obj[j].estado_cliente );
-        tabla.AddRowCellText(row, 3, obj[j].efecto );
-        tabla.AddRowCellText(row, 4, obj[j].total_recibo );
+        var celda = tabla.AddRowCellText(row, 0, obj[j].expe_agencia);
+        //celda.setAttribute('hidden', 'true'); // ocultar la columna ID
+        tabla.AddRowCellText(row, 1, obj[j].id_poliza );
+        tabla.AddRowCellText(row, 2, obj[j].expe_cia );
+        tabla.AddRowCellText(row, 3, obj[j].fecha_hora_sini );
+        tabla.AddRowCellText(row, 4, obj[j].lugar );
         
         tabla.AddRowCellText(row, 5,
         '<ul class="table-controls">'+

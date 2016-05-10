@@ -105,11 +105,16 @@ public class TuplasSiniestros {
             this.expe_agencia = expe_agencia;
         }
 
+        public Builder Expe_cia(final String expe_cia) {
+            this.expe_cia = expe_cia;
+            return this;
+        }
+
         public Builder Id_poliza(final String id_poliza) {
             this.id_poliza = id_poliza;
             return this;
         }
-
+        
         public Builder Fecha_hora_sini(final String fecha_hora_sini) {
             this.fecha_hora_sini = fecha_hora_sini;
             return this;

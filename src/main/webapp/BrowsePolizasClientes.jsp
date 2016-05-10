@@ -191,6 +191,7 @@
                             var tama=10; //window.pagsize;
                             
                             //alert(direccion);
+                            // El nif lo toma del objeto sesión
                             var conn=LeerPolizasByNIF();
                         </script>
             </div>

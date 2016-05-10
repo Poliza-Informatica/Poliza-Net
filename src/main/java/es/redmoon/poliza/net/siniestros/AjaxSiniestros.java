@@ -59,6 +59,7 @@ public class AjaxSiniestros extends HttpServlet {
                     String xIDPoliza = request.getParameter("xIDPoliza");
                     //System.out.print(xIDPoliza);
                     List<TuplasSiniestros> ListaSini = mySini.getSinistroByPolizaID(Integer.parseInt(xIDPoliza));
+                    System.out.print("Lista sini"+gson.toJson(ListaSini));
                     response.getWriter().write(gson.toJson(ListaSini));
                     break;
                 }
