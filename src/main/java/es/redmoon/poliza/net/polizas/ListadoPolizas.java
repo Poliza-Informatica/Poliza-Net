@@ -46,7 +46,7 @@ public class ListadoPolizas extends PoolConn {
     }
 
     /**
-     * Devuelve un listado
+     * Devuelve un listado de todas las pólizas
      * @param xYear
      * @param xTrimestre
      * @param xNIF
@@ -136,9 +136,9 @@ public class ListadoPolizas extends PoolConn {
         PdfPCell h25 = new PdfPCell(new Paragraph("Tomador"));
         PdfPCell h26 = new PdfPCell(new Paragraph("Riesgo Asegurado"));
         PdfPCell h27 = new PdfPCell(new Paragraph("Efecto"));
-        PdfPCell h28 = new PdfPCell(new Paragraph("Vencim"));
+        PdfPCell h28 = new PdfPCell(new Paragraph("Venci."));
         PdfPCell h29 = new PdfPCell(new Paragraph("gestor"));
-        PdfPCell h20 = new PdfPCell(new Paragraph("comerc"));
+        PdfPCell h20 = new PdfPCell(new Paragraph("comer."));
 
 
         h21.setGrayFill(0.7f);
