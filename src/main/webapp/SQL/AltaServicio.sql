@@ -255,51 +255,6 @@ COST 100;
 
 
 
--- **************************************************************
--- Añadir un usuario adicional 
--- **************************************************************
---
--- ejemplo llamada: 
--- select AddUserSingleMode('admin@prodacon.es','antonio@prodacon.es','Empleado directivo');
--- select AddUserSingleMode('admin@prodacon.es','laboral@prodacon.es','Empleado plantilla');
--- select AddUserSingleMode('admin@prodacon.es','financiero@prodacon.es','Empleado plantilla');
---
-CREATE OR REPLACE FUNCTION AddUserSingleMode(
-    xMailAdmin in varchar,
-    xMail in varchar,
-    xRol in varchar
-) 
-returns void
-AS
-$body$
-DECLARE
-
-    xid_customers integer;
-    xip varchar(20);
-    xdatabasename varchar(30);
-
-BEGIN
-
-
--- Averiguar el ID de cliente
-
-SELECT id_customers, ip, databasename INTO xid_customers, xip, xdatabasename 
-    FROM customers_users WHERE mail=xMailAdmin;
-
---
--- Insertar el nuevo cliente, esto supone un cargo en la cuenta del cliente
--- por usuario adicional
---
-
-INSERT INTO customers_users (id_customers, mail,   rol,  ip, databasename, certificado, passdatabase) 
-                     values (xid_customers, xMail, xRol, xip, xdatabasename, pg_read_binary_file(xCertificado), 'PassMaquina1' );
-
-END;
-$body$
-LANGUAGE 'plpgsql'
-VOLATILE
-SECURITY INVOKER
-COST 100;
 
 
 -- ***************************************
@@ -322,6 +277,114 @@ BEGIN
 
 INSERT INTO AltaCustomersNoResueltas (PAIS, MAIL, NOMBRE) VALUES (xPais, xMail, xNombre);
 
+
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+SECURITY INVOKER
+COST 100;
+
+
+-- **************************************************************
+-- Añadir un usuario adicional 
+-- **************************************************************
+--
+-- ejemplo llamada: 
+-- select AddUserSingleMode('admin@prodacon.es','antonio@prodacon.es','{"agente":"000001"}');
+-- select AddUserSingleMode('admin@prodacon.es','laboral@prodacon.es','{"comercial":"100215"}');
+-- select AddUserSingleMode('admin@prodacon.es','financiero@prodacon.es','{"cobrador":"000006"}');
+--
+CREATE OR REPLACE FUNCTION AddUserSingleMode(
+    xMailAdmin in varchar,
+    xMail in varchar,
+    xRol in varchar,
+    xvisibility_client in varchar,
+    xvisibility_polizas in varchar,
+    xvisibility_recibos in varchar,
+    xvisibility_sinister in varchar
+) 
+returns void
+AS
+$body$
+DECLARE
+
+    xId_customers integer;
+    xIP varchar(20);
+    xDatabasename varchar(30);
+
+BEGIN
+
+
+-- Averiguar el ID de cliente
+
+SELECT id_customers, ip, databasename INTO xId_customers, xIP, xDatabasename 
+    FROM customers_users WHERE mail=xMailAdmin;
+
+IF xId_customers IS NULL THEN
+    raise notice 'No existe el mail indicado : %',xMailAdmin;
+ELSE
+
+    INSERT INTO customers_users (id_customers, mail,   rol,  ip, databasename,
+            visibility_client, visibility_polizas, visibility_recibos, visibility_sinister) 
+                     values (xid_customers, xMail, xRol, xIP, xDatabasename,
+            Xvisibility_client::json, Xvisibility_polizas::json, Xvisibility_recibos::json, Xvisibility_sinister::json);
+END IF;
+
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+SECURITY INVOKER
+COST 100;
+
+
+
+
+-- **************************************************************
+-- Añadir un usuario adicional para clientes tipo Loesis Asesores
+-- **************************************************************
+-- xCertificado contiene el nombre del certificado ejemplo A1.p12
+--
+-- ejemplo llamada: 
+-- select AddUserShared('prodacon@gmail.com','antonio@gmail.com','Empleado directivo');
+-- select AddUserShared('prodacon@gmail.com','laboral@prodacon.es','Empleado plantilla');
+-- select AddUserShared('prodacon@gmail.com','financiero@prodacon.es','Empleado plantilla');
+--
+CREATE OR REPLACE FUNCTION AddUserShared(
+    xMailAdmin in varchar,
+    xMail in varchar,
+    xRol in varchar,
+    visibility_client in varchar,
+    visibility_polizas in varchar,
+    visibility_recibos in varchar,
+    visibility_sinister in varchar
+) 
+returns void
+AS
+$body$
+DECLARE
+
+    xId_customers integer;
+    xIP varchar(20);
+    xDatabasename varchar(30);
+
+BEGIN
+
+
+-- Averiguar el ID de cliente
+
+SELECT id_customers, ip, databasename INTO xId_customers, xIP, xDatabasename 
+    FROM customers_users WHERE mail=xMailAdmin;
+
+IF xId_customers IS NULL THEN
+    raise notice 'No existe el mail indicado : %',xMailAdmin;
+ELSE
+
+    INSERT INTO customers_users (id_customers, mail,   rol,  ip, databasename) 
+                     values (xid_customers, xMail, xRol, xIP, xDatabasename,
+            Xvisibility_client::json, Xvisibility_polizas::json, Xvisibility_recibos::json, Xvisibility_sinister::json);
+END IF;
 
 END;
 $body$
