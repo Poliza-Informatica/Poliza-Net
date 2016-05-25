@@ -109,10 +109,13 @@ function setClienteIndex(xCliente)
 //
 // invocar el servlet que muestra el PDF
 //
-function VerPDF(numFila)
+function VerPDF()
 {
-    var xID='ofila'+numFila;
-    var oCelda = document.getElementById(xID).cells[0];
+    var xCode = document.getElementById('xCode').value;
+    var xDesde = document.getElementById('xDesde').value;
+    var xHasta = document.getElementById('xHasta').value;
     
-    window.location.href = 'pdfServlet.servlet?xID='+oCelda.innerHTML;
+    alert('?xCodeCia='+xCode+'&xDesde='+xDesde+'&xHasta='+xHasta);
+    
+    window.location.href = 'ServletpdfListadoPolizas.servlet?xCodeCia='+xCode+'&xDesde='+xDesde+'&xHasta='+xHasta;
 }

@@ -128,7 +128,6 @@
                         <div class="span12">
 
 
-                            <form class="form-horizontal" action="#" id="ViewPoliza" method="post">
                                 <div  class="well">	
                                     <div id="cajaForm" class="navbar">
                                         <div class="navbar-inner"><h6 id="xTitulo2">Usuario :<%= sesion.getAttribute("xUser")%> Rol : <%= sesion.getAttribute("UserTipo")%></h6></div></div>
@@ -140,29 +139,34 @@
                                             <label class="control-label" for="CiaName">Compañía:</label>
                                                     <select data-placeholder="Seleccione una compañía..." 
                                                             class="select" tabindex="2" id="listaCias" name="listaCias"
-                                                            style="width: 350px;" onchange="seleccionarCliente()">
+                                                            style="width: 350px;" onchange="seleccionarCia()">
                                                         <option></option>
                                                     </select>
 
                                                 </div>
                                             
                                         <div class="control-group">
-                                            <label class="control-label" for="Riesgo">Desde:</label>
+                                            <label class="control-label" for="desde">Desde:</label>
                                             <div class="controls">
-                                                <input type="date" name="xRiesgo" maxlength="60" class="span12"
+                                                <input type="date" name="xDesde" id="xDesde" maxlength="60" class="span12"
                                                        value="">
                                             </div>
 
                                         </div>
                                             
                                         <div class="control-group">
-                                            <label class="control-label" for="Poliza">Hasta:</label>
+                                            <label class="control-label" for="Hasta">Hasta:</label>
                                             <div class="controls">
-                                                <input type="date" name="Poliza" maxlength="60" class="span12"
+                                                <input type="date" name="xHasta" id="xHasta" maxlength="60" class="span12"
                                                        value="">
                                             </div>
 
                                         </div>
+                                        
+                                        <div class="form-actions align-left">
+
+                                            <input class="btn btn-primary" type="submit" value="Imprimir"  onclick="VerPDF()"/>
+                                            </div>
                                         
                                                                                         
                                     </fieldset>
