@@ -329,8 +329,8 @@ CREATE TABLE polizas
    mediador2           varchar(6),
    cobrador            varchar(6),
    comercial           varchar(6),
-   anulada             char(1)        DEFAULT 'N'::bpchar,
-   f_anulada           varchar(20),
+   motivo_anulacion    varchar(50),
+   fecha_anulacion     varchar(20),
    primary key (id)
 );
 

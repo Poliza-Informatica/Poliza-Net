@@ -1,15 +1,12 @@
 <%-- 
-    Document   : ShowPoliza
-    Created on : 25-Abril-2015, 23:08:38
+    Document   : SetUpListados
+    Created on : 25-May-2016, 12:12:38
     Author     : antonio
 --%>
 
 <%@include file="sesion.jsp" %>
 <%@page import="java.util.List"%>
-<%@page import="es.redmoon.poliza.net.polizas.TuplasPolizasMV"%>
-<%@page import="es.redmoon.poliza.net.polizas.SQLPolizas"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="poliza" class="es.redmoon.poliza.net.polizas.BeanPolizasMV" scope="session"/>
 <!DOCTYPE html>
 <html>
 
@@ -17,7 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
         <link href="css/main.css" rel="stylesheet" type="text/css" />
-        <title>Datos del contrato</title>
+        <title>Listados de pólizas</title>
         <!--[if IE 8]><link href="css/ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 
@@ -50,6 +47,8 @@
         <script type="text/javascript" src="js/plugins/tables/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="js/files/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/files/functions.js"></script>
+        <script type="text/javascript" src="js_tetbury/conta-comAJAX.js"></script>
+        <script type="text/javascript" src="js_tetbury/ListaCias.js"></script>
     </head>
     <body>
 
@@ -122,25 +121,7 @@
 
                     <%
                         String database = (String) sesion.getAttribute("xDataBaseName");
-                        String xIDPoliza = request.getParameter("xIDPoliza");
                         
-                        if (xIDPoliza != null && !xIDPoliza.isEmpty()) {
-                            SQLPolizas myPoliza = new SQLPolizas(database);
-                            TuplasPolizasMV myTupla = myPoliza.getTuplaByIDFromMVpolizas_asegurado(Integer.parseInt(xIDPoliza));
-                            poliza.setId(myTupla.getId());
-                            poliza.setNif(myTupla.getNif());
-                            poliza.setNombre(myTupla.getNombre());
-                            poliza.setRiesgo_asegurado(myTupla.getRiesgo_asegurado());
-                            poliza.setCia_name(myTupla.getCiaName());
-                            poliza.setPoliza(myTupla.getPoliza());
-                            poliza.setTlf1(myTupla.getTlf1());
-                            poliza.setEmail(myTupla.getEmail());
-                            poliza.setIban(myTupla.getIban());
-                        } else {
-                            poliza.setId("0");
-                            poliza.setNif("");
-                            poliza.setNombre("");
-                        }
                     %>
                     <div class="row-fluid">
 
@@ -153,83 +134,36 @@
                                         <div class="navbar-inner"><h6 id="xTitulo2">Usuario :<%= sesion.getAttribute("xUser")%> Rol : <%= sesion.getAttribute("UserTipo")%></h6></div></div>
 
                                     <fieldset>
-                                        <input type="hidden" name="xIDPoliza" id="xIDPoliza" value="<%= poliza.getId()%>">
-
-                                        <div class="control-group">
-                                            <label class="control-label" for="Riesgo">Riesgo asegurado:</label>
-                                            <div class="controls">
-                                                <input type="text" name="xRiesgo" maxlength="60" class="span12"
-                                                       readonly = "readonly"
-                                                       value="<%= poliza.getRiesgo_asegurado()%>">
-                                            </div>
-
-                                        </div>
-                                            
+                                        <input type="hidden" name="xCode" id="xCode">
+                                        
                                         <div class="control-group">
                                             <label class="control-label" for="CiaName">Compañía:</label>
+                                                    <select data-placeholder="Seleccione una compañía..." 
+                                                            class="select" tabindex="2" id="listaCias" name="listaCias"
+                                                            style="width: 350px;" onchange="seleccionarCliente()">
+                                                        <option></option>
+                                                    </select>
+
+                                                </div>
+                                            
+                                        <div class="control-group">
+                                            <label class="control-label" for="Riesgo">Desde:</label>
                                             <div class="controls">
-                                                <input type="text" name="CiaName" maxlength="60" class="span12"
-                                                       readonly = "readonly"
-                                                       value="<%= poliza.getCia_name()%>">
+                                                <input type="date" name="xRiesgo" maxlength="60" class="span12"
+                                                       value="">
                                             </div>
 
                                         </div>
                                             
                                         <div class="control-group">
-                                            <label class="control-label" for="Poliza">Póliza:</label>
+                                            <label class="control-label" for="Poliza">Hasta:</label>
                                             <div class="controls">
-                                                <input type="text" name="Poliza" maxlength="60" class="span12"
-                                                       readonly = "readonly"
-                                                       value="<%= poliza.getPoliza()%>">
+                                                <input type="date" name="Poliza" maxlength="60" class="span12"
+                                                       value="">
                                             </div>
 
                                         </div>
-                                            
-                                        <div class="control-group">
-                                            <label class="control-label" for="NIF">NIF/CIF:</label>
-                                            <div class="controls">
-                                                <input type="text" name="xNIF" id="xNIF" maxlength="10" class="input-medium"
-                                                       readonly = "readonly" 
-                                                       value="<%= poliza.getNif()%>">
-                                            </div>
-                                        </div>
-
-                                        <div class="control-group">
-                                            <label class="control-label" for="Razonsocial">Tomador:</label>
-                                            <div class="controls">
-                                                <input type="text" name="xNombre" maxlength="60" class="span12"
-                                                       readonly = "readonly"
-                                                       value="<%= poliza.getNombre()%>">
-                                            </div>
-
-                                        </div>
-
-                                        <div class="control-group">
-                                            <label class="control-label" for="Móvil">Teléfono/Móvil:</label>
-                                            <div class="controls">
-                                                <input type="text" name="xMovil" maxlength="10" class="input-medium"
-                                                       readonly = "readonly"
-                                                       value="<%= poliza.getTlf1() %>">
-                                            </div>
-                                        </div>
-
-                                        <div class="control-group">
-                                            <label class="control-label" for="eMailF">e-Mail:</label>
-                                            <div class="controls">
-                                                <input type="email" name="xMail" maxlength="60"  class="span12"
-                                                       readonly = "readonly"
-                                                       value="<%= poliza.getEmail() %>">
-                                            </div>
-                                        </div>
-
-                                        <div class="control-group">
-                                            <label class="control-label" for="iban">IBAN:</label>
-                                            <div class="controls">
-                                                <input type="text" name="xIBAN" maxlength="34" class="input-large"
-                                                       readonly = "readonly"
-                                                       value="<%= poliza.getIban() %>">
-                                            </div>
-                                        </div>
+                                        
                                                                                         
                                     </fieldset>
                             </form>
@@ -244,6 +178,11 @@
         </div>
         <!-- /content container -->
 
+
+        <script>
+            // Leer el listado de compañías
+            LeerCias();
+        </script>
 
     </body>
 </html>

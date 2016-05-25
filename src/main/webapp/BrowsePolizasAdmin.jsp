@@ -1,6 +1,6 @@
 <%-- 
-    Document   : BrowseMovimientos
-    Created on : 01-sep-2013, 2:46:37
+    Document   : BrowsePolizasAdmin
+    Created on : 25-may-2016, 2:46:37
     Author     : antonio
 --%>
 <%@include file="sesion.jsp" %>
@@ -11,7 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
             <link href="css/main.css" rel="stylesheet" type="text/css" />
-            <title>Consultar Pólizas</title>
+            <title>Consultar Pólizas administrador del sistema</title>
             <!--[if IE 8]><link href="css/ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
             <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 
@@ -100,19 +100,11 @@
             <div id="general">		            
 
                 <!-- Main navigation -->
-                <!-- <@include file="menu.jsp" %> -->
+                <%@include file="menu.jsp" %> 
                 <!-- /main navigation -->
 
             </div>
 
-            <div id="stuff">
-                <!-- Datepicker -->
-                <div class="widget">
-                    <h6 class="widget-name"><i class="icon-calendar"></i>Calendario</h6>
-                    <div class="inlinepicker datepicker-liquid"></div>
-                </div>
-                <!-- /datepicker -->
-            </div>
 
         </div>
     </div>
@@ -125,37 +117,16 @@
         <!-- Content wrapper -->
         <div class="wrapper">
 
-            <!-- Breadcrumbs line -->
-            <div class="crumbs">
-                <ul id="breadcrumbs" class="breadcrumb"> 
-                    <li class="active"><a href="#">Diario de Asientos</a></li>
-                    <!--<li class="active"><a href="calendar.html" title="">Calendar</a></li>-->
-                </ul>
-
-                <ul class="alt-buttons">
-
-                </ul>
-            </div>
-            <!-- /breadcrumbs line -->
 
             <!-- Page header -->
             <div class="page-header">
                 <div class="page-title">
 
-                    <h5 id="conexion">Cartera de pólizas <%= sesion.getAttribute("NIF") %> <%= sesion.getAttribute("RazonSocial") %>
-                        <%= sesion.getAttribute("FormaJuridica") %></h5>
+                    <h5 id="conexion">Cartera de pólizas <%= sesion.getAttribute("NIF") %> </h5>
                     
                    
                 </div>			    	
             </div>
-
-    <!-- ***************************************
-    Conectado con contabilidad INTERNA
-    ******************************************** -->
-
-    <!-- 
-        Tabla de movimientos cuentas
-    -->
     
     
             <div class="navbar">
