@@ -115,7 +115,7 @@ function VerPDF()
     var xDesde = document.getElementById('xDesde').value;
     var xHasta = document.getElementById('xHasta').value;
     
-    alert('?xCodeCia='+xCode+'&xDesde='+xDesde+'&xHasta='+xHasta);
+    //alert('?xCodeCia='+xCode+'&xDesde='+xDesde+'&xHasta='+xHasta);
     
     window.location.href = 'ServletpdfListadoPolizas.servlet?xCodeCia='+xCode+'&xDesde='+xDesde+'&xHasta='+xHasta;
 }
