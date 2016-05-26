@@ -12,8 +12,8 @@ $(document).ready(function () {
     $.plot($("#chartIRPF"), data1, {
         xaxis: {
             show: true,
-            min: (new Date(2009, 12, 1)).getTime(),
-            max: (new Date(2010, 11, 2)).getTime(),
+            min: (new Date(2015, 12, 1)).getTime(),
+            max: (new Date(2016, 11, 2)).getTime(),
             mode: "time",
             tickSize: [1, "month"],
             monthNames: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"],
