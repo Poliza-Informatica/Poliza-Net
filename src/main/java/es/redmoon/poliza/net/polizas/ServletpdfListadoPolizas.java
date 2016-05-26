@@ -9,6 +9,11 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -22,7 +27,7 @@ import org.apache.commons.io.IOUtils;
 
 /**
  *
- * @author antonio
+ * @author antonio 
  */
 public class ServletpdfListadoPolizas extends HttpServlet {
 
@@ -42,16 +47,60 @@ public class ServletpdfListadoPolizas extends HttpServlet {
         HttpSession sesion = request.getSession();
         String xDataBase = (String) sesion.getAttribute("xDataBaseName");
         
-        /*
-        String xTipo = request.getParameter("xTipo");
-        String xYear = request.getParameter("xYear");
-        String xTrimestre = request.getParameter("xTrimestre");
-        String xNIF = request.getParameter("xNIF");
-        String xNombre = request.getParameter("xNombre");
-        */
+        
+        String xCode = request.getParameter("xCodeCia");
+        String xDesde = request.getParameter("xDesde");
+        String xHasta = request.getParameter("xHasta");
+        StringBuilder SQLSentencia = new StringBuilder("Select * from mwpolizas_asegurado ");
+        
+        // Analizar las variables para configurar la sentencia SQL del listado
+        if (xCode.equals("00") || xCode.equals("") || xCode==null)
+        {
+            // Todas las compañias
+            SQLSentencia.append("where cia_code!='00'");
+        }
+        else
+        {
+            // sólo una compañía
+            SQLSentencia.append("where cia_code='");
+            SQLSentencia.append(xCode);
+            SQLSentencia.append("' ");
+        }
+        
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        Date dateDesde=null;
+        Date dateHasta=null;
+        try {
+            dateDesde = format.parse(xDesde);
+            
+        } catch (ParseException ex) {
+            Logger.getLogger(ServletpdfListadoPolizas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            dateHasta = format.parse(xHasta);
+        } catch (ParseException ex) {
+            Logger.getLogger(ServletpdfListadoPolizas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if (dateDesde!=null )
+        {
+            // Desde una fecha
+            SQLSentencia.append("and date(efecto) >=date('");
+            SQLSentencia.append(xDesde);
+            SQLSentencia.append("') ");
+        }
+        
+        if (dateHasta!=null)
+        {
+            // Hasta una fecha
+            SQLSentencia.append("and date(efecto) <=date('");
+            SQLSentencia.append(xHasta);
+            SQLSentencia.append("') ");
+        }
         
         
-        byte[] pdfListado = new ListadoPolizas(xDataBase).makeListado();
+        byte[] pdfListado = new ListadoPolizas(xDataBase).makeListado(SQLSentencia.toString());
         
         ByteArrayInputStream in = new ByteArrayInputStream(pdfListado);
         

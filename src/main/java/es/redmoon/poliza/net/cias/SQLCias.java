@@ -31,7 +31,7 @@ public class SQLCias extends PoolConn {
     
     
     /**
-     * Crea una lista de compañías
+     * Crea una lista de compañías para un des plegable de selección
      * @return
      * @throws SQLException 
      */
@@ -47,6 +47,13 @@ public class SQLCias extends PoolConn {
             
             ResultSet rs = st.executeQuery();
         
+            // Añadir una tupla con todas las Cías
+            tp.add( new TuplasCias.
+                        Builder("00").
+                        Name_cia("Todas las Cías").
+                        build()
+                         );
+            
             while (rs.next()) {
                 
                 tp.add( new TuplasCias.

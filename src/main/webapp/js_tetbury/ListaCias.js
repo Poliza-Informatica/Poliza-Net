@@ -84,12 +84,9 @@ function LeerDatosCias(myJson)
  */
 function seleccionarCia()
 {
-    //alert($("#listaClientes option:selected").val());
+    //alert($("#listaCias option:selected").val());
     document.getElementById("xCode").value = $("#listaCias option:selected").val();
     
-
-    
-
 }
 
 

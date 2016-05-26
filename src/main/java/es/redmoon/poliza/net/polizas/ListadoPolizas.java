@@ -55,11 +55,8 @@ public class ListadoPolizas extends PoolConn {
      * @throws DocumentException
      * @throws SQLException 
      */
-    public byte[] makeListado() throws DocumentException, SQLException
+    public byte[] makeListado(String sentencia) throws DocumentException, SQLException
     {
-        String sentencia;
-        
-        sentencia="select * from mwpolizas_asegurado";
         
         CreatePDF();
         
