@@ -4,7 +4,7 @@
 <head>
     <title>Bar Chart</title>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="../dist/Chart.bundle.js"></script>
+    <script src="dist/Chart.bundle.js"></script>
     <style>
     canvas {
         -moz-user-select: none;
@@ -18,8 +18,8 @@
     <div id="container" style="width: 75%;">
         <canvas id="canvas"></canvas>
     </div>
-</body>
-<script>
+    
+    <script>
 
 var barChartData = {
     labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio","Agosto","Septiembre","Noviembre","Diciembre"],
@@ -98,4 +98,6 @@ window.onload = function() {
 
         };
 </script>
+</body>
+
 </html>
