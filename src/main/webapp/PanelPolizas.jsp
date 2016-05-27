@@ -7,6 +7,7 @@
     <script src="js_tetbury/PanelPolizas.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="dist/Chart.bundle.js"></script>
+    
     <style>
     canvas {
         -moz-user-select: none;
@@ -19,6 +20,19 @@
 <body>
     <input type="hidden" name="2015" id="2015">
     <input type="hidden" name="2016" id="2016">
+    
+    <div class="control-group">
+        <label class="control-label" for="xYear">Año:</label>
+        <div class="controls">
+            <input type="text" name="xYear" id="xYear" maxlength="4" class="span12"
+                   value="">
+        </div>
+        <div class="form-actions align-left">
+
+        <input class="btn btn-primary" type="submit" value="Ver"  onclick="MakeGraph()"/>
+        </div>
+
+    </div>
     
     <div id="container" style="width: 75%;">
         <canvas id="canvas"></canvas>
@@ -141,7 +155,7 @@ window.onload = function() {
 
             ProduccionByNumeroVentas("2015");
             ProduccionByNumeroVentas("2016");
-            MakeGraph();
+            //MakeGraph();
 
         };
         
