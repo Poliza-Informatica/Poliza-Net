@@ -12,20 +12,20 @@ public class TuplasPolizasMV {
     
     // id,nombre, nif,en_calidad_de, poliza,riesgo_asegurado,efecto,vencimiento,cia_code,cia_name
     
-    private String id;
-    private String nombre;
-    private String poliza;
-    private String nif;
-    private String efecto;
-    private String vencimiento;
-    private String cia_code;
-    private String cia_name;
-    private String riesgo_asegurado;
-    private String en_calidad_de;
-    private String iban;
-    private String tlf1;
-    private String tlf2;
-    private String email;
+    private final String id;
+    private final String nombre;
+    private final String poliza;
+    private final String nif;
+    private final String efecto;
+    private final String vencimiento;
+    private final String cia_code;
+    private final String cia_name;
+    private final String riesgo_asegurado;
+    private final String en_calidad_de;
+    private final String iban;
+    private final String tlf1;
+    private final String tlf2;
+    private final String email;
     
 
     public String getId() {

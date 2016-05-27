@@ -289,4 +289,45 @@ public class SQLPolizas extends PoolConn {
         
         return tp;
     }
+    
+    /**
+     * 
+     * @param xYear
+     * @return
+     * @throws SQLException 
+     */
+    public List<TuplasProduccionByNumeroVentas> getProduccionByNumeroVentas(String xYear) throws SQLException {
+        
+        Connection conn = PGconectar();
+        List<TuplasProduccionByNumeroVentas> tp = new ArrayList<>();
+        
+        try {
+         
+            
+            PreparedStatement st = conn.prepareStatement("select extract(MONTH from date(efecto)) as mes, count(*) as unidades from mwpolizas_asegurado where extract(ISOYEAR from date(efecto)) = ? group by mes order by mes");
+            
+            st.setInt(1, Integer.parseInt(xYear));
+            
+            ResultSet rs = st.executeQuery();
+        
+            while (rs.next()) {
+                
+                tp.add( new TuplasProduccionByNumeroVentas.
+                        Builder(rs.getString("mes")).
+                        Unidades(rs.getString("unidades")).
+                        build()
+                         );
+            }
+            
+        } catch (SQLException e) {
+
+            System.out.println("mwpolizas_asegurado Connection Failed!");
+
+        } finally {
+
+            conn.close();
+        }
+        
+        return tp;
+    }
 }

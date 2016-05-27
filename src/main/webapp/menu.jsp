@@ -57,7 +57,7 @@
        {
     %>
     
-    <li class="active"><a href="PanelFacturacion.jsp" title="Panel de Control" ><i class="icon-bar-chart"></i>Panel de Control</a>
+    <li class="active"><a href="PanelPolizas.jsp" title="Panel de Control" ><i class="icon-bar-chart"></i>Panel de Control</a>
        <!-- <ul>
             <li><a href="PanelObligaciones.jsp" title="">Panel obligaciones</a></li>
         </ul>-->

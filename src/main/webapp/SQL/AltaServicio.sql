@@ -347,18 +347,18 @@ COST 100;
 -- xCertificado contiene el nombre del certificado ejemplo A1.p12
 --
 -- ejemplo llamada: 
--- select AddUserShared('prodacon@gmail.com','antonio@gmail.com','Empleado directivo');
--- select AddUserShared('prodacon@gmail.com','laboral@prodacon.es','Empleado plantilla');
--- select AddUserShared('prodacon@gmail.com','financiero@prodacon.es','Empleado plantilla');
+-- select addusershared('antonio.gialnet@gmail.com','antonio.castillo','administrador','{}','{}','{}','{}')
+-- 
+-- 
 --
 CREATE OR REPLACE FUNCTION AddUserShared(
     xMailAdmin in varchar,
     xMail in varchar,
     xRol in varchar,
-    visibility_client in varchar,
-    visibility_polizas in varchar,
-    visibility_recibos in varchar,
-    visibility_sinister in varchar
+    Xvisibility_client in varchar,
+    Xvisibility_polizas in varchar,
+    Xvisibility_recibos in varchar,
+    Xvisibility_sinister in varchar
 ) 
 returns void
 AS
@@ -381,7 +381,8 @@ IF xId_customers IS NULL THEN
     raise notice 'No existe el mail indicado : %',xMailAdmin;
 ELSE
 
-    INSERT INTO customers_users (id_customers, mail,   rol,  ip, databasename) 
+    INSERT INTO customers_users (id_customers, mail,   rol,  ip, databasename,
+            visibility_client, visibility_polizas, visibility_recibos, visibility_sinister) 
                      values (xid_customers, xMail, xRol, xIP, xDatabasename,
             Xvisibility_client::json, Xvisibility_polizas::json, Xvisibility_recibos::json, Xvisibility_sinister::json);
 END IF;
