@@ -100,11 +100,29 @@ public class AjaxPolizas extends HttpServlet {
                 {
                     SQLPolizas myPoliza = new SQLPolizas(xDataBase);
                     String xYear = request.getParameter("xYear");
-                    List<TuplasProduccionByNumeroVentas> tpByNumeroVentas = 
+                    List<TuplasProduccionByNumeroVentas> tpBy = 
                                     myPoliza.getProduccionByNumeroVentas(xYear);
-                    response.getWriter().write(gson.toJson(tpByNumeroVentas));
+                    response.getWriter().write(gson.toJson(tpBy));
                     break;
                 }
+            case "ProduccionByTotal":
+                {
+                    SQLPolizas myPoliza = new SQLPolizas(xDataBase);
+                    String xYear = request.getParameter("xYear");
+                    List<TuplasProduccionByNumeroVentas> tpBy = 
+                                    myPoliza.getProduccionByTotal(xYear);
+                    response.getWriter().write(gson.toJson(tpBy));
+                    break;
+                }
+            case "ProduccionByComision":
+                {
+                    SQLPolizas myPoliza = new SQLPolizas(xDataBase);
+                    String xYear = request.getParameter("xYear");
+                    List<TuplasProduccionByNumeroVentas> tpBy = 
+                                    myPoliza.getProduccionByComision(xYear);
+                    response.getWriter().write(gson.toJson(tpBy));
+                    break;
+                }    
             default:
                 response.getWriter().write("Error, mensaje no conteplado: "+accion);
                 break;

@@ -291,7 +291,7 @@ public class SQLPolizas extends PoolConn {
     }
     
     /**
-     * 
+     * Producción por número de pólizas
      * @param xYear
      * @return
      * @throws SQLException 
@@ -330,4 +330,87 @@ public class SQLPolizas extends PoolConn {
         
         return tp;
     }
+    
+    /**
+     * Producción por importe total del recibo
+     * @param xYear
+     * @return
+     * @throws SQLException 
+     */
+    public List<TuplasProduccionByNumeroVentas> getProduccionByTotal(String xYear) throws SQLException {
+        
+        Connection conn = PGconectar();
+        List<TuplasProduccionByNumeroVentas> tp = new ArrayList<>();
+        
+        try {
+         
+            
+            PreparedStatement st = conn.prepareStatement("select extract(MONTH from date(efecto)) as mes, sum(to_number(total_recibo, '999999.99')) as unidades from vwrecibos_clientes where extract(ISOYEAR from date(efecto)) = ? group by mes order by mes");
+            
+            st.setInt(1, Integer.parseInt(xYear));
+            
+            ResultSet rs = st.executeQuery();
+        
+            while (rs.next()) {
+                
+                tp.add( new TuplasProduccionByNumeroVentas.
+                        Builder(rs.getString("mes")).
+                        Unidades(rs.getString("unidades")).
+                        build()
+                         );
+            }
+            
+        } catch (SQLException e) {
+
+            System.out.println("mwpolizas_asegurado Connection Failed!");
+
+        } finally {
+
+            conn.close();
+        }
+        
+        return tp;
+    }
+    
+    /**
+     * Producción por importe de nuestra comisión
+     * @param xYear
+     * @return
+     * @throws SQLException 
+     */
+    public List<TuplasProduccionByNumeroVentas> getProduccionByComision(String xYear) throws SQLException {
+        
+        Connection conn = PGconectar();
+        List<TuplasProduccionByNumeroVentas> tp = new ArrayList<>();
+        
+        try {
+         
+            
+            PreparedStatement st = conn.prepareStatement("select extract(MONTH from date(efecto)) as mes, sum(to_number(comision, '999999.99')) as unidades from vwrecibos_clientes where extract(ISOYEAR from date(efecto)) = ? group by mes order by mes");
+            
+            st.setInt(1, Integer.parseInt(xYear));
+            
+            ResultSet rs = st.executeQuery();
+        
+            while (rs.next()) {
+                
+                tp.add( new TuplasProduccionByNumeroVentas.
+                        Builder(rs.getString("mes")).
+                        Unidades(rs.getString("unidades")).
+                        build()
+                         );
+            }
+            
+        } catch (SQLException e) {
+
+            System.out.println("mwpolizas_asegurado Connection Failed!");
+
+        } finally {
+
+            conn.close();
+        }
+        
+        return tp;
+    }
+    
 }
