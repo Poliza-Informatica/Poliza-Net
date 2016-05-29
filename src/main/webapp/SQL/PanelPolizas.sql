@@ -89,7 +89,7 @@ COST 100;
 --
 -- Ventas por mes en número de recibos
 --
-CREATE OR REPLACE FUNCTION  RecibosPorMes(
+CREATE OR REPLACE FUNCTION  ProduccionByNumeroVentas(
     xYear in varchar,
     xCia_code in varchar
 ) 
