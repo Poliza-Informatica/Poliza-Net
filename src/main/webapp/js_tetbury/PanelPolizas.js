@@ -244,6 +244,7 @@ function ReadValuesGrafico()
     
     // 'visibility:hidden'
     var botonOculto = document.getElementById("VerGrafico");
+    botonOculto.disabled=false;
     botonOculto.style.visibility="visible";
     botonOculto.style.display='';
             
