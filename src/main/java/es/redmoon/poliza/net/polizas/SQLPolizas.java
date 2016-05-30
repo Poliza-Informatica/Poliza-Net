@@ -413,4 +413,43 @@ public class SQLPolizas extends PoolConn {
         return tp;
     }
     
+    
+    /**
+     * 
+     * @param xYear
+     * @return
+     * @throws SQLException 
+     */
+    public String ProduccionAll(String xYear) throws SQLException {
+        
+        Connection conn = PGconectar();
+        String resultado="";
+        
+        try {
+         
+            
+            PreparedStatement st = conn.prepareStatement("select PanelPolizas(?)");
+            
+            st.setInt(1, Integer.parseInt(xYear));
+            
+            ResultSet rs = st.executeQuery();
+        
+            while (rs.next()) {
+                
+                
+                resultado=rs.getString(1);
+            }
+            
+        } catch (SQLException e) {
+
+            System.out.println("mwpolizas_asegurado Connection Failed!");
+
+        } finally {
+
+            conn.close();
+        }
+        
+        return resultado;
+    }
+    
 }

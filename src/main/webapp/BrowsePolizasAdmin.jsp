@@ -138,7 +138,7 @@
             </div>
             <ul class="toolbar">
                 <li><a title="" href="#"><i class="icon-plus"></i>
-                        <span>Nuevo Asiento</span></a>
+                        <span></span></a>
                 </li>
                 <li>
                     <a class="expand"  title="" ><i class="icon-search"></i><span>Buscar:</span></a>

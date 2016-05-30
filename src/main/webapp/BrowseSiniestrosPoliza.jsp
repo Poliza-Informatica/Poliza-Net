@@ -91,19 +91,11 @@
             <div id="general">		            
 
                 <!-- Main navigation -->
-                <!-- <@include file="menu.jsp" %> -->
+                <%@include file="menu.jsp" %>
                 <!-- /main navigation -->
 
             </div>
 
-            <div id="stuff">
-                <!-- Datepicker -->
-                <div class="widget">
-                    <h6 class="widget-name"><i class="icon-calendar"></i>Calendario</h6>
-                    <div class="inlinepicker datepicker-liquid"></div>
-                </div>
-                <!-- /datepicker -->
-            </div>
 
         </div>
     </div>
@@ -115,19 +107,6 @@
 
         <!-- Content wrapper -->
         <div class="wrapper">
-
-            <!-- Breadcrumbs line -->
-            <div class="crumbs">
-                <ul id="breadcrumbs" class="breadcrumb"> 
-                    <li class="active"><a href="#">Diario de Asientos</a></li>
-                    <!--<li class="active"><a href="calendar.html" title="">Calendar</a></li>-->
-                </ul>
-
-                <ul class="alt-buttons">
-
-                </ul>
-            </div>
-            <!-- /breadcrumbs line -->
 
             <!-- Page header -->
             <div class="page-header">

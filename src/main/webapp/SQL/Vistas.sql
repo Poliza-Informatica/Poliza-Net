@@ -95,3 +95,4 @@ as select R.id,R.id_poliza,R.n_recibo,R.fecha_efecto,R.fecha_vencimiento,R.prima
 from recibos R, mwpolizas_asegurado P
 where R.id_poliza = P.id;
 
+

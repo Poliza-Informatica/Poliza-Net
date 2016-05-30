@@ -122,7 +122,16 @@ public class AjaxPolizas extends HttpServlet {
                                     myPoliza.getProduccionByComision(xYear);
                     response.getWriter().write(gson.toJson(tpBy));
                     break;
-                }    
+                }
+            case "ProduccionAll":
+                {
+                    SQLPolizas myPoliza = new SQLPolizas(xDataBase);
+                    String xYear = request.getParameter("xYear");
+                    String respuesta = 
+                                    myPoliza.ProduccionAll(xYear);
+                    response.getWriter().write(respuesta);
+                    break;
+                }
             default:
                 response.getWriter().write("Error, mensaje no conteplado: "+accion);
                 break;

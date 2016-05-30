@@ -67,6 +67,24 @@
     %>
     
 
+    <%
+   
+    if ( sesion.getAttribute("UserTipo").equals("administrador") )
+       {
+    %>
+    
+    <li id="itemClientes" ><a  title="Clientes" href="BrowsePolizasAdmin.jsp"><i class="icon-user"></i><%= clientes %></a>
+       <!-- <ul>
+            <li><a href="BrowseClientes.jsp" title="">Ver lista de Clientes</a></li>
+            <li><a href="newCliente.jsp" title="">Nuevo Cliente</a></li>
+        </ul>-->
+    </li>
+    
+    <%
+       }
+    else
+      {
+    %>
     
     <li id="itemClientes" ><a  title="Clientes" href="BrowsePolizasClientes.jsp"><i class="icon-user"></i><%= clientes %></a>
        <!-- <ul>
@@ -75,10 +93,13 @@
         </ul>-->
     </li>
     
+    <%
+       }
+    %>
     
     <%
         
-        if (sesion.getAttribute("UserTipo").equals("administrador") || true )
+        if (sesion.getAttribute("UserTipo").equals("administrador") )
         {
             
     %>

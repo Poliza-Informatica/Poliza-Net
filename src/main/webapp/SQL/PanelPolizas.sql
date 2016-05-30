@@ -2,55 +2,14 @@
 -- Datos del Panel de Control de Pólizas
 --
 
-CREATE OR REPLACE FUNCTION  PanelPolizas(
-    xYear in integer,
-    xCia_code in varchar,
-    NumeroVentasCurrent out numeric,
-    NumeroVentasPrevious out numeric,
-    ByTotalCurrent out numeric,
-    ByTotalPrevious out numeric,
-    ByComisionCurrent out numeric,
-    ByComisionPrevious out numeric
-) 
-returns RECORD
-AS
-$body$
-DECLARE
-
-    
-BEGIN
-
-    
-    SELECT ProduccionByNumeroVentas((xYear,'00') INTO NumeroVentasCurrent;
-    SELECT ProduccionByNumeroVentas((xYear-1,'00') INTO NumeroVentasPrevious;
-
-    SELECT ProduccionByTotal((xYear,'00') INTO ByTotalCurrent;
-    SELECT ProduccionByTotal((xYear-1,'00') INTO ByTotalPrevious;
-
-    SELECT ProduccionByComision((xYear,'00') INTO ByComisionCurrent;
-    SELECT ProduccionByComision((xYear-1,'00') INTO ByComisionPrevious;
-
-END;
-$body$
-LANGUAGE 'plpgsql'
-VOLATILE
-SECURITY INVOKER
-COST 100;
-
--- Ventas del año en número de recibos por agente
--- Ventas del año en número de recibos por comercial
--- Ventas del año en número de recibos por producto
-
-
 
 --
 -- Ventas por mes en número de recibos
 --
 CREATE OR REPLACE FUNCTION  ProduccionByNumeroVentas(
-    xYear in varchar,
-    xCia_code in varchar
+    xYear in INTEGER
 ) 
-returns json
+returns text
 AS
 $body$
 DECLARE
@@ -59,13 +18,9 @@ DECLARE
             where extract(ISOYEAR from date(efecto)) = xYear
             group by mes
             order by mes;
-    curs5 select extract(MONTH from date(efecto)) as mes, count(*) as unidades from mwpolizas_asegurado 
-            where cia_code=xCia_code and extract(ISOYEAR from date(efecto)) = xYear
-            group by mes
-            order by mes;
 
 resultado text:='';
-
+resjson json;
 BEGIN
 
     FOR cCursor IN curs4 LOOP
@@ -74,12 +29,15 @@ BEGIN
         -- [ {"mes":"1", "unidades":"12"}, {"mes":"2", "unidades":"32"}]
         IF resultado = '' THEN
             resultado := row_to_json(cCursor);
+            -- raise notice 'contenido resultado: %', resultado;
         ELSE
-            resultado := resultado + ', ' + row_to_json(cCursor) ;
+            resjson := row_to_json(cCursor);
+            resultado := resultado || ', ' || cast(resjson as text);
         END IF;
     END LOOP;
 
- return ('[' + resultado + ']')::json;
+ -- raise notice 'contenido resultado: %', resultado;
+ return '[' || resultado || ']';
 
 END;
 $body$
@@ -93,41 +51,38 @@ COST 100;
 -- Ventas por mes en importe total recibo
 --
 CREATE OR REPLACE FUNCTION  ImportePorMes(
-    xYear in varchar,
-    xCia_code in varchar
+    xYear in integer
 ) 
-returns numeric
+returns text
 AS
 $body$
 DECLARE
 
-    xSumaIRPF numeric(8,2) :=0;
-    
-BEGIN
-
-    IF xCia_code = '00' THEN 
-        
-        select extract(MONTH from date(efecto)) as mes, sum(to_number(total_recibo, '999999.99')) as importe from vwrecibos_clientes 
+    curs4 CURSOR IS select extract(MONTH from date(efecto)) as mes, sum(to_number(total_recibo, '999999.99')) as unidades from vwrecibos_clientes 
             where extract(ISOYEAR from date(efecto)) = xYear
             group by mes
             order by mes;
+
+    resultado text:='';
+    resjson json;
     
-        
-     ELSE 
-        
-        select extract(MONTH from date(efecto)) as mes, sum(to_number(total_recibo, '999999.99')) as importe from vwrecibos_clientes 
-            where cia_code=xCia_code and extract(ISOYEAR from date(efecto)) = xYear
-            group by mes
-            order by mes;
-        
-    END IF;
+BEGIN
 
+    FOR cCursor IN curs4 LOOP
 
-    if xSumaIRPF is null then
-        xSumaIRPF:=0;
-    end if;
+        -- añadir cada tupla al array json
+        -- [ {"mes":"1", "unidades":"12"}, {"mes":"2", "unidades":"32"}]
+        IF resultado = '' THEN
+            resultado := row_to_json(cCursor);
+            -- raise notice 'contenido resultado: %', resultado;
+        ELSE
+            resjson := row_to_json(cCursor);
+            resultado := resultado || ', ' || cast(resjson as text);
+        END IF;
+    END LOOP;
 
-    return xSumaIRPF;
+ -- raise notice 'contenido resultado: %', resultado;
+ return '[' || resultado || ']';
 
 END;
 $body$
@@ -140,41 +95,257 @@ COST 100;
 -- Comisiones por mes
 --
 CREATE OR REPLACE FUNCTION  ComisionesPorMes(
-    xYear in varchar,
-    xCia_code in varchar
+    xYear in integer
 ) 
-returns numeric
+returns text
 AS
 $body$
 DECLARE
 
-    xSumaIRPF numeric(8,2) :=0;
-    
-BEGIN
-
-    IF xCia_code = '00' THEN 
-        
-        select extract(MONTH from date(efecto)) as mes, sum(to_number(comision, '999999.99')) as importe from vwrecibos_clientes 
+    curs4 CURSOR IS select extract(MONTH from date(efecto)) as mes, sum(to_number(comision, '999999.99')) as unidades from vwrecibos_clientes 
             where extract(ISOYEAR from date(efecto)) = xYear
             group by mes
             order by mes;
+
+    resultado text:='';
+    resjson json;
     
-        
-     ELSE 
-        
-        select extract(MONTH from date(efecto)) as mes, sum(to_number(comision, '999999.99')) as importe from vwrecibos_clientes 
+BEGIN
+
+
+    FOR cCursor IN curs4 LOOP
+
+        -- añadir cada tupla al array json
+        -- [ {"mes":"1", "unidades":"12"}, {"mes":"2", "unidades":"32"}]
+        IF resultado = '' THEN
+            resultado := row_to_json(cCursor);
+            -- raise notice 'contenido resultado: %', resultado;
+        ELSE
+            resjson := row_to_json(cCursor);
+            resultado := resultado || ', ' || cast(resjson as text);
+        END IF;
+    END LOOP;
+
+ -- raise notice 'contenido resultado: %', resultado;
+ return '[' || resultado || ']';
+
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+SECURITY INVOKER
+COST 100;
+
+--
+-- Ventas por mes en número de recibos
+--
+CREATE OR REPLACE FUNCTION  CiaProduccionByNumeroVentas(
+    xYear in INTEGER,
+    xCia_code in varchar
+) 
+returns text
+AS
+$body$
+DECLARE
+
+    curs5 CURSOR IS select extract(MONTH from date(efecto)) as mes, count(*) as unidades from mwpolizas_asegurado 
             where cia_code=xCia_code and extract(ISOYEAR from date(efecto)) = xYear
             group by mes
             order by mes;
-        
-    END IF;
+
+resultado text:='';
+resjson json;
+BEGIN
+
+    FOR cCursor IN curs5 LOOP
+
+        -- añadir cada tupla al array json
+        -- [ {"mes":"1", "unidades":"12"}, {"mes":"2", "unidades":"32"}]
+        IF resultado = '' THEN
+            resultado := row_to_json(cCursor);
+            -- raise notice 'contenido resultado: %', resultado;
+        ELSE
+            resjson := row_to_json(cCursor);
+            resultado := resultado || ', ' || cast(resjson as text);
+        END IF;
+    END LOOP;
+
+ -- raise notice 'contenido resultado: %', resultado;
+ return '[' || resultado || ']';
+
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+SECURITY INVOKER
+COST 100;
 
 
-    if xSumaIRPF is null then
-        xSumaIRPF:=0;
-    end if;
+--
+-- Ventas por mes en importe total recibo
+--
+CREATE OR REPLACE FUNCTION  CiaImportePorMes(
+    xYear in integer,
+    xCia_code in varchar
+) 
+returns text
+AS
+$body$
+DECLARE
 
-    return xSumaIRPF;
+    curs5 CURSOR IS select extract(MONTH from date(efecto)) as mes, sum(to_number(total_recibo, '999999.99')) as unidades from vwrecibos_clientes 
+            where cia_code=xCia_code and extract(ISOYEAR from date(efecto)) = xYear
+            group by mes
+            order by mes;
+
+    resultado text:='';
+    resjson json;
+    
+BEGIN
+
+    FOR cCursor IN curs5 LOOP
+
+        -- añadir cada tupla al array json
+        -- [ {"mes":"1", "unidades":"12"}, {"mes":"2", "unidades":"32"}]
+        IF resultado = '' THEN
+            resultado := row_to_json(cCursor);
+            -- raise notice 'contenido resultado: %', resultado;
+        ELSE
+            resjson := row_to_json(cCursor);
+            resultado := resultado || ', ' || cast(resjson as text);
+        END IF;
+    END LOOP;
+
+ -- raise notice 'contenido resultado: %', resultado;
+ return '[' || resultado || ']';
+
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+SECURITY INVOKER
+COST 100;
+
+--
+-- Comisiones por mes
+--
+CREATE OR REPLACE FUNCTION  CiaComisionesPorMes(
+    xYear in varchar,
+    xCia_code in varchar
+) 
+returns text
+AS
+$body$
+DECLARE
+
+    curs5 CURSOR IS select extract(MONTH from date(efecto)) as mes, sum(to_number(comision, '999999.99')) as unidades from vwrecibos_clientes 
+            where cia_code=xCia_code and extract(ISOYEAR from date(efecto)) = xYear
+            group by mes
+            order by mes;
+
+    resultado text:='';
+    resjson json;
+    
+BEGIN
+
+
+    FOR cCursor IN curs5 LOOP
+
+        -- añadir cada tupla al array json
+        -- [ {"mes":"1", "unidades":"12"}, {"mes":"2", "unidades":"32"}]
+        IF resultado = '' THEN
+            resultado := row_to_json(cCursor);
+            -- raise notice 'contenido resultado: %', resultado;
+        ELSE
+            resjson := row_to_json(cCursor);
+            resultado := resultado || ', ' || cast(resjson as text);
+        END IF;
+    END LOOP;
+
+ -- raise notice 'contenido resultado: %', resultado;
+ return '[' || resultado || ']';
+
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+SECURITY INVOKER
+COST 100;
+
+--
+--
+--
+CREATE OR REPLACE FUNCTION  PanelPolizas(
+    xYear in integer
+) 
+returns text
+AS
+$body$
+DECLARE
+
+    NumeroVentasCurrent text;
+    NumeroVentasPrevious text;
+    ByTotalCurrent text;
+    ByTotalPrevious text;
+    ByComisionCurrent text;
+    ByComisionPrevious text;
+
+BEGIN
+
+    
+    SELECT ProduccionByNumeroVentas(xYear) INTO NumeroVentasCurrent;
+    SELECT ProduccionByNumeroVentas(xYear-1) INTO NumeroVentasPrevious;
+
+    SELECT ImportePorMes(xYear) INTO ByTotalCurrent;
+    SELECT ImportePorMes(xYear-1) INTO ByTotalPrevious;
+
+    SELECT ComisionesPorMes(xYear) INTO ByComisionCurrent;
+    SELECT ComisionesPorMes(xYear-1) INTO ByComisionPrevious;
+
+    return '[' ||   NumeroVentasCurrent || ', '|| 
+                    NumeroVentasPrevious || ', '|| 
+                    ByTotalCurrent || ', '||
+                    ByTotalPrevious || ', '||
+                    ByComisionCurrent || ', '||
+                    ByComisionPrevious || ']';
+
+END;
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+SECURITY INVOKER
+COST 100;
+
+--
+-- Por Compañías
+--
+CREATE OR REPLACE FUNCTION  CiaPanelPolizas(
+    xYear in integer,
+    xCia_code in varchar,
+    NumeroVentasCurrent out json,
+    NumeroVentasPrevious out json,
+    ByTotalCurrent out json,
+    ByTotalPrevious out json,
+    ByComisionCurrent out json,
+    ByComisionPrevious out json
+) 
+returns RECORD
+AS
+$body$
+DECLARE
+
+    
+BEGIN
+
+    
+    SELECT ProduccionByNumeroVentas(xYear,'00') INTO NumeroVentasCurrent;
+    SELECT ProduccionByNumeroVentas(xYear-1,'00') INTO NumeroVentasPrevious;
+
+    SELECT CiaImportePorMes(xYear,'00') INTO ByTotalCurrent;
+    SELECT CiaImportePorMes(xYear-1,'00') INTO ByTotalPrevious;
+
+    SELECT CiaComisionesPorMes(xYear,'00') INTO ByComisionCurrent;
+    SELECT CiaComisionesPorMes(xYear-1,'00') INTO ByComisionPrevious;
 
 END;
 $body$
