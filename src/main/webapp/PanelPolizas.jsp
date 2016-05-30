@@ -59,7 +59,7 @@
         <div class="form-actions align-left">
 
             <input class="btn btn-primary" type="button" value="Leer Datos"  onclick="ReadValuesGrafico()"/>
-            <input class="btn btn-primary" type="button" value="Ver Gráfico" hidden="hidden" id="VerGrafico" name="VerGrafico" onclick="MakeGraph()"/>
+            <input class="btn btn-primary" type="button" value="Ver Gráfico" disabled="true" id="VerGrafico" name="VerGrafico" onclick="MakeGraph()"/>
         </div>
 
     </div>

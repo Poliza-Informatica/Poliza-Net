@@ -1,3 +1,5 @@
+
+
 /**
  * 
  * @param {type} xYear
@@ -59,164 +61,37 @@ function PutValProduccion(myJson)
 {
     
 
-
-
-var arjson=[[{"mes":1,"unidades":14}, {"mes":2,"unidades":16}, {"mes":3,"unidades":20}, {"mes":4,"unidades":30}, {"mes":5,"unidades":15}, {"mes":6,"unidades":2}], [{"mes":1,"unidades":24}, {"mes":2,"unidades":32}, {"mes":3,"unidades":31}, {"mes":4,"unidades":46}, {"mes":5,"unidades":28}, {"mes":6,"unidades":39}, {"mes":7,"unidades":52}, {"mes":8,"unidades":28}, {"mes":9,"unidades":23}, {"mes":10,"unidades":35}, {"mes":11,"unidades":23}, {"mes":12,"unidades":40}], [{"mes":1,"unidades":10637.64}, {"mes":2,"unidades":39403.14}, {"mes":3,"unidades":34304.48}, {"mes":4,"unidades":37952.36}, {"mes":5,"unidades":36166.42}, {"mes":6,"unidades":8819.17}, {"mes":9,"unidades":888.49}, {"mes":10,"unidades":439.68}], [{"mes":1,"unidades":62456.69}, {"mes":2,"unidades":34101.90}, {"mes":3,"unidades":27859.79}, {"mes":4,"unidades":33318.74}, {"mes":5,"unidades":42939.25}, {"mes":6,"unidades":45690.54}, {"mes":7,"unidades":47841.30}, {"mes":8,"unidades":36329.52}, {"mes":9,"unidades":61707.46}, {"mes":10,"unidades":58301.85}, {"mes":11,"unidades":27944.40}, {"mes":12,"unidades":97241.89}], [{"mes":1,"unidades":1582.91}, {"mes":2,"unidades":5484.30}, {"mes":3,"unidades":4390.83}, {"mes":4,"unidades":4909.21}, {"mes":5,"unidades":4944.74}, {"mes":6,"unidades":1156.23}, {"mes":9,"unidades":160.42}, {"mes":10,"unidades":50.09}], [{"mes":1,"unidades":7821.19}, {"mes":2,"unidades":4996.55}, {"mes":3,"unidades":3702.60}, {"mes":4,"unidades":4935.64}, {"mes":5,"unidades":4413.21}, {"mes":6,"unidades":5547.34}, {"mes":7,"unidades":4761.19}, {"mes":8,"unidades":5249.86}, {"mes":9,"unidades":6777.20}, {"mes":10,"unidades":7048.52}, {"mes":11,"unidades":3828.69}, {"mes":12,"unidades":6005.34}]];
-
-    var obj = JSON.parse(myJson[0]);
-    //var current = JSON.parse(obj[0]);
-    alert(obj);
+    var obj = JSON.parse(myJson);
+    var current = obj[0];
+    var jcurrent = JSON.stringify(current);
+    //alert(jcurrent);
+    document.getElementById("CurrPolizas").value=jcurrent;
     
+    current = obj[1];
+    jcurrent = JSON.stringify(current);
+    //alert(jcurrent);
+    document.getElementById("PrePolizas").value=jcurrent;
     
-    //document.getElementById(PreCurr).value=myJson;
+    current = obj[2];
+    jcurrent = JSON.stringify(current);
+    //alert(jcurrent);
+    document.getElementById("CurrTotal").value=jcurrent;
     
-
-    /*
-   for (j = 0; j <= (obj.length - 1); j++)
-    {
-        
-        $('#listaCias').append($('<option>', { 
-            value: obj[j].code,
-            text : obj[j].nombre
-    }));
-    }*/
+    current = obj[3];
+    jcurrent = JSON.stringify(current);
+    //alert(jcurrent);
+    document.getElementById("PreTotal").value=jcurrent;
     
-    /*
-    var xCliente = document.getElementById('xIDCliente').value;
-    if( xCliente.length>0 )
-        setClienteIndex(xCliente); */
+    current = obj[4];
+    jcurrent = JSON.stringify(current);
+    //alert(jcurrent);
+    document.getElementById("CurrComision").value=jcurrent;
     
-}
+    current = obj[5];
+    jcurrent = JSON.stringify(current);
+    //alert(jcurrent);
+    document.getElementById("PreComision").value=jcurrent;
 
-/**
- * 
- * @param {type} xYear
- * @param {type} PreCurr
- * @returns {Conectar}
- */
-function ProduccionByNumeroVentas(xYear, PreCurr)
-{
-
-    //var pag=window.pagina;
-    //var tama=window.pagsize;
-    //alert(xYear);
-    var url='AjaxPolizas.servlet';
-    var dataToSend='accion=ProduccionByNumeroVentas&xYear='+xYear;
-    var conn = new Conectar(url, dataToSend);
-       
-    conn.pageRequest.onreadystatechange = function() { ListaNumeroVentas(conn.pageRequest, PreCurr); };
-
-    conn.Enviar();
-    
-    return conn;
-}
-
-/**
- * 
- * @param {type} xYear
- * @param {type} PreCurr
- * @returns {Conectar}
- */
-function ProduccionByTotal(xYear, PreCurr)
-{
-
-    //var pag=window.pagina;
-    //var tama=window.pagsize;
-    //alert(xYear);
-    var url='AjaxPolizas.servlet';
-    var dataToSend='accion=ProduccionByTotal&xYear='+xYear;
-    var conn = new Conectar(url, dataToSend);
-       
-    conn.pageRequest.onreadystatechange = function() { ListaNumeroVentas(conn.pageRequest, PreCurr); };
-
-    conn.Enviar();
-    
-    return conn;
-}
-
-/**
- * 
- * @param {type} xYear
- * @param {type} PreCurr
- * @returns {Conectar}
- */
-function ProduccionByComision(xYear, PreCurr)
-{
-
-    //var pag=window.pagina;
-    //var tama=window.pagsize;
-    //alert(xYear);
-    var url='AjaxPolizas.servlet';
-    var dataToSend='accion=ProduccionByComision&xYear='+xYear;
-    var conn = new Conectar(url, dataToSend);
-       
-    conn.pageRequest.onreadystatechange = function() { ListaNumeroVentas(conn.pageRequest, PreCurr); };
-
-    conn.Enviar();
-    
-    return conn;
-}
-
-/**
- * 
- * @param {type} pageRequest
- * @param {type} PreCurr
- * @returns {unresolved}
- */
-function ListaNumeroVentas(pageRequest, PreCurr) {
-
-
-    if (pageRequest.readyState === 4)
-    {
-        if (pageRequest.status === 200)
-        {
-            // Solo descomentar para depuración
-            //alert(pageRequest.responseText);
-            if (pageRequest.responseText === 'Error')
-                alert(pageRequest.responseText);
-            else
-            {
-                PutValNumeroVentas(pageRequest.responseText, PreCurr);
-                //return pageRequest.responseText;
-
-            }
-
-
-        }
-    }
-    else
-        return;
-}
-
-/**
- * 
- * @param {type} myJson
- * @param {type} PreCurr
- * @returns {undefined}
- */
-function PutValNumeroVentas(myJson, PreCurr)
-{
-    
-
-    //var obj = JSON.parse(myJson);
-    //alert(myJson);
-    document.getElementById(PreCurr).value=myJson;
-    
-
-    /*
-   for (j = 0; j <= (obj.length - 1); j++)
-    {
-        
-        $('#listaCias').append($('<option>', { 
-            value: obj[j].code,
-            text : obj[j].nombre
-    }));
-    }*/
-    
-    /*
-    var xCliente = document.getElementById('xIDCliente').value;
-    if( xCliente.length>0 )
-        setClienteIndex(xCliente); */
     
 }
 
@@ -324,46 +199,13 @@ function ReadValuesGrafico()
         
    var current = document.getElementById("xYear").value;
    ProduccionAll(current);
-}
-
-/**
- * 
- * @returns {undefined}
- */
-function ReadValuesGraficoOld()
-{
-    
-    //alert("ReadValuesGrafico");
-    
-    if (document.getElementById("xYear").value==='')
-        {
-        document.getElementById("xYear").value='2016';
-        }
-    else
-        {
-            var WhatYear=parseInt(document.getElementById("xYear").value,10);
-            if (WhatYear===NaN)
-                document.getElementById("xYear").value='2016';
-        }
-        
-    var prev = document.getElementById("xYear").value - 1;
-    var current = document.getElementById("xYear").value;
-    
-    ProduccionByNumeroVentas(prev,"PrePolizas");
-    ProduccionByNumeroVentas(current,"CurrPolizas");
-    ProduccionByTotal(prev,"PreTotal");
-    ProduccionByTotal(current,"CurrTotal");
-    ProduccionByComision(prev,"PreComision");
-    ProduccionByComision(current,"CurrComision");
-    
-    // 'visibility:hidden'
-    var botonOculto = document.getElementById("VerGrafico");
+   
+   var botonOculto = document.getElementById("VerGrafico");
     botonOculto.disabled=false;
     botonOculto.style.visibility="visible";
     botonOculto.style.display='';
-            
-    //alert("Salir de ReadValuesGrafico");
 }
+
 
 /**
  * 
@@ -383,7 +225,8 @@ function MakeGraph(){
                 document.getElementById("xYear").value='2016';
         }
     
-    var barChartData = {
+        
+var barChartData = {
     labels: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"],
     datasets: [
         {
@@ -435,12 +278,16 @@ function MakeGraph(){
       }
     ]
 };
-    
+
     barChartData.datasets[0].label=document.getElementById("xYear").value;
     barChartData.datasets[1].label=document.getElementById("xYear").value - 1;
-    
+
     var ctx = document.getElementById("canvas").getContext("2d");
-            
+
+    if (typeof window.myBar !== "undefined")
+        window.myBar.destroy();
+
+
             window.myBar = new Chart(ctx, {
                 type: 'bar',
                 data: barChartData,
@@ -460,8 +307,9 @@ function MakeGraph(){
                     },
                     title: {
                         display: true,
-                        text: 'Gráfico comparativo producción'
+                        text: 'Grafico comparativo produccion'
                     }
                 }
             });
+   
 }

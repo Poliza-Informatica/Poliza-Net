@@ -32,6 +32,8 @@ public class SQLPolizas extends PoolConn {
      * Lista de pólizas ordenadas por ID
      * @param NumPage
      * @param SizePage
+     * @return
+     * @throws SQLException 
      */
     public List<TuplasPolizas> getTuplasPolizas(int NumPage, int SizePage) throws SQLException
     {
@@ -442,7 +444,7 @@ public class SQLPolizas extends PoolConn {
             
         } catch (SQLException e) {
 
-            System.out.println("mwpolizas_asegurado Connection Failed!");
+            System.out.println("PanelPolizas() Connection Failed!");
 
         } finally {
 
