@@ -129,11 +129,26 @@ function DatosCurrentYear(mes)
     
     //alert(myJson);
     var obj = JSON.parse(myJson);
-
-    if (obj.length < mes)
-        return 0;
-    else    
-        return obj[mes-1].unidades;
+    var unidades=0;
+    
+    // recorrer el array para buscar los huecos pues se producen cobros futuros
+    // pagos por adelantado con efecto en fechas venideras
+    for (j = 0; j <= (obj.length - 1); j++)
+    {
+        if (obj[j].mes === mes)
+            unidades=obj[j].unidades;
+    }
+    
+    
+    /*
+    try {
+       unidades = obj[mes-1].unidades;
+    }
+    catch(err) {
+        unidades = 0;
+    } */
+    
+    return unidades;
 
 }
  
@@ -169,11 +184,25 @@ function DatosPreviousYear(mes)
         
     //alert(myJson);
     var obj = JSON.parse(myJson);
-
-    if (obj.length < mes)
-        return 0;
-    else    
-        return obj[mes-1].unidades;
+    var unidades=0;
+    
+    // recorrer el array para buscar los huecos pues se producen cobros futuros
+    // pagos por adelantado con efecto en fechas venideras
+    for (j = 0; j <= (obj.length - 1); j++)
+    {
+        if (obj[j].mes === mes)
+            unidades=obj[j].unidades;
+    }
+    
+    /*
+    try {
+       unidades = obj[mes-1].unidades;
+    }
+    catch(err) {
+        unidades = 0;
+    } */
+    
+    return unidades;
 
 }
 

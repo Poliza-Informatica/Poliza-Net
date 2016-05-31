@@ -14,7 +14,7 @@ AS
 $body$
 DECLARE
 
-    curs4 CURSOR IS select extract(MONTH from date(efecto))::text as mes, count(*)::text as unidades from mwpolizas_asegurado 
+    curs4 CURSOR IS select extract(MONTH from date(efecto)) as mes, count(*) as unidades from mwpolizas_asegurado 
             where extract(ISOYEAR from date(efecto)) = xYear
             group by mes
             order by mes;
@@ -58,7 +58,7 @@ AS
 $body$
 DECLARE
 
-    curs4 CURSOR IS select extract(MONTH from date(efecto))::text as mes, sum(to_number(total_recibo, '999999.99'))::text as unidades from vwrecibos_clientes 
+    curs4 CURSOR IS select extract(MONTH from date(efecto)) as mes, sum(to_number(total_recibo, '999999.99')) as unidades from vwrecibos_clientes 
             where extract(ISOYEAR from date(efecto)) = xYear
             group by mes
             order by mes;
@@ -102,7 +102,7 @@ AS
 $body$
 DECLARE
 
-    curs4 CURSOR IS select extract(MONTH from date(efecto))::text as mes, sum(to_number(comision, '999999.99'))::text as unidades from vwrecibos_clientes 
+    curs4 CURSOR IS select extract(MONTH from date(efecto)) as mes, sum(to_number(comision, '999999.99')) as unidades from vwrecibos_clientes 
             where extract(ISOYEAR from date(efecto)) = xYear
             group by mes
             order by mes;
