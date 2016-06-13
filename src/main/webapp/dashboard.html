@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="comprar tickets de suministro de agua">
+        <meta name="author" content="Antonio Perez Caballero">
+        <link rel="icon" href="favicon.ico">
+
+        <title>Panel principal de poliza-net</title>
+
+        <link href="css/main.css" rel="stylesheet" type="text/css" />
+            <title>Consultar Pólizas administrador del sistema</title>
+            <!--[if IE 8]><link href="css/ie8.css" rel="stylesheet" type="text/css" /><![endif]-->
+            <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+
+                <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+                <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+                
+
+                <script type="text/javascript" src="js/plugins/charts/excanvas.min.js"></script>
+                <script type="text/javascript" src="js/plugins/charts/jquery.flot.js"></script>
+                <script type="text/javascript" src="js/plugins/charts/jquery.flot.resize.js"></script>
+                <script type="text/javascript" src="js/plugins/charts/jquery.sparkline.min.js"></script>
+
+                <script type="text/javascript" src="js/plugins/ui/jquery.easytabs.min.js"></script>
+                <script type="text/javascript" src="js/plugins/ui/jquery.collapsible.min.js"></script>
+                <script type="text/javascript" src="js/plugins/ui/jquery.mousewheel.js"></script>
+                <script type="text/javascript" src="js/plugins/ui/prettify.js"></script>
+                <script type="text/javascript" src="js/plugins/ui/jquery.bootbox.min.js"></script>
+                <script type="text/javascript" src="js/plugins/ui/jquery.colorpicker.js"></script>
+                <script type="text/javascript" src="js/plugins/ui/jquery.timepicker.min.js"></script>
+                <script type="text/javascript" src="js/plugins/ui/jquery.jgrowl.js"></script>
+                <script type="text/javascript" src="js/plugins/ui/jquery.fancybox.js"></script>
+                <script type="text/javascript" src="js/plugins/ui/jquery.fullcalendar.min.js"></script>
+                <script type="text/javascript" src="js/plugins/ui/jquery.elfinder.js"></script>
+
+                <script type="text/javascript" src="js/plugins/uploader/plupload.js"></script>
+                <script type="text/javascript" src="js/plugins/uploader/plupload.html4.js"></script>
+                <script type="text/javascript" src="js/plugins/uploader/plupload.html5.js"></script>
+                <script type="text/javascript" src="js/plugins/uploader/jquery.plupload.queue.js"></script>
+
+                <script type="text/javascript" src="js/plugins/forms/jquery.uniform.min.js"></script>
+                <script type="text/javascript" src="js/plugins/forms/jquery.autosize.js"></script>
+                <script type="text/javascript" src="js/plugins/forms/jquery.inputlimiter.min.js"></script>
+                <script type="text/javascript" src="js/plugins/forms/jquery.tagsinput.min.js"></script>
+                <script type="text/javascript" src="js/plugins/forms/jquery.inputmask.js"></script>
+                <script type="text/javascript" src="js/plugins/forms/jquery.select2.min.js"></script>
+                <script type="text/javascript" src="js/plugins/forms/jquery.listbox.js"></script>
+                <script type="text/javascript" src="js/plugins/forms/jquery.validation.js"></script>
+                <script type="text/javascript" src="js/plugins/forms/jquery.validationEngine-en.js"></script>
+                <script type="text/javascript" src="js/plugins/forms/jquery.form.wizard.js"></script>
+                <script type="text/javascript" src="js/plugins/forms/jquery.form.js"></script>
+                <script type="text/javascript" src="js/plugins/tables/jquery.dataTables.min.js"></script>
+                <script type="text/javascript" src="js/files/bootstrap.min.js"></script>
+                <script type="text/javascript" src="js/files/functions.js"></script>
+
+    </head>
+    
+    <body>
+        
+        <!-- Fixed top -->
+<div id="top">
+            <div class="fixed">
+                <a href="inicio.jsp" title="" class="logo"><img src="img/LogoPoliza.gif" alt="" /></a>
+                <ul class="top-menu">
+                    <li><a class="fullview"></a></li>
+
+
+                    <li class="dropdown">
+                        <a class="user-menu" data-toggle="dropdown"><!--<img src="img/userpic.png" alt="" />-->
+                            <img src="img/person.png" width="20" height="20" alt="" /><span>usuario</span></a>
+                        <ul class="dropdown-menu">
+
+                            <li><a href="index.jsp" title=""><i class="icon-cog"></i>Mi Configuraci&oacute;n</a></li>
+                            <li><a href="logout.jsp" title=""><i class="icon-remove"></i>Salir</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+<!-- /fixed top -->
+
+        <div class="container">
+
+            <!-- Sidebar -->
+            <div id="sidebar" style="background-color: green">
+
+                <div class="sidebar-tabs">
+
+                    <div id="general">		            
+
+                        <!-- Main navigation -->
+                        <ul class="navigation widget" id="navMenu">
+                        <li class="active"><a href="#" title="Panel de Control" ><i class="icon-bar-chart"></i>Panel de Control</a>
+                        <!-- <ul>
+                        <li><a href="PanelObligaciones.jsp" title="">Panel obligaciones</a></li>
+                        </ul>-->
+                        </li>
+                        <li><a href="#" title="Listados" ><i class="icon-adjust"></i>Panel de Control</a>
+                        <!-- <ul>
+                        <li><a href="PanelObligaciones.jsp" title="">Panel obligaciones</a></li>
+                        </ul>-->
+                        </li>
+                        </ul>
+                        <!-- /main navigation -->
+
+                    </div>
+
+
+                </div>
+            </div>
+            <!-- /sidebar -->
+
+
+            <div id="content">
+                 <nav>
+                    <ul class="nav nav-tabs">
+                    <li role="presentation" class="active"><a href="#">Polizas</a></li>
+                    <li role="presentation"><a href="#">Siniestros</a></li>
+                  </ul>
+                </nav>
+            </div>
+        </div> <!-- /.container -->
+        
+        
+    
+    </body>
+</html>
