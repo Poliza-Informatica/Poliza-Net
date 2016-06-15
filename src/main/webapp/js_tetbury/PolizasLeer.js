@@ -93,10 +93,10 @@ function CrearTablaPolizas(myJson)
         tabla.AddRowCellText(row, 5, obj[j].riesgo_asegurado );
         
         tabla.AddRowCellText(row, 6,
-        '<ul class="table-controls">'+
-        '<li><a onclick="ShowPoliza('+(j+1)+');" class="btn tip" title="Ver Póliza"><i class="icon-eye-open"></i></a> </li>'+
-        '<li><a onclick="ShowListaRecibos('+(j+1)+');" class="btn tip" title="Ver Recibos"><i class="icon-money"></i></a> </li>'+
-        '<li><a onclick="ShowListaSiniestros('+(j+1)+');" class="btn tip" title="Ver Siniestros"><i class="icon-bell"></i></a> </li>'+
+        '<ul class="nav nav-pills nav-justified">'+
+        '<li><a onclick="ShowPoliza('+(j+1)+');" class="fa fa-eye" title="Ver Póliza"></a> </li>'+
+        '<li><a onclick="ShowListaRecibos('+(j+1)+');" class="fa fa-money" title="Ver Recibos"></a> </li>'+
+        '<li><a onclick="ShowListaSiniestros('+(j+1)+');" class="fa fa-bell" title="Ver Siniestros"></a> </li>'+
         '</ul>');
     
         window.fila++;
