@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentellela Alela! | </title>
+    <title>Consultar Pólizas administrador del sistema</title>
 
     <!-- Bootstrap -->
     <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -316,7 +316,7 @@
                               <div class="input-group">
                                   <input type="text" class="form-control" id="xBuscar" placeholder="Buscar..." onkeypress="LeerPolizasByBuscar();">
                                 <span class="input-group-btn">
-                                  <button class="btn btn-default" type="button">Busca!</button>
+                                  <button class="btn btn-default" type="button">Buscar</button>
                                 </span>
                               </div>
                             </div>
@@ -339,14 +339,18 @@
                                         </tr>
                                 </table>
                           </div>
-                              <script>
-            
-                                var pag=1; //window.pagina;
-                                var tama=10; //window.pagsize;
+                              <div class="table-footer">
 
-                                //alert(direccion);
-                                var conn=LeerPolizasByBuscar();
-                             </script>
+                                <div class="pagination">
+                                    <ul>
+                                        <li><a onclick="conn.PrevPage('accion=PolizasByBuscar&xBuscar='+document.getElementById('xBuscar').value);">Anterior</a></li>
+
+                                        <li class="active"><a href="#" id="xPag">1</a></li>
+
+                                        <li><a onclick="conn.NextPage('accion=PolizasByBuscar&xBuscar='+document.getElementById('xBuscar').value);">Siguiente</a></li>
+                                    </ul>
+                                </div>
+                                </div>
                           </div>
                           
                           <!-- Rejilla de resultados -->
@@ -1063,6 +1067,14 @@
     <!-- Custom Theme Scripts -->
     <script src="build/js/custom.min.js"></script>
 
+    <script>
+
+        var pag=1; //window.pagina;
+        var tama=10; //window.pagsize;
+
+        //alert(direccion);
+        var conn=LeerPolizasByBuscar();
+    </script>
     <!-- Flot -->
     <script>
       $(document).ready(function() {
