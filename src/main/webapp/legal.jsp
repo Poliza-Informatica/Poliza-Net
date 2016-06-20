@@ -64,6 +64,7 @@
     <script src="js_tetbury/conta-comAJAX.js"></script>
     <script src="js_tetbury/PanelPolizas.js"></script>
     <script src="js_tetbury/PolizasLeer.js"></script>
+    <script src="js_tetbury/SiniestrosLeer.js"></script>
 </head>
 <!-- Alternate Body Classes: .modern and .vintage -->
 
@@ -98,7 +99,7 @@
                         <a class="page-scroll" href="#team">Pólizas</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#jurisdictions">Contrato</a>
+                        <a class="page-scroll" href="#jurisdictions">Siniestros</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#locations">Locations</a>
@@ -198,7 +199,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h3>Búsquedas de pólizas</h3>
-                    <input type="text" name="xBuscar" id="xBuscar" style="height: 28px; margin-right: 10px;" size="30" maxlength="30" 
+                    <input type="text" name="xBuscar" id="xBuscar" style="height: 28px; margin-right: 10px;" size="60" maxlength="30" 
                            onkeypress="LeerPolizasByBuscar();">
                     <hr class="colored">
                 </div>
@@ -255,122 +256,37 @@
             </div>
         </div>
     </aside>
-    
+
+    <!-- Búsquedas de siniestros   -->
     <section id="jurisdictions" class="services">
-        <%
-                        String database = (String) sesion.getAttribute("xDataBaseName");
-                        String xIDPoliza = request.getParameter("xIDPoliza");
-                        
-                        if (xIDPoliza != null && !xIDPoliza.isEmpty()) {
-                            SQLPolizas myPoliza = new SQLPolizas(database);
-                            TuplasPolizasMV myTupla = myPoliza.getTuplaByIDFromMVpolizas_asegurado(Integer.parseInt(xIDPoliza));
-                            poliza.setId(myTupla.getId());
-                            poliza.setNif(myTupla.getNif());
-                            poliza.setNombre(myTupla.getNombre());
-                            poliza.setRiesgo_asegurado(myTupla.getRiesgo_asegurado());
-                            poliza.setCia_name(myTupla.getCiaName());
-                            poliza.setPoliza(myTupla.getPoliza());
-                            poliza.setTlf1(myTupla.getTlf1());
-                            poliza.setEmail(myTupla.getEmail());
-                            poliza.setIban(myTupla.getIban());
-                        } else {
-                            poliza.setId("0");
-                            poliza.setNif("");
-                            poliza.setNombre("");
-                        }
-                    %>
-        <div class="container">
-            <div class="row text-center">
-                <div class="col-lg-8 col-lg-offset-2"> 
-                    <form class="form-horizontal" action="#" id="ViewPoliza" method="post">
-                                <div  class="well">	
-                                    <div id="cajaForm" class="navbar">
-                                        <div class="form-group col-xs-12 floating-label-form-group controls"><h6 id="xTitulo2">Usuario : <%= sesion.getAttribute("xUser")%> Rol : <%= sesion.getAttribute("UserTipo")%></h6></div></div>
-
-                                    <fieldset>
-                                        <input type="hidden" name="xIDPoliza" id="xIDPoliza" value="<%= poliza.getId()%>">
-
-                                        <div class="control-group">
-                                            <label class="control-label" for="Riesgo">Riesgo asegurado:</label>
-                                            <div class="controls">
-                                                <input type="text" name="xRiesgo" class="form-control input-lg"
-                                                       readonly = "readonly"
-                                                       value="<%= poliza.getRiesgo_asegurado()%>">
-                                            </div>
-
-                                        </div>
-                                            
-                                        <div class="control-group">
-                                            <label class="control-label" for="CiaName">Compañía:</label>
-                                            <div class="controls">
-                                                <input type="text" name="CiaName" class="form-control input-lg"
-                                                       readonly = "readonly"
-                                                       value="<%= poliza.getCia_name()%>">
-                                            </div>
-
-                                        </div>
-                                            
-                                        <div class="control-group">
-                                            <label class="control-label" for="Poliza">Póliza:</label>
-                                            <div class="controls">
-                                                <input type="text" name="Poliza" class="form-control input-lg"
-                                                       readonly = "readonly"
-                                                       value="<%= poliza.getPoliza()%>">
-                                            </div>
-
-                                        </div>
-                                            
-                                        <div class="control-group">
-                                            <label class="control-label" for="NIF">NIF/CIF:</label>
-                                            <div class="controls">
-                                                <input type="text" name="xNIF" id="xNIF" class="form-control input-lg"
-                                                       readonly = "readonly" 
-                                                       value="<%= poliza.getNif()%>">
-                                            </div>
-                                        </div>
-
-                                        <div class="control-group">
-                                            <label class="control-label" for="Razonsocial">Tomador:</label>
-                                            <div class="controls">
-                                                <input type="text" name="xNombre" class="form-control input-lg"
-                                                       readonly = "readonly"
-                                                       value="<%= poliza.getNombre()%>">
-                                            </div>
-
-                                        </div>
-
-                                        <div class="control-group">
-                                            <label class="control-label" for="Móvil">Teléfono/Móvil:</label>
-                                            <div class="controls">
-                                                <input type="text" name="xMovil" class="form-control input-lg"
-                                                       readonly = "readonly"
-                                                       value="<%= poliza.getTlf1() %>">
-                                            </div>
-                                        </div>
-
-                                        <div class="control-group">
-                                            <label class="control-label" for="eMailF">e-Mail:</label>
-                                            <div class="controls">
-                                                <input type="email" name="xMail" class="form-control input-lg"
-                                                       readonly = "readonly"
-                                                       value="<%= poliza.getEmail() %>">
-                                            </div>
-                                        </div>
-
-                                        <div class="control-group">
-                                            <label class="control-label" for="iban">IBAN:</label>
-                                            <div class="controls">
-                                                <input type="text" name="xIBAN" class="form-control input-lg"
-                                                       readonly = "readonly"
-                                                       value="<%= poliza.getIban() %>">
-                                            </div>
-                                        </div>
-                                                                                        
-                                    </fieldset>
-                            </form>
-                </div> 
+        <div class="container text-center wow fadeIn">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>Búsquedas de siniestros</h3>
+                    <input type="text" name="xBuscarSini" id="xBuscarSini" style="height: 28px; margin-right: 10px;" size="60" maxlength="30" 
+                           onkeypress="LeerPolizasByBuscar();">
+                    <hr class="colored">
+                </div>
             </div>
-            
+            <div class="row content-row">
+                <div class="col-lg-12">
+                    <div class="table-overflow">
+
+                    <table class="table table-striped table-bordered" id="oTablaSini">
+                        <thead>
+                            <tr>
+                                <td width="5%"><strong>Exp.Agencia</strong></td>
+                                <td width="5%"><strong>Póliza</strong></td>
+                                <td width="5%"><strong>Exp.Cía</strong></td>
+                                <td width="5%"><strong>Fecha</strong></td>
+                                <td width="15%"><strong>Lugar</strong></td>
+                                <td width="15%"></td>
+                            </tr>
+                    </table>
+                        <!-- table footer -->
+                   </div>
+                </div>
+            </div>
         </div>
     </section>
                                             
@@ -555,6 +471,106 @@
             </div>
         </div>
     </footer>
+    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true" style="background-image: url('assets/img/portfolio/bg-1.jpg')">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        
+                        <form class="form-horizontal" action="#" id="ViewPoliza" method="post">
+                                <div  class="well">	
+                                    <div id="cajaForm" class="navbar">
+                                        <div class="form-group col-xs-12 floating-label-form-group label-success">
+                                            <h6 id="xTitulo2">Usuario : <%= sesion.getAttribute("xUser")%> Rol : <%= sesion.getAttribute("UserTipo")%></h6>
+                                        </div>
+                                    </div>
+
+                                    <fieldset>
+                                        <input type="hidden" name="xIDPoliza" id="xIDPoliza" value="<%= poliza.getId()%>">
+
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="Riesgo">Riesgo asegurado</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="xRiesgo" name="Riesgo" class="form-control input-lg"
+                                                       readonly = "readonly"
+                                                       value="<%= poliza.getRiesgo_asegurado()%>">
+                                            </div>
+
+                                        </div>
+                                            
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="CiaName">Compañía</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="CiaName" name="CiaName" class="form-control input-lg"
+                                                       readonly = "readonly">
+                                            </div>
+
+                                        </div>
+                                            
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="Poliza">Póliza</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="Poliza" class="form-control input-lg"
+                                                       readonly = "readonly">
+                                            </div>
+
+                                        </div>
+                                            
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="NIF">NIF/CIF</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="xNIF" name="xNIF" class="form-control input-lg"
+                                                       readonly = "readonly">
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="Razonsocial">Tomador</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="xNombre" class="form-control input-lg"
+                                                       readonly = "readonly">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="Móvil">Teléfono/Móvil</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="xMovil" class="form-control input-lg"
+                                                       readonly = "readonly">
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="eMailF">e-Mail</label>
+                                            <div class="col-sm-10">
+                                                <input type="email" id="xMail" class="form-control input-lg"
+                                                       readonly = "readonly">
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="iban">IBAN</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="xIBAN" class="form-control input-lg"
+                                                       readonly = "readonly">
+                                            </div>
+                                        </div>
+                                                                                        
+                                    </fieldset>
+                            </form>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Core Scripts -->
     <script src="assets/js/jquery.js"></script>
     <script src="assets/js/bootstrap/bootstrap.min.js"></script>

@@ -1,9 +1,77 @@
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
+ * @returns {Conectar}
  */
+function LeerUnContratoPoliza()
+{
+
+    var pag=window.pagina;
+    var tama=window.pagsize;
+    var xIDPoliza = document.getElementById('xIDPoliza').value;
+    
+    
+    var url='AjaxPolizas.servlet';
+    var dataToSend='accion=IDFromMVpolizas_asegurado&xIDPoliza='+xIDPoliza;
+    var conn = new Conectar(url, dataToSend);
+       
+    conn.pageRequest.onreadystatechange = function() { UnContratoPoliza(conn.pageRequest); };
+
+    conn.Enviar();
+    
+    return conn;
+}
+
+/**
+ * 
+ * @param {type} pageRequest
+ * @returns {unresolved}
+ */
+function UnContratoPoliza(pageRequest) {
 
 
+    if (pageRequest.readyState === 4)
+    {
+        if (pageRequest.status === 200)
+        {
+            // Solo descomentar para depuración
+            //alert(pageRequest.responseText);
+            if (pageRequest.responseText === 'Error')
+                alert(pageRequest.responseText);
+            else
+            {
+                FillContrato(pageRequest.responseText);
+                //return pageRequest.responseText;
+
+            }
+
+
+        }
+    }
+    else
+        return;
+}
+
+/**
+ * Rellenar los datos del contrato desde una variable json
+ * @param {type} myJson
+ * @returns {undefined}
+ */
+function FillContrato(myJson)
+{
+    //alert(myJson);
+    var obj = JSON.parse(myJson);
+    //alert(obj.nif);
+    document.getElementById('xRiesgo').value=obj.riesgo_asegurado;
+    document.getElementById('CiaName').value=obj.cia_name;
+    document.getElementById('Poliza').value=obj.poliza;
+    document.getElementById('xNIF').value=obj.nif;
+    document.getElementById('xNombre').value=obj.nombre;
+    document.getElementById('xMovil').value=obj.tlf1;
+    document.getElementById('xMail').value=obj.email;
+    document.getElementById('xIBAN').value=obj.iban;
+    
+    
+}
 
 /**
  * Lista de polizas
@@ -94,7 +162,7 @@ function CrearTablaPolizas(myJson)
         
         tabla.AddRowCellText(row, 6,
         '<ul class="nav nav-pills nav-justified">'+
-        '<li><a onclick="ShowPoliza('+(j+1)+');" class="fa fa-eye" title="Ver Póliza"></a> </li>'+
+        '<li><button type="button" onclick="GetDatosContrato('+(j+1)+');" class="btn btn-default btn-xs fa fa-eye" data-toggle="modal" data-target="#portfolioModal1"></button></li>'+
         '<li><a onclick="ShowListaRecibos('+(j+1)+');" class="fa fa-money" title="Ver Recibos"></a> </li>'+
         '<li><a onclick="ShowListaSiniestros('+(j+1)+');" class="fa fa-bell" title="Ver Siniestros"></a> </li>'+
         '</ul>');
@@ -154,12 +222,15 @@ function LeerPolizasByBuscar()
 //
 // Mostrar los datos de una póliza
 //
-function ShowPoliza(numFila)
+function GetDatosContrato(numFila)
 {
     var xID='ofila'+numFila;
     var oCelda = document.getElementById(xID).cells[0];
+    document.getElementById('xIDPoliza').value=oCelda.innerHTML;
     
-    window.location.href = 'ShowPoliza.jsp?xIDPoliza='+oCelda.innerHTML;
+    LeerUnContratoPoliza();
+    //window.location.href = 'ShowPoliza.jsp?xIDPoliza='+oCelda.innerHTML;
+    
 }
 
 /**

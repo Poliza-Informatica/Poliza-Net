@@ -61,7 +61,7 @@ function ListaSiniestros(pageRequest) {
 function CrearTablaSiniestros(myJson)
 {
 
-    var tabla = new grid("oTabla");
+    var tabla = new grid("oTablaSini");
     var j = 0;
     var myfila=window.fila;
 
