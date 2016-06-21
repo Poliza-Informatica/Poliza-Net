@@ -95,4 +95,24 @@ as select R.id,R.id_poliza,R.n_recibo,R.fecha_efecto,R.fecha_vencimiento,R.prima
 from recibos R, mwpolizas_asegurado P
 where R.id_poliza = P.id;
 
+--
+-- Siniestros
+--
+create or replace view vwsiniestros (expe_agencia,id_poliza,expe_cia,fecha_hora_sini,lugar,cp,localidad,provincia,tipo_siniestro,
+                                    situacion,fecha_situacion,descripcion,damage_asegurado,tramitador, buscar)
+as select expe_agencia,id_poliza,expe_cia,fecha_hora_sini,lugar,cp,localidad,provincia,tipo_siniestro,
+                                    situacion,fecha_situacion,descripcion,damage_asegurado,tramitador,
+                                    concat(expe_agencia,expe_cia,lugar,descripcion,damage_asegurado)
+from siniestros;
 
+
+--
+-- Grafico de ramos
+--
+select c.codigo,c.descripcion,count(*) as cuantos from polizas p, productos s, clasificacion_productos c, ramos r
+where p.producto=s.code_product 
+and p.anulado=0
+and c.codigo=r.codigo_clasificacion
+and r.code_ramo=s.code_ramo
+group by c.codigo
+order by cuantos desc

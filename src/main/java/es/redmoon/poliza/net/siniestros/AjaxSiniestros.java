@@ -41,7 +41,7 @@ public class AjaxSiniestros extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sesion = request.getSession(); 
         String xDataBase = (String) sesion.getAttribute("xDataBaseName");
-        String xNIF = (String) sesion.getAttribute("NIF");
+        
         Gson gson = new Gson();
         request.setCharacterEncoding("UTF-8");
         String accion = request.getParameter("accion");
@@ -53,13 +53,25 @@ public class AjaxSiniestros extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         
         switch (accion) {
+            case "SiniestrosByBuscar":
+                {
+                    SQLSiniestros mySini = new SQLSiniestros(xDataBase);
+                    
+                    String buscar = request.getParameter("xBuscar");
+                    //System.out.print(xIDPoliza);
+                    List<TuplasSiniestros> ListaSini = 
+                            mySini.getTuplasBuscarSiniestros(buscar.trim(), Integer.parseInt(pagina),Integer.parseInt(size));
+                    //System.out.print("Lista sini"+gson.toJson(ListaSini));
+                    response.getWriter().write(gson.toJson(ListaSini));
+                    break;
+                }
             case "SiniestrosByPoliza":
                 {
                     SQLSiniestros mySini = new SQLSiniestros(xDataBase);
                     String xIDPoliza = request.getParameter("xIDPoliza");
                     //System.out.print(xIDPoliza);
                     List<TuplasSiniestros> ListaSini = mySini.getSinistroByPolizaID(Integer.parseInt(xIDPoliza));
-                    System.out.print("Lista sini"+gson.toJson(ListaSini));
+                    //System.out.print("Lista sini"+gson.toJson(ListaSini));
                     response.getWriter().write(gson.toJson(ListaSini));
                     break;
                 }

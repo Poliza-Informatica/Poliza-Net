@@ -264,7 +264,7 @@
                 <div class="col-lg-12">
                     <h3>Búsquedas de siniestros</h3>
                     <input type="text" name="xBuscarSini" id="xBuscarSini" style="height: 28px; margin-right: 10px;" size="60" maxlength="30" 
-                           onkeypress="LeerPolizasByBuscar();">
+                           onkeypress="LeerSiniestrosByBuscar();">
                     <hr class="colored">
                 </div>
             </div>
@@ -284,6 +284,26 @@
                             </tr>
                     </table>
                         <!-- table footer -->
+                        <div class="table-footer">
+
+                            <div class="pagination">
+                                <ul>
+                                    <li><a onclick="conn.PrevPage('accion=LeerSinisestrosByBuscar');">Anterior</a></li>
+
+                                    <li class="active"><a href="#" id="xPag">1</a></li>
+
+                                    <li><a onclick="conn.NextPage('accion=LeerSinisestrosByBuscar');">Siguiente</a></li>
+                                </ul>
+                            </div>
+                                        <script>
+
+                                            var pag=1; //window.pagina;
+                                            var tama=10; //window.pagsize;
+
+                                            //alert(direccion);
+                                            var conn=LeerSiniestrosByBuscar();
+                                        </script>
+                       </div>
                    </div>
                 </div>
             </div>

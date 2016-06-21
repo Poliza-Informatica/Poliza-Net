@@ -1,4 +1,20 @@
+function LeerSiniestrosByBuscar()
+{
+    var pag=window.pagina;
+    var tama=window.pagsize;
+    var xBuscar=document.getElementById("xBuscarSini").value;
+    
+    
+    var url='AjaxSiniestros.servlet';
+    var dataToSend='accion=SiniestrosByBuscar&pagina='+pag +'&size='+tama+'&xBuscar='+xBuscar;
+    var conn = new Conectar(url, dataToSend);
+       
+    conn.pageRequest.onreadystatechange = function() { ListaSiniestros(conn.pageRequest); };
 
+    conn.Enviar();
+    
+    return conn;
+}
 /**
  * Lista de siniestros de una póliza
  * @returns {Conectar}
@@ -90,8 +106,9 @@ function CrearTablaSiniestros(myJson)
         tabla.AddRowCellText(row, 4, obj[j].lugar );
         
         tabla.AddRowCellText(row, 5,
-        '<ul class="table-controls">'+
-        '<li><a onclick="ShowSiniestro('+(j+1)+');" class="btn tip" title="Ver Siniestro"><i class="icon-eye-open"></i></a> </li>'+
+        '<ul class="nav nav-pills nav-justified">'+
+        '<li><a onclick="ShowSiniestro('+(j+1)+');" class="fa fa-eye" title="Ver Siniestro"></a> </li>'+
+        '<li><a onclick="ShowSiniestro('+(j+1)+');" class="fa fa-list" title="Ver Póliza"></a> </li>'+
         '</ul>');
     
         window.fila++;

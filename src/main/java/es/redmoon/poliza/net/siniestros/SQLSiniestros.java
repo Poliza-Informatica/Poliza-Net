@@ -119,4 +119,58 @@ public class SQLSiniestros extends PoolConn {
         
         return ts;
     }
+    
+
+    /**
+     * 
+     * @param buscar
+     * @param NumPage
+     * @param SizePage
+     * @return
+     * @throws SQLException 
+     */
+    public List<TuplasSiniestros> getTuplasBuscarSiniestros(String buscar, int NumPage, int SizePage) throws SQLException
+    {
+        Connection conn = PGconectar();
+        List<TuplasSiniestros> ts = new ArrayList<>();
+    
+        //System.out.print("Buscar en getTuplasBuscarSiniestros:"+buscar);
+        try {
+         
+            int Offset = SizePage * (NumPage-1);
+            PreparedStatement st = conn.prepareStatement("SELECT * from vwsiniestros where buscar ilike ? order by expe_agencia desc LIMIT ? OFFSET ?");
+            st.setString(1, "%"+buscar+"%");
+            st.setInt(2, SizePage);
+            st.setInt(3, Offset);
+            
+            
+            ResultSet rs = st.executeQuery();
+        
+            while (rs.next()) {
+                
+                ts.add( new TuplasSiniestros.
+                        Builder(rs.getString("expe_agencia")).
+                        Expe_cia(rs.getString("expe_cia")).
+                        Id_poliza(rs.getString("id_poliza")).
+                        Fecha_hora_sini(rs.getString("fecha_hora_sini")).
+                        Lugar(rs.getString("lugar")).
+                        build()
+                );
+            }
+            
+        } catch (SQLException e) {
+
+            System.out.println("vwsiniestros Connection Failed!");
+
+        } finally {
+
+            conn.close();
+        }
+        
+        
+        
+        return ts;
+    }
+    
+    
 }
