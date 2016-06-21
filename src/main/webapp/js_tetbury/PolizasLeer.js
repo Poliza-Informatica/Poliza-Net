@@ -134,14 +134,14 @@ function ListaPolizas(pageRequest) {
 function CrearTablaPolizas(myJson)
 {
 
-    var tabla = new grid("oTabla");
+    var tabla = new grid("oTablaPolizas");
     var j = 0;
     var myfila=window.fila;
 
     var obj = JSON.parse(myJson);
 
     // borrar las tuplas de consultas anteriores
-    deleteLastRow("oTabla");
+    deleteLastRow("oTablaPolizas");
     
     //alert(myJson);
     //alert(obj.length - 1);
@@ -256,7 +256,9 @@ function ShowListaRecibos(numFila)
     var xID='ofila'+numFila;
     var oCelda = document.getElementById(xID).cells[0];
     
-    window.location.href = 'BrowseRecibosClientes.jsp?xIDPoliza='+oCelda.innerHTML;
+    //window.location.href = 'BrowseRecibosClientes.jsp?xIDPoliza='+oCelda.innerHTML;
+    LeerRecibos();
+    window.location.href = '#section_recibos';
 }
 
 /*

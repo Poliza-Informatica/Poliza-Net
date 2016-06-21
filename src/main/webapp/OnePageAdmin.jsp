@@ -64,6 +64,7 @@
     <script src="js_tetbury/conta-comAJAX.js"></script>
     <script src="js_tetbury/PanelPolizas.js"></script>
     <script src="js_tetbury/PolizasLeer.js"></script>
+    <script src="js_tetbury/RecibosLeer.js"></script>
     <script src="js_tetbury/SiniestrosLeer.js"></script>
 </head>
 <!-- Alternate Body Classes: .modern and .vintage -->
@@ -93,16 +94,16 @@
                         <a class="page-scroll" href="#page-top"></a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#about">Gráficos</a>
+                        <a class="page-scroll" href="#graficos">Gráficos</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#team">Pólizas</a>
+                        <a class="page-scroll" href="#section_polizas">Pólizas</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#jurisdictions">Siniestros</a>
+                        <a class="page-scroll" href="#section_recibos">Recibos</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="#locations">Locations</a>
+                        <a class="page-scroll" href="#section_sini">Siniestros</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="#contact">Contacto</a>
@@ -123,12 +124,12 @@
             <div class="brand-name-subtext">Gestión para mediadores de seguros</div>
         </div>
         <div class="scroll-down">
-            <a class="btn page-scroll" href="#about"><i class="fa fa-angle-down fa-fw"></i></a>
+            <a class="btn page-scroll" href="#graficos"><i class="fa fa-angle-down fa-fw"></i></a>
         </div>
     </header>
     
     <!-- Sección gráficos  -->
-    <section id="about">
+    <section id="graficos">
         <div class="container-fluid">
             <div class="row text-center">
                 <div class="col-lg-12 wow fadeIn">
@@ -193,8 +194,10 @@
         </div>
     </section>
     
+    
+    
     <!-- Búsquedas de pólizas  -->
-    <section id="team" class="bg-gray">
+    <section id="section_polizas" class="bg-gray">
         <div class="container text-center wow fadeIn">
             <div class="row">
                 <div class="col-lg-12">
@@ -208,7 +211,7 @@
                 <div class="col-lg-12">
                     <div class="table-overflow">
 
-                    <table class="table table-striped table-bordered" id="oTabla">
+                    <table class="table table-striped table-bordered" id="oTablaPolizas">
                         <thead>
                             <tr>
                                 <td width="1%" hidden="hidden"><strong>id</strong></td>
@@ -245,6 +248,7 @@
             </div>
         </div>
     </section>
+    <!--
     <aside class="cta-quote" style="background-image: url('assets/img/legal/bg-aside.jpg');">
         <div class="container wow fadeIn">
             <div class="row">
@@ -255,10 +259,43 @@
                 </div>
             </div>
         </div>
-    </aside>
+    </aside> -->
 
+    
+    <!-- Recibos  -->
+    <section id="section_recibos" class="bg-gray">
+        <div class="container text-center wow fadeIn">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h3>Recibos de la póliza</h3>
+                    <hr class="colored">
+                </div>
+            </div>
+            <div class="row content-row">
+                <div class="col-lg-12">
+                    <div class="table-overflow">
+
+                    <table class="table table-striped table-bordered" id="oTablaRecibos">
+                        <thead>
+                            <tr>
+                                <td width="1%" hidden="hidden"><strong>id</strong></td>
+                                <td width="8%"><strong>Número</strong></td>
+                                <td width="5%"><strong>Estado</strong></td>
+                                <td width="5%"><strong>Efecto</strong></td>
+                                <td width="5%"><strong>Importe</strong></td>
+                                <td width="15%"></td>
+                            </tr>
+                    </table>
+                   </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
     <!-- Búsquedas de siniestros   -->
-    <section id="jurisdictions" class="services">
+    <section id="section_sini" class="services">
         <div class="container text-center wow fadeIn">
             <div class="row">
                 <div class="col-lg-12">
@@ -310,97 +347,7 @@
         </div>
     </section>
                                             
-    <section id="locations" class="pricing" style="background-image: url('assets/img/legal/bg-locations.jpg')">
-        <div class="container wow fadeIn">
-            <div class="row text-center">
-                <div class="col-lg-12">
-                    <h2>Locations</h2>
-                    <hr class="colored">
-                    <p>Our firm has nine locations across three different states. We serve clients in the Western United States.</p>
-                </div>
-            </div>
-            <div class="row content-row">
-                <div class="col-md-4">
-                    <div class="pricing-item">
-                        <h3>West Coast</h3>
-                        <hr class="colored">
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <strong>San Fransisco, CA</strong>
-                                <br><em>415-555-5555</em>
-                                <br>Mon - Fri: 8am to 5pm
-                                <br><a href="#">Website</a>
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Portland, OR</strong>
-                                <br><em>503-555-5555</em>
-                                <br>Mon - Fri: 8am to 5pm
-                                <br><a href="#">Website</a>
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Seattle, WA</strong>
-                                <br><em>206-555-5555</em>
-                                <br>Mon - Fri: 8am to 5pm
-                                <br><a href="#">Website</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="pricing-item">
-                        <h3>Midwest</h3>
-                        <hr class="colored">
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <strong>Bismarck, ND</strong>
-                                <br><em>701-555-5555</em>
-                                <br>Mon - Fri: 8am to 5pm
-                                <br><a href="#">Website</a>
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Pierre, ND</strong>
-                                <br><em>605-555-5555</em>
-                                <br>Mon - Fri: 8am to 5pm
-                                <br><a href="#">Website</a>
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Helena, MT</strong>
-                                <br><em>406-555-5555</em>
-                                <br>Mon - Fri: 8am to 5pm
-                                <br><a href="#">Website</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="pricing-item">
-                        <h3>Southwest</h3>
-                        <hr class="colored">
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <strong>Denver, CO</strong>
-                                <br><em>303-555-5555</em>
-                                <br>Mon - Fri: 8am to 5pm
-                                <br><a href="#">Website</a>
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Phoenix, AZ</strong>
-                                <br><em>602-555-5555</em>
-                                <br>Mon - Fri: 8am to 5pm
-                                <br><a href="#">Website</a>
-                            </li>
-                            <li class="list-group-item">
-                                <strong>Albuquerque, NM</strong>
-                                <br><em>505-555-5555</em>
-                                <br>Mon - Fri: 8am to 5pm
-                                <br><a href="#">Website</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
     <section id="contact">
         <div class="container wow fadeIn">
             <div class="row">
@@ -491,6 +438,9 @@
             </div>
         </div>
     </footer>
+    
+    <!--  Pantalla modal de contratos  -->
+    
     <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true" style="background-image: url('assets/img/portfolio/bg-1.jpg')">
         <div class="modal-content">
             <div class="close-modal" data-dismiss="modal">
@@ -512,14 +462,13 @@
                                     </div>
 
                                     <fieldset>
-                                        <input type="hidden" name="xIDPoliza" id="xIDPoliza" value="<%= poliza.getId()%>">
+                                        <input type="hidden" name="xIDPoliza" id="xIDPoliza">
 
                                         <div class="control-group">
                                             <label class="col-sm-2 label-default" for="Riesgo">Riesgo asegurado</label>
                                             <div class="col-sm-10">
                                                 <input type="text" id="xRiesgo" name="Riesgo" class="form-control input-lg"
-                                                       readonly = "readonly"
-                                                       value="<%= poliza.getRiesgo_asegurado()%>">
+                                                       readonly = "readonly">
                                             </div>
 
                                         </div>
@@ -589,6 +538,94 @@
                     </div>
                 </div>
             </div>
+        </div>
+        </div>
+    </div>
+                                            
+        <!-- PANTALLA MODAL DE RECIBOS    -->
+        
+        <div class="portfolio-modal modal fade" id="RecibosModal" tabindex="-1" role="dialog" aria-hidden="true" style="background-image: url('assets/img/portfolio/bg-1.jpg')">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        
+                        <form class="form-horizontal" action="#" id="ViewRecibo">
+                                <div  class="well">	
+                                    <div id="cajaForm" class="navbar">
+                                        <div class="form-group col-xs-12 floating-label-form-group label-success">
+                                            <h6 id="xTitulo2">Usuario : <%= sesion.getAttribute("xUser")%> Rol : <%= sesion.getAttribute("UserTipo")%></h6>
+                                        </div>
+                                    </div>
+
+                                    <fieldset>
+
+                                        <input type="hidden" name="xIDRecibo" id="xIDRecibo">
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="xRiesgoAsegurado">Riesgo asegurado</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="xRiesgoAsegurado" name="xRiesgoAsegurado" class="form-control input-lg"
+                                                       readonly = "readonly">
+                                            </div>
+
+                                        </div>
+                                            
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="n_recibo">Nº Recibo</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="n_recibo" name="n_recibo" class="form-control input-lg"
+                                                       readonly = "readonly">
+                                            </div>
+
+                                        </div>
+                                            
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="Poliza">Póliza</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="id_poliza" class="form-control input-lg"
+                                                       readonly = "readonly">
+                                            </div>
+
+                                        </div>
+                                            
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="xEfecto">fecha efecto</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="xEfecto" class="form-control input-lg"
+                                                       readonly = "readonly">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="xVencimiento">vencimiento</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="xVencimiento" class="form-control input-lg"
+                                                       readonly = "readonly">
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="xImporte">Importe</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="xImporte" class="form-control input-lg"
+                                                       readonly = "readonly">
+                                            </div>
+                                        </div>
+
+                                                                                        
+                                    </fieldset>
+                            </form>
+                        
+                </div>
+            </div>
+        </div>
+        </div>
         </div>
     </div>
     <!-- Core Scripts -->

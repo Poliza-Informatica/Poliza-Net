@@ -84,7 +84,7 @@ function CrearTablaSiniestros(myJson)
     var obj = JSON.parse(myJson);
 
     // borrar las tuplas de consultas anteriores
-    deleteLastRow("oTabla");
+    deleteLastRow("oTablaSini");
     
     //alert(myJson);
     /*

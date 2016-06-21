@@ -41,7 +41,7 @@ public class SQLRecibos extends PoolConn {
         try {
          
             // vista materializada mwpolizas_asegurado
-            PreparedStatement st = conn.prepareStatement("SELECT * from vwrecibos_clientes where id = ?");
+            PreparedStatement st = conn.prepareStatement("SELECT * from vwrecibos_clientes where id_poliza = ?");
             st.setInt(1, xIDRecibo);
             
             
