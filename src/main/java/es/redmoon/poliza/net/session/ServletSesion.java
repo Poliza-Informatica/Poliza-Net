@@ -86,7 +86,7 @@ public class ServletSesion extends HttpServlet {
                 // vista de administrador
                 if (mySesion.getUserTipo().equalsIgnoreCase("administrador"))
                 {
-                    rd=request.getRequestDispatcher("BrowsePolizasAdmin.jsp");
+                    rd=request.getRequestDispatcher("OnePageAdmin.jsp");
                 }
                 // vista de clientes
                 else if (mySesion.getUserTipo().equalsIgnoreCase("cliente"))
