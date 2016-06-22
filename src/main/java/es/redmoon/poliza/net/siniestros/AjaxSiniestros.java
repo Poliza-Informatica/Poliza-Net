@@ -53,6 +53,18 @@ public class AjaxSiniestros extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         
         switch (accion) {
+            case "SeguimientoByExpeAgencia":
+                {
+                    SQLSiniestros mySini = new SQLSiniestros(xDataBase);
+                    
+                    String xExpe_Agencia = request.getParameter("xExpe_Agencia");
+                    //System.out.print(xIDPoliza);
+                    List<TuplasSeguimiento> ListaSini = 
+                            mySini.SeguimientoByExpeAgencia(xExpe_Agencia);
+                    //System.out.print("Lista sini"+gson.toJson(ListaSini));
+                    response.getWriter().write(gson.toJson(ListaSini));
+                    break;
+                }
             case "SiniestrosByBuscar":
                 {
                     SQLSiniestros mySini = new SQLSiniestros(xDataBase);
@@ -75,12 +87,12 @@ public class AjaxSiniestros extends HttpServlet {
                     response.getWriter().write(gson.toJson(ListaSini));
                     break;
                 }
-            case "ReciboByID":
+            case "SiniestroByExpeAgencia":
                 {
-                    SQLRecibos myRecibo = new SQLRecibos(xDataBase);
-                    String xIDRecibo = request.getParameter("xIDRecibo");
-                    TuplasVWrecibos_clientes myTupla = 
-                            myRecibo.getReciboByID(Integer.parseInt(xIDRecibo));
+                    SQLSiniestros mySini = new SQLSiniestros(xDataBase);
+                    String xExpe_Agencia = request.getParameter("xExpe_Agencia");
+                    TuplasSiniestros myTupla = 
+                            mySini.getSinistroByExpeAgencia(xExpe_Agencia);
                     response.getWriter().write(gson.toJson(myTupla));
                     break;
                 }

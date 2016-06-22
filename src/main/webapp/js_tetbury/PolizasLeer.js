@@ -134,7 +134,7 @@ function ListaPolizas(pageRequest) {
 function CrearTablaPolizas(myJson)
 {
 
-    var tabla = new grid("oTablaPolizas");
+    var tabla = new grid("oTablaPolizas","oFilaPolizas");
     var j = 0;
     var myfila=window.fila;
 
@@ -162,7 +162,7 @@ function CrearTablaPolizas(myJson)
         
         tabla.AddRowCellText(row, 6,
         '<ul class="nav nav-pills nav-justified">'+
-        '<li><button type="button" onclick="GetDatosContrato('+(j+1)+');" class="btn btn-default btn-xs fa fa-eye" data-toggle="modal" data-target="#portfolioModal1"></button></li>'+
+        '<li><button type="button" onclick="GetDatosContrato('+(j+1)+');" class="btn btn-default btn-xs fa fa-eye" data-toggle="modal" data-target="#ContratoModal"></button></li>'+
         '<li><a onclick="ShowListaRecibos('+(j+1)+');" class="fa fa-money" title="Ver Recibos"></a> </li>'+
         '<li><a onclick="ShowListaSiniestros('+(j+1)+');" class="fa fa-bell" title="Ver Siniestros"></a> </li>'+
         '</ul>');
@@ -224,7 +224,7 @@ function LeerPolizasByBuscar()
 //
 function GetDatosContrato(numFila)
 {
-    var xID='ofila'+numFila;
+    var xID='oFilaPolizas'+numFila;
     var oCelda = document.getElementById(xID).cells[0];
     document.getElementById('xIDPoliza').value=oCelda.innerHTML;
     
@@ -240,7 +240,7 @@ function GetDatosContrato(numFila)
  */
 function ShowListaSiniestros(numFila)
 {
-    var xID='ofila'+numFila;
+    var xID='oFilaPolizas'+numFila;
     var oCelda = document.getElementById(xID).cells[0];
     
     window.location.href = 'BrowseSiniestrosPoliza.jsp?xIDPoliza='+oCelda.innerHTML;
@@ -253,9 +253,9 @@ function ShowListaSiniestros(numFila)
  */
 function ShowListaRecibos(numFila)
 {
-    var xID='ofila'+numFila;
+    var xID='oFilaPolizas'+numFila;
     var oCelda = document.getElementById(xID).cells[0];
-    
+    document.getElementById('xIDPoliza').value=oCelda.innerHTML;
     //window.location.href = 'BrowseRecibosClientes.jsp?xIDPoliza='+oCelda.innerHTML;
     LeerRecibos();
     window.location.href = '#section_recibos';

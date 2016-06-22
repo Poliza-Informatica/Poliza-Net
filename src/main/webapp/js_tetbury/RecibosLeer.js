@@ -129,7 +129,7 @@ function ListaRecibos(pageRequest) {
 function CrearTablaRecibos(myJson)
 {
 
-    var tabla = new grid("oTablaRecibos");
+    var tabla = new grid("oTablaRecibos","oFilaRecibos");
     var j = 0;
     var myfila=window.fila;
 
@@ -174,7 +174,7 @@ function CrearTablaRecibos(myJson)
  */
 function ShowRecibo(numFila)
 {
-    var xID='ofila'+numFila;
+    var xID='oFilaRecibos'+numFila;
     var oCelda = document.getElementById(xID).cells[0];
     document.getElementById('xIDRecibo').value=oCelda.innerHTML;
     //alert(document.getElementById('xIDRecibo').value);

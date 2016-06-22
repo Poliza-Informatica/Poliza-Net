@@ -120,6 +120,49 @@ public class SQLSiniestros extends PoolConn {
         return ts;
     }
     
+    /**
+     * 
+     * @param xExpe
+     * @return
+     * @throws SQLException 
+     */
+    public List<TuplasSeguimiento> SeguimientoByExpeAgencia(String xExpe) throws SQLException{
+        
+        Connection conn = PGconectar();
+        List<TuplasSeguimiento> ts = new ArrayList<>();
+        
+        try {
+         
+            // vista materializada mwpolizas_asegurado
+            // id_siniestro es el expe_agencia
+            PreparedStatement st = conn.prepareStatement("SELECT * from seguimiento_siniestro where id_siniestro = ?");
+            st.setString(1, xExpe);
+            
+            
+            ResultSet rs = st.executeQuery();
+        
+            while (rs.next()) {
+                
+                 ts.add( new TuplasSeguimiento.
+                         Builder(rs.getString("id_siniestro")).
+                         Fecha_hora(rs.getString("fecha_hora")).
+                         Texto(rs.getString("texto")).
+                        build()
+                         );
+                
+            }
+            
+        } catch (SQLException e) {
+
+            System.out.println("seguimiento_siniestro Connection Failed!");
+
+        } finally {
+
+            conn.close();
+        }
+        
+        return ts;
+    }
 
     /**
      * 

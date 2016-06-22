@@ -60,7 +60,7 @@
     }
     </style>
     <link href="css/redmoon.css" rel="stylesheet">
-    <script src="js_tetbury/grid.js"></script>
+    <script src="js_tetbury/gridV2.js"></script>
     <script src="js_tetbury/conta-comAJAX.js"></script>
     <script src="js_tetbury/PanelPolizas.js"></script>
     <script src="js_tetbury/PolizasLeer.js"></script>
@@ -274,7 +274,7 @@
             <div class="row content-row">
                 <div class="col-lg-12">
                     <div class="table-overflow">
-
+                     <input type="hidden" name="xIDRecibo" id="xIDRecibo">
                     <table class="table table-striped table-bordered" id="oTablaRecibos">
                         <thead>
                             <tr>
@@ -441,7 +441,7 @@
     
     <!--  Pantalla modal de contratos  -->
     
-    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true" style="background-image: url('assets/img/portfolio/bg-1.jpg')">
+    <div class="portfolio-modal modal fade" id="ContratoModal" tabindex="-1" role="dialog" aria-hidden="true" style="background-image: url('assets/img/portfolio/bg-1.jpg')">
         <div class="modal-content">
             <div class="close-modal" data-dismiss="modal">
                 <div class="lr">
@@ -566,7 +566,7 @@
 
                                     <fieldset>
 
-                                        <input type="hidden" name="xIDRecibo" id="xIDRecibo">
+                                        
                                         <div class="control-group">
                                             <label class="col-sm-2 label-default" for="xRiesgoAsegurado">Riesgo asegurado</label>
                                             <div class="col-sm-10">
@@ -625,6 +625,101 @@
                 </div>
             </div>
         </div>
+        </div>
+        </div>
+    </div>
+                                        
+    <!--   MODAL DEL DETALLE DE UN SINIESTRO  -->
+    
+    <div class="portfolio-modal modal fade" id="SiniestroModal" tabindex="-1" role="dialog" aria-hidden="true" style="background-image: url('assets/img/portfolio/bg-1.jpg')">
+        <div class="modal-content">
+            <div class="close-modal" data-dismiss="modal">
+                <div class="lr">
+                    <div class="rl">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        
+                        <form class="form-horizontal" action="#" id="ViewSiniestro">
+                                <div  class="well">
+                                    <div id="cajaForm" class="navbar">
+                                        <div class="form-group col-xs-12 floating-label-form-group label-success">
+                                            <h6 id="xTitulo2">Usuario : <%= sesion.getAttribute("xUser")%> Rol : <%= sesion.getAttribute("UserTipo")%></h6>
+                                        </div>
+                                    </div>
+
+                                    <fieldset>
+                                        <input type="hidden" name="xExpe_Agencia" id="xExpe_Agencia">
+
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="xExpeCia">Expediente Cía</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="xExpeCia" name="xExpeCia" class="form-control input-lg"
+                                                       readonly = "readonly">
+                                            </div>
+
+                                        </div>
+                                            
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="num_poliza">Póliza</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="num_poliza" class="form-control input-lg"
+                                                       readonly = "readonly">
+                                            </div>
+
+                                        </div>
+                                            
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="fechayhora">Fecha y hora</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="fechayhora" name="fechayhora" class="form-control input-lg"
+                                                       readonly = "readonly">
+                                            </div>
+                                        </div>
+
+                                        <div class="control-group">
+                                            <label class="col-sm-2 label-default" for="lugar">Lugar</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" id="lugar" class="form-control input-lg"
+                                                       readonly = "readonly">
+                                            </div>
+
+                                        </div>
+                                                                                        
+                                    </fieldset>
+                            </form>
+                        
+                    </div>
+                </div>
+                    <!--  Tabla del seguimiento    -->
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h3>Seguimiento del siniestro</h3>
+                                <hr class="colored">
+                            </div>
+                        </div>
+                        <div class="row bg-gray">
+                        
+                            <div class="col-xs-12">
+                                <div class="table-overflow">
+                                    
+                                <table class="table table-bordered table-responsive" id="oTablaSeguiSini">
+                                    <thead>
+                                        <tr style="color: black;">
+                                            <td width="10%">Fecha</td>
+                                            <td width="50%">Descripción</td>
+                                        </tr>
+                                </table>
+
+                               </div>
+                            </div>
+                        
+                    </div>
+
         </div>
         </div>
     </div>
