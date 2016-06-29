@@ -234,7 +234,7 @@ function GetDatosContrato(numFila)
 }
 
 /**
- * 
+ * Sincronizo la rejilla de recibos y siniestros
  * @param {type} numFila
  * @returns {undefined}
  */
@@ -242,12 +242,17 @@ function ShowListaSiniestros(numFila)
 {
     var xID='oFilaPolizas'+numFila;
     var oCelda = document.getElementById(xID).cells[0];
+    document.getElementById('xIDPoliza').value=oCelda.innerHTML;
+    document.getElementById('xBuscarSini').value='';
+    LeerRecibos();
+    LeerSiniestros();
     
-    window.location.href = 'BrowseSiniestrosPoliza.jsp?xIDPoliza='+oCelda.innerHTML;
+    //window.location.href = 'BrowseSiniestrosPoliza.jsp?xIDPoliza='+oCelda.innerHTML;
+    window.location.href ='#section_sini';
 }
 
 /**
- * 
+ * Sincronizo la rejilla de recibos y siniestros
  * @param {type} numFila
  * @returns {undefined}
  */
@@ -256,7 +261,10 @@ function ShowListaRecibos(numFila)
     var xID='oFilaPolizas'+numFila;
     var oCelda = document.getElementById(xID).cells[0];
     document.getElementById('xIDPoliza').value=oCelda.innerHTML;
+    document.getElementById('xBuscarSini').value='';
+    
     //window.location.href = 'BrowseRecibosClientes.jsp?xIDPoliza='+oCelda.innerHTML;
+    LeerSiniestros();
     LeerRecibos();
     window.location.href = '#section_recibos';
 }
