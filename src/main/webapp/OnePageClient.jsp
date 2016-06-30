@@ -121,7 +121,7 @@
             <div class="brand-name-subtext">Gestión para mediadores de seguros</div>
         </div>
         <div class="scroll-down">
-            <a class="btn page-scroll" href="#graficos"><i class="fa fa-angle-down fa-fw"></i></a>
+            <a class="btn page-scroll" href="#section_polizas"><i class="fa fa-angle-down fa-fw"></i></a>
         </div>
     </header>
     
@@ -131,14 +131,14 @@
         <div class="container text-center wow fadeIn">
             <div class="row">
                 <div class="col-lg-12">
-                    <h3>Búsquedas de pólizas</h3>
+                    <h3>Productos contratados</h3>
                     <hr class="colored">
                 </div>
             </div>
             <div class="row content-row">
                 <div class="col-lg-12">
                     <div class="table-overflow">
-
+                        <input type="hidden" name="xBuscarSini" id="xBuscarSini">
                     <table class="table table-striped table-bordered" id="oTablaPolizas">
                         <thead>
                             <tr>
@@ -176,19 +176,7 @@
             </div>
         </div>
     </section>
-    <!--
-    <aside class="cta-quote" style="background-image: url('assets/img/legal/bg-aside.jpg');">
-        <div class="container wow fadeIn">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <span class="quote">We use the practical application of legal theories and knowledge to pursue and uphold justice.</span>
-                    <hr class=" colored">
-                    <a class="btn btn-outline-light page-scroll" href="#contact">Contact Us</a>
-                </div>
-            </div>
-        </div>
-    </aside> -->
-
+    
     
     <!-- Recibos  -->
     <section id="section_recibos" class="bg-gray">
