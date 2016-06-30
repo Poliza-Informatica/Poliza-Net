@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.naming.NamingException;
+import org.json.simple.JSONObject;
 
 /**
  * Consultas de pólizas por varios criterios
@@ -452,6 +453,48 @@ public class SQLPolizas extends PoolConn {
         }
         
         return resultado;
+    }
+    
+    /**
+     * Gráfico de Cartera por Ramos
+     * @return
+     * @throws SQLException 
+     */
+    public String ProduccionRamos() throws SQLException {
+        
+        Connection conn = PGconectar();
+        JSONObject obj=new JSONObject();
+        
+        try {
+         
+            
+            PreparedStatement st = conn.prepareStatement("select c.codigo,c.descripcion,count(*) as cuantos from polizas p, productos s, clasificacion_productos c, ramos r \n" +
+                "where p.producto=s.code_product \n" +
+                "and p.anulado=0 \n" +
+                "and c.codigo=r.codigo_clasificacion \n" +
+                "and r.code_ramo=s.code_ramo \n" +
+                "group by c.codigo \n" +
+                "order by cuantos desc");
+            
+            
+            ResultSet rs = st.executeQuery();
+        
+            while (rs.next()) {
+                
+                obj.put(rs.getString("descripcion"),rs.getString("cuantos"));
+                
+            }
+            
+        } catch (SQLException e) {
+
+            System.out.println("group by para gráfico por Ramos Connection Failed!");
+
+        } finally {
+
+            conn.close();
+        }
+        
+        return obj.toJSONString();
     }
     
 }

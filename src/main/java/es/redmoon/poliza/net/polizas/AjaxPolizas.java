@@ -132,6 +132,15 @@ public class AjaxPolizas extends HttpServlet {
                     response.getWriter().write(respuesta);
                     break;
                 }
+            case "ProduccionRamos":
+                {
+                    SQLPolizas myPoliza = new SQLPolizas(xDataBase);
+
+                    String respuesta = 
+                                    myPoliza.ProduccionRamos();
+                    response.getWriter().write(respuesta);
+                    break;
+                }
             default:
                 response.getWriter().write("Error, mensaje no conteplado: "+accion);
                 break;

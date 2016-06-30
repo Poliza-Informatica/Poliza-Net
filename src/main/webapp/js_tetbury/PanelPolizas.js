@@ -1,4 +1,88 @@
 
+/**
+ * 
+ * @returns {Conectar}
+ */
+function ProduccionRamos()
+{
+
+    //var pag=window.pagina;
+    //var tama=window.pagsize;
+    //alert(xYear);
+    var url='AjaxPolizas.servlet';
+    var dataToSend='accion=ProduccionRamos';
+    var conn = new Conectar(url, dataToSend);
+       
+    conn.pageRequest.onreadystatechange = function() { ListaProduccionRamos(conn.pageRequest); };
+
+    conn.Enviar();
+    
+    return conn;
+}
+
+/**
+ * 
+ * @param {type} pageRequest
+ * @returns {unresolved}
+ */
+function ListaProduccionRamos(pageRequest) {
+
+
+    if (pageRequest.readyState === 4)
+    {
+        if (pageRequest.status === 200)
+        {
+            // Solo descomentar para depuración
+            //alert(pageRequest.responseText);
+            if (pageRequest.responseText === 'Error')
+                alert(pageRequest.responseText);
+            else
+            {
+                PutValProduccionRamos(pageRequest.responseText);
+                //return pageRequest.responseText;
+
+            }
+
+
+        }
+    }
+    else
+        return;
+}
+
+/**
+ * 
+ * @param {type} myJson
+ * @returns {undefined}
+ */
+function PutValProduccionRamos(myJson)
+{
+    
+
+    //alert(myJson);
+    var obj = JSON.parse(myJson);
+    //alert(obj.AUTOMOVILES);
+    document.getElementById("RamosAutos").value=obj.AUTOMOVILES;
+    document.getElementById("RamosDiversos").value=obj.DIVERSOS;
+    document.getElementById("RamosVida").value=obj.VIDA;
+
+    
+}
+
+function getDatosAutos()
+{
+    return document.getElementById("RamosAutos").value;
+}
+
+function getDatosDiversos()
+{
+    return document.getElementById("RamosDiversos").value;
+}
+
+function getDatosVida()
+{
+    return document.getElementById("RamosVida").value;
+}
 
 /**
  * 
@@ -341,4 +425,54 @@ var barChartData = {
                 }
             });
    
+}
+
+
+function MakeDonut()
+{
+
+    ProduccionRamos();
+    
+    var config = {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [
+                    getDatosAutos(),
+                    getDatosDiversos(),
+                    getDatosVida()
+                ],
+                backgroundColor: [
+                    "#F7464A",
+                    "#46BFBD",
+                    "#FDB45C",
+                ],
+                label: 'Dataset 1'
+            }],
+            labels: [
+                "Automoviles",
+                "Diversos",
+                "Vida"
+            ]
+        },
+        options: {
+            responsive: true,
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Produccion por Ramos'
+            },
+            animation: {
+                animateScale: true,
+                animateRotate: true
+            }
+        }
+    };
+    
+    var ctx = document.getElementById("chart-area").getContext("2d");
+        window.myDoughnut = new Chart(ctx, config);
+        
+    
 }

@@ -115,18 +115,32 @@
         <!-- /.container -->
     </nav>
     
+    
+    
+    
     <!-- Instructions: Set your background image using the URL below. -->
     <header style="background-image: url('assets/img/legal/bg-header.jpg')">
+        
+        <!-- <div id="canvas-holder" style="width:75%"> -->
+        <canvas id="chart-area" class="img-responsive img-centered"/>
+        
+        <input type="hidden" name="RamosAutos" id="RamosAutos">
+        <input type="hidden" name="RamosDiversos" id="RamosDiversos">
+        <input type="hidden" name="RamosVida" id="RamosVida">
+        <div class="scroll-down">
+            <a class="btn page-scroll" href="#graficos"><i class="fa fa-angle-down fa-fw"></i></a>
+        </div>
+    </header>
+    
+    <section>
+        
         <div class="intro-content">
             <img src="assets/img/legal/profile.png" class="img-responsive img-centered" alt="">
             <div class="brand-name">Póliza-Net</div>
             <hr class="colored">
             <div class="brand-name-subtext">Gestión para mediadores de seguros</div>
         </div>
-        <div class="scroll-down">
-            <a class="btn page-scroll" href="#graficos"><i class="fa fa-angle-down fa-fw"></i></a>
-        </div>
-    </header>
+    </section>
     
     <!-- Sección gráficos  -->
     <section id="graficos">
@@ -144,6 +158,7 @@
                 <input type="hidden" name="CurrTotal" id="CurrTotal">
                 <input type="hidden" name="PreComision" id="PreComision">
                 <input type="hidden" name="CurrComision" id="CurrComision">
+                
                 
                 <div class="control-group">
 
@@ -744,6 +759,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="dist/Chart.min.js"></script>
     <script src="dist/Chart.bundle.min.js"></script>
+    <script>MakeDonut();</script>
 </body>
 
 </html>
