@@ -132,15 +132,6 @@
         </div>
     </header>
     
-    <section>
-        
-        <div class="intro-content">
-            <img src="assets/img/legal/profile.png" class="img-responsive img-centered" alt="">
-            <div class="brand-name">Póliza-Net</div>
-            <hr class="colored">
-            <div class="brand-name-subtext">Gestión para mediadores de seguros</div>
-        </div>
-    </section>
     
     <!-- Sección gráficos  -->
     <section id="graficos">
