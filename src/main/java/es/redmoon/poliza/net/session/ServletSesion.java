@@ -91,10 +91,10 @@ public class ServletSesion extends HttpServlet {
                 // vista de clientes
                 else if (mySesion.getUserTipo().equalsIgnoreCase("cliente"))
                 {
-                    rd=request.getRequestDispatcher("BrowsePolizasClientes.jsp");
+                    rd=request.getRequestDispatcher("OnePageClient.jsp");
                 }
                 else
-                    rd=request.getRequestDispatcher("BrowsePolizasClientes.jsp");
+                    rd=request.getRequestDispatcher("OnePageClient.jsp");
                 
                 rd.forward(request, response);
             }
