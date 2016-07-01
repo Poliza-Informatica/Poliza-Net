@@ -123,7 +123,7 @@
         
         <!-- <div id="canvas-holder" style="width:75%"> -->
         <canvas id="chart-area" class="img-responsive img-centered"/>
-        
+        </canvas>
         <input type="hidden" name="RamosAutos" id="RamosAutos">
         <input type="hidden" name="RamosDiversos" id="RamosDiversos">
         <input type="hidden" name="RamosVida" id="RamosVida">
