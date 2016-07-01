@@ -55,8 +55,7 @@
     #canvas {
         -moz-user-select: none;
         -webkit-user-select: none;
-        -ms-user-select: none;
-        height: 150px;
+        -ms-user-select: none;        
     }
     </style>
     <link href="css/redmoon.css" rel="stylesheet">
@@ -66,6 +65,7 @@
     <script src="js_tetbury/PolizasLeer.js"></script>
     <script src="js_tetbury/RecibosLeer.js"></script>
     <script src="js_tetbury/SiniestrosLeer.js"></script>
+    <script>ProduccionRamos();</script>
 </head>
 <!-- Alternate Body Classes: .modern and .vintage -->
 
@@ -253,19 +253,7 @@
             </div>
         </div>
     </section>
-    <!--
-    <aside class="cta-quote" style="background-image: url('assets/img/legal/bg-aside.jpg');">
-        <div class="container wow fadeIn">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <span class="quote">We use the practical application of legal theories and knowledge to pursue and uphold justice.</span>
-                    <hr class=" colored">
-                    <a class="btn btn-outline-light page-scroll" href="#contact">Contact Us</a>
-                </div>
-            </div>
-        </div>
-    </aside> -->
-
+   
     
     <!-- Recibos  -->
     <section id="section_recibos" class="bg-gray">
@@ -405,6 +393,7 @@
             </div>
         </div>
     </section>
+    
     <footer class="footer" style="background-image: url('assets/img/bg-footer.jpg')">
         <div class="container text-center">
             <div class="row">
@@ -647,7 +636,7 @@
                 <div class="container">
                     <div class="row">
                         
-                        <form class="form-horizontal" action="#" id="ViewSiniestro">
+                        <form class="form-horizontal" action="#" id="ViewSiniestro" >
                                 <div  class="well">
                                     <div id="cajaForm" class="navbar">
                                         <div class="form-group col-xs-12 floating-label-form-group label-success">
@@ -728,7 +717,9 @@
         </div>
     </div>
     <!-- Core Scripts -->
-    <script src="assets/js/jquery.js"></script>
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="assets/js/bootstrap/bootstrap.min.js"></script>
     <!-- Plugin Scripts -->
     <script src="assets/js/plugins/jquery.easing.min.js"></script>
@@ -741,14 +732,14 @@
     <script src="assets/js/plugins/background/background.js"></script>
     <script src="assets/js/plugins/jquery.mixitup.js"></script>
     <script src="assets/js/plugins/wow/wow.min.js"></script>
-    <script src="assets/js/contact_me.js"></script>
     <script src="assets/js/plugins/jqBootstrapValidation.js"></script>
     <!-- Vitality Theme Scripts -->
     <script src="assets/js/vitality.js"></script>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="dist/Chart.min.js"></script>
+    
+    
     <script src="dist/Chart.bundle.min.js"></script>
+    
     <script>MakeDonut();</script>
 </body>
 

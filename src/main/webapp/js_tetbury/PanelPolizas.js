@@ -431,7 +431,6 @@ var barChartData = {
 function MakeDonut()
 {
 
-    ProduccionRamos();
     
     var config = {
         type: 'doughnut',
